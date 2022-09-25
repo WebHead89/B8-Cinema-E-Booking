@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="NavBar buffer center"> <!Should be completely replaced by the navigation bar class>
+MOVIES (Replace this with the Nav Bar)
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="container centerBlock">
+	<div class="center">
+	Sign up!
+		<form>
+		<br>
+		<br>
+		
+		<label for="name">Enter your name:<br></label>
+		<input type="text" id="name" name="name">
+		<br>
+		<br>
+		<br>
+		
+		<label for="phone">Enter your phone number:<br></label>
+		<input type="text" id="phone" name="phone">
+		<br>
+		<br>
+		<br>
+		
+		<label for="email">Enter email:<br></label>
+		<input type="text" id="email" name="email">
+		<br>
+		<br>
+		<br>
+		
+		<label for="password">Enter a password:<br></label>
+		<input type="password" id="password" name="password">
+		<br>
+		<input type="checkbox" onclick="myFunction()">Show Password
+		<br>
+		<br>
+		<br>
+		
+		<label for="cpass">Confirm password:<br></label>
+		<input type="password" id="cpass" name="cpass">
+		<br>
+		<br>
+		<br>
+		
+		<input type=submit onClick="window.location.href='home.html';" value="Submit">
+
+		</form>
+	</div>
+</div>
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
+</body>
+</html>
