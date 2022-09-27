@@ -1,0 +1,65 @@
+html,
+
+#bg { 
+    /* The image used */
+    background-image: url("../assets/wallpaper.jpg");
+  
+    /* Full height */
+    height: 100%; 
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+  
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.centerText {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.centerBlock {
+	margin-left: auto;
+	margin-right: auto;
+	height: 500px;
+	width: 500px;
+	background-color: #00b3b3;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.vertCenter {
+	padding-bottom: 50%;
+	padding-top: 50%;
+}

@@ -3,55 +3,39 @@
 
 <head>
 <meta charset="utf-8">
-<link rel="stylesheet" href="style.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/signin.css" rel="stylesheet">
+<title>E-Booking Edit Profile</title>
 </head>
 
-<body>
-<div class="NavBar buffer center"> <!Should be completely replaced by the navigation bar class>
-MOVIES (Replace this with the Nav Bar)
-</div>
-<br>
-<br>
-<br>
-<br>
-<div class="container centerBlock">
+<body id="bg">
+
+
+<div class="container centerBlock form-control">
 	<div class="center">
 	<h1>Hello [Customer]</h1>
-		<form>
+		<form action="home.html" method="POST">
 		
 		<label for="name">Edit name:<br></label>
-		<input type="text" id="name" name="name" value="[Customer's Name]">
-		<br>
-		<br>
-		<br>
+		<input type="text" class="form-control" id="name" name="name" value="[Customer's Name]">
 		
 		<label for="phone">Edit phone number:<br></label>
-		<input type="text" id="phone" name="phone" value="[Current Phone #]">
-		<br>
-		<br>
-		<br>
+		<input type="text" class="form-control" id="phone" name="phone" value="[Current Phone #]">
 		
 		<label for="email">Edit email:<br></label>
-		<input type="text" id="email" name="email" value="[Current Email]">
-		<br>
-		<br>
-		<br>
+		<input type="text" class="form-control" id="email" name="email" value="[Current Email]">
 		
 		<label for="password">Edit password:<br></label>
-		<input type="password" id="password" name="password" value="[Current Password]">
-		<br>
-		<input type="checkbox" onclick="myFunction()">Show Password
-		<br>
-		<br>
-		<br>
+		<input type="password" class="form-control" id="password" name="password" value="[Current Password]">
 		
+		<input type="checkbox" class="centerText" onclick="myFunction()">Show Password</input>
+		<br>
 		<label for="cpass">Confirm password:<br></label>
-		<input type="password" id="cpass" name="cpass">
-		<br>
-		<br>
+		<input type="password" class="form-control" id="cpass" name="cpass">
 		<br>
 		
-		<input type=submit onClick="window.location.href='home.html';" value="Confirm">
+		<button class="w-100 btn btn-lg btn-primary" type="submit">Confirm</button>
 
 		</form>
 	</div>
