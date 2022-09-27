@@ -1,0 +1,78 @@
+.open_seat {
+    position: relative;
+    width: 34px;
+    height: 36px;
+    
+    background: #D9D9D9;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: #A38989;
+
+    margin-top: 10;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    
+}
+
+.selected_seat {
+    width: 34px;
+    height: 36px;
+    
+    background: #10d059;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: #A38989;
+
+    margin-top: 10;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.unavailable_seat {
+    width: 34px;
+    height: 36px;
+    
+    background: #d50d0d;
+    border-width: 0px 2px 2px 2px;
+    border-style: solid;
+    border-color: #A38989;
+
+    margin-top: 10;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.column.theater {
+    background-color: bisque;
+    width: 65%;
+}
+
+.column.booking {
+    background-color: aqua;
+    width: 35%;
+}
+
+.row.first {
+    /* margin-left: 32.5% */
+}
+
+.row.second {
+    margin-left: -12.5%;
+}
+
+.row.third {
+    margin-left: -22.2%;
+}
+
+.seats {
+    position: relative;
+    margin-left: 32.5%;
+}
