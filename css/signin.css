@@ -1,16 +1,4 @@
 html,
-
-#bg { 
-    /* The image used */
-    background-image: url("../assets/wallpaper.jpg");
-  
-    /* Full height */
-    height: 100%; 
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
   
 body {
   height: 100%;
