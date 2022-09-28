@@ -72,7 +72,7 @@
   <main>
     <div class="py-5 text-center">
       <h2>Checkout</h2>
-      <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+      <p class="lead">Enter details and click "Checkout". Or go back and edit your order</p>
     </div>
 
     <div class="row g-5">
@@ -81,6 +81,13 @@
           <span class="text-primary">Your cart</span>
           <span class="badge bg-primary rounded-pill">0</span>
         </h4>
+		
+		<form class="card p-2" action="booking.html" method="POST">
+          <div class="input-group">
+            <button type="submit" class="w-100 btn btn-secondary" style="background-color:green">Update Cart</button>
+          </div>
+        </form>
+		
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
@@ -122,9 +129,15 @@
             <button type="submit" class="btn btn-secondary">Redeem</button>
           </div>
         </form>
+		
       </div>
+	  
+	  
+	  
+	  
+	  
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing address</h4>
+        <h4 class="mb-3">Billing Info</h4>
         <form action="checkoutConfirmation.html" method="POST"> <!class="needs-validation" !novalidate>
           <div class="row g-3">
             <div class="col-sm-6">
@@ -144,18 +157,7 @@
             </div>
 
             <div class="col-12">
-              <label for="username" class="form-label">Username</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                <input type="text" class="form-control" id="username" placeholder="Username" !required>
-              <div class="invalid-feedback">
-                  Your username is required.
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
+              <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="email" placeholder="you@example.com">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
@@ -177,7 +179,7 @@
 
             <div class="col-md-5">
               <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" required>
+              <select class="form-select" id="country" !required>
                 <option value="">Choose...</option>
                 <option>United States</option>
               </select>
@@ -188,7 +190,7 @@
 
             <div class="col-md-4">
               <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" required>
+              <select class="form-select" id="state" !required>
                 <option value="">Choose...</option>
                 <option>California</option>
               </select>
@@ -274,7 +276,7 @@
 
           <hr class="my-4">
 
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
         </form>
       </div>
     </div>

@@ -11,7 +11,7 @@
 .form-block {
 	margin-left: auto;
 	margin-right: auto;
-	height: 100%;
-	width: 75%;
+	height: auto;
+	width: auto;
 	background-color: #ffffff;
 }
