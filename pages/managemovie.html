@@ -60,7 +60,7 @@
 			<button type="button" class="btn btn-primary">Upload Poster Image</button>
 
 			<div>
-              <label for="movname" class="form-label">Add Movie name</label>
+              <label for="movname" class="form-label">Edit Movie name</label>
               <input type="text" class="form-control" id="movname" placeholder="" value="" !required>
               <div class="invalid-feedback">
                 Valid first name is required.
@@ -68,7 +68,7 @@
             </div>
 
             <div>
-              <label for="description" class="form-label">Add Movie description</label>
+              <label for="description" class="form-label">Edit Movie description</label>
               <input type="text" class="form-control" id="description" placeholder="" value="" !required>
               <div class="invalid-feedback">
                 Valid last name is required.
@@ -85,6 +85,12 @@
 		  <label for="vehicle3"> 8:00</label><br><br>
 		
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Confirm</button>
+		
+		<form class="card p-2" action="home.html" method="POST">
+          <div class="input-group">
+            <button type="submit" class="w-100 btn btn-secondary" style="background-color:red">Delete</button>
+          </div>
+        </form>
 
 		</form>
 		
