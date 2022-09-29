@@ -52,12 +52,14 @@
 
 .column.theater {
     background-color: bisque;
-    width: 65%;
+    width: 55%;
+    margin-left: 10%;
 }
 
 .column.booking {
-    background-color: aqua;
-    width: 35%;
+    background-color: rgb(222, 238, 238);
+    width: 25%;
+    margin-right: 10%;
 }
 
 .row.first {
@@ -65,15 +67,28 @@
 }
 
 .row.second {
-    margin-left: -12.5%;
+    margin-left: -14.8%;
 }
 
 .row.third {
-    margin-left: -22.2%;
+    margin-left: -26.3%;
 }
 
 .seats {
     position: relative;
     margin-left: 32.5%;
     /* padding-left: 10%; */
+}
+
+.showtimes {
+    padding-bottom: 15%;
+
+}
+
+.showtimes .child {
+    margin: 2px;
+}
+
+.ticketSelection {
+    
 }
