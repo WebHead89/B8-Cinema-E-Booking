@@ -29,6 +29,19 @@
                     <li>
                         <a class="nav-link active" href="checkout.html" aria-current="page">View Cart</a>
                     </li>
+                    <li>
+                        <div class="nav-item dropdown justify-content-end">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin Controls
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="managemovie.html">Manage Movies</a></li>
+                                <li><a class="dropdown-item" href="addpromo.html">Manage Promos</a></li>
+
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
                 <div class="mx-auto">
                     <form class="d-flex">
@@ -53,8 +66,13 @@
         </div>
     </nav>
 
-    <div class="trailer">
-        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <div class="trailer" id="trailer_admin">
+        <form>
+            <input class="form-control" type="text" placeholder="Trailer URL">
+            <button class="btn btn-outline-success" type="submit">Change Trailer</button>
+        </form>
+        <!-- <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
     </div>
 
     <div class="container">
@@ -64,7 +82,7 @@
                     <img class="card-img-top" src="../assets/avatar.jpg" alt="Avatar">
                     <div class="card-body">
                         <h5 class="card-title">Avatar (PG-13)</h5>
-                        <a href="booking.html" class="btn btn-primary">Buy Tickets</a>
+                        <a href="booking.html" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +91,7 @@
                     <img class="card-img-top" src="../assets/avengers.jpg" alt="Avengers">
                     <div class="card-body">
                         <h5 class="card-title">Avengers (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        <a href="#" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>
@@ -82,7 +100,7 @@
                     <img class="card-img-top" src="../assets/topgun.jpg" alt="Top Gun: Maverick">
                     <div class="card-body">
                         <h5 class="card-title">Top Gun: Maverick (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        <a href="#" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>
@@ -91,7 +109,7 @@
                     <img class="card-img-top" src="../assets/northman.jpg" alt="Prey">
                     <div class="card-body">
                         <h5 class="card-title">The Northman (R)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        <a href="#" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>
@@ -100,7 +118,7 @@
                     <img class="card-img-top" src="../assets/rogueone.jpg" alt="Rogue One">
                     <div class="card-body">
                         <h5 class="card-title">Rogue One (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        <a href="#" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>
@@ -109,7 +127,7 @@
                     <img class="card-img-top" src="../assets/elvis.jpg" alt="Elvis">
                     <div class="card-body">
                         <h5 class="card-title">Elvis (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
+                        <a href="#" class="btn btn-primary">Remove Movie</a>
                     </div>
                 </div>
             </div>

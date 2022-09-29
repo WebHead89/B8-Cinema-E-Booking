@@ -14,3 +14,18 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+  iframe {
+    margin: auto;
+    display: block;
+  }
+
+  #trailer_admin {
+    width: 840px;
+    height: 472.5px;
+    padding: 50px;
+    background: white;
+    text-align: center;
+    margin: auto;
+    display: block;
+  }
