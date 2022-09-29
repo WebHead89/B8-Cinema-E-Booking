@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/signin.css" rel="stylesheet">
+<link href="../css/form-validation.css" rel="stylesheet">
+<link href="../css/homepage.css" rel="stylesheet">
+<title>E-Booking |Admin| Manage Movie</title>
+</head>
+
+<body class="text-center" id="bg">
+
+
+<div class="container form-control form-block">
+	<div class="center">
+	<h1>Hello [Admin]</h1>
+		<form action="home.html" method="POST">
+		
+			<button type="button" class="btn btn-primary">Upload Poster Image</button>
+
+			<div>
+              <label for="movname" class="form-label">Add Movie name</label>
+              <input type="text" class="form-control" id="movname" placeholder="" value="" !required>
+              <div class="invalid-feedback">
+                Valid first name is required.
+              </div>
+            </div>
+
+            <div>
+              <label for="description" class="form-label">Add Movie description</label>
+              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <div class="invalid-feedback">
+                Valid last name is required.
+              </div>
+            </div>
+		
+		
+		<label>Select Available Times</label><br>
+		  <input type="checkbox" id="7" name="7" value="7">
+		  <label for="vehicle1"> 7:00</label><br>
+		  <input type="checkbox" id="7:30" name="7:30" value="7:30">
+		  <label for="vehicle2"> 7:30</label><br>
+		  <input type="checkbox" id="8" name="8" value="8">
+		  <label for="vehicle3"> 8:00</label><br><br>
+		
+		<button class="w-100 btn btn-lg btn-primary" type="submit">Confirm</button>
+
+		</form>
+		
+	
+	
+	
+	</div>
+</div>
+
+
+<script>
+</script>
+
+</body>
+</html>
