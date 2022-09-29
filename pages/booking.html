@@ -52,11 +52,14 @@
 
     <!-- Will need to add responsiveness for if a seat is open or not and selected or not -->
     <div class="column theater">
+        <div id="movie_screen">
+            Movie Screen
+        </div>
         <div class="seats">
             <div class="row first">
                 <div class="open_seat" id="seat1" onclick="selectSeat(this.id)"></div>
-                <div class="selected_seat" id="seat2" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat3" onclick="selectSeat(this.id)"></div>
+                <div class="open_seat" id="seat2" onclick="selectSeat(this.id)"></div>
+                <div class="open_seat" id="seat3" onclick="selectSeat(this.id)"></div>
             </div>
             <div class="row second">
                 <div class="open_seat" id="seat4" onclick="selectSeat(this.id)"></div>
@@ -67,8 +70,8 @@
             </div>
             <div class="row second">
                 <div class="open_seat" id="seat9" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat10" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat11" onclick="selectSeat(this.id)"></div>
+                <div class="unavailable_seat" id="seat10" onclick="selectSeat(this.id)"></div>
+                <div class="unavailable_seat" id="seat11" onclick="selectSeat(this.id)"></div>
                 <div class="open_seat" id="seat12" onclick="selectSeat(this.id)"></div>
                 <div class="open_seat" id="seat13" onclick="selectSeat(this.id)"></div>
             </div>
@@ -87,9 +90,9 @@
                 <div class="open_seat" id="seat21" onclick="selectSeat(this.id)"></div>
                 <div class="open_seat" id="seat22" onclick="selectSeat(this.id)"></div>
                 <div class="open_seat" id="seat23" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat24" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat25" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat26" onclick="selectSeat(this.id)"></div>
+                <div class="unavailable_seat" id="seat24" onclick="selectSeat(this.id)"></div>
+                <div class="unavailable_seat" id="seat25" onclick="selectSeat(this.id)"></div>
+                <div class="unavailable_seat" id="seat26" onclick="selectSeat(this.id)"></div>
                 <div class="open_seat" id="seat27" onclick="selectSeat(this.id)"></div>
 
             </div>
@@ -97,6 +100,7 @@
     </div>
 
     <div class="column booking">
+        <h3 style="text-align: center;">Showtimes</h3>
         <div class="showtimes">
                     <a href="#" class="btn btn-secondary child">6:45 - 8:00 PM</a>
                     <a href="#" class="btn btn-secondary child">8:15 - 9:30 PM</a>
@@ -108,7 +112,31 @@
         </div>
         <div class="ticketSelection">
             <p>You have selected X seats. Please choose your ticket types below:</p>
+            <div class="ticketType">
+                Adult Tickets: X Selected
+                <div class="btn-group" role="group" aria-label="test">
+                    <button type="button" class="btn btn-secondary">-</button>
+                    <button type="button" class="btn btn-secondary">+</button>
+                </div>
+            </div>
+
+            <div class="ticketType">
+                Child Tickets: X Selected
+                <div class="btn-group" role="group" aria-label="test">
+                    <button type="button" class="btn btn-secondary">-</button>
+                    <button type="button" class="btn btn-secondary">+</button>
+                </div>
+            </div>
+
+            <div class="ticketType">
+                Senior Tickets: X Selected
+                <div class="btn-group" role="group" aria-label="test">
+                    <button type="button" class="btn btn-secondary">-</button>
+                    <button type="button" class="btn btn-secondary">+</button>
+                </div>
+            </div>
         </div>
+            <button type="button" class="btn btn-secondary proceedToPayment">Add tickets to cart</button>
     </div>
 
 
