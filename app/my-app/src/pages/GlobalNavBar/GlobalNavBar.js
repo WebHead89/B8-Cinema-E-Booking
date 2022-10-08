@@ -30,7 +30,7 @@ const GlobalNavBar = () => {
 
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, mb: 5 }}>
             <AppBar position='static'>
                 <ToolBar>
                     <Box sx={{ flexGrow: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', display: 'flex' }}>
