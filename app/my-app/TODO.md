@@ -10,3 +10,17 @@ Connect database elements to javascript for modularity
 
 # Database
 Define schema for database
+
+Ex:
+
+movies
+- title
+- rating
+- image
+- genre
+
+showtimes
+- title
+- room
+- startTime
+- endTime
