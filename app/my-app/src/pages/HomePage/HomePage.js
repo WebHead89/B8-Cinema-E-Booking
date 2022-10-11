@@ -32,7 +32,7 @@ const HomePage = () => {
                 {movies.map((element) => (
                     <Grid xs={2} sm={4} md={4}>
                         <Card>
-                            <CardMedia component='img' height='500' image={posters[element.image]} alt="test" />
+                            <CardMedia component='img' height='800' image={posters[element.image]} alt="test" />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     {element.title}
@@ -52,7 +52,8 @@ const HomePage = () => {
     )
 }
 
-// This should be connected to the database instead 
+
+// This should be connected to the database instead
 const movies = [
     { title: 'Avatar', rating: 'PG-13', image: 'AvatarPoster', genre: 'Sci-Fi, Adventure' },
     { title: 'Top Gun: Maverick', rating: 'PG-13', image: 'TopGunMaverickPoster', genre: 'Action' },
