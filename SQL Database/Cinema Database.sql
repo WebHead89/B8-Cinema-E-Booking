@@ -417,11 +417,12 @@ CREATE TABLE `users` (
   `accountType` int DEFAULT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `idUsers_UNIQUE` (`idUser`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `accountType_idx` (`accountType`),
   KEY `accountStatus_idx` (`accountStatus`),
   CONSTRAINT `accountStatus` FOREIGN KEY (`accountStatus`) REFERENCES `account_status` (`idStatus`),
   CONSTRAINT `accountType` FOREIGN KEY (`accountType`) REFERENCES `account_type` (`idType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store all the users of the system\n';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Table to store all the users of the system\n';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,6 +431,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (10,'Ben','Prestel','7703304466','benjamin43.prestel@gmail.com','password',1,'Marietta','Ga','30062',1,1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -442,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-13 15:56:57
+-- Dump completed on 2022-10-13 17:20:17
