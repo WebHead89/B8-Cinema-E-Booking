@@ -14,13 +14,14 @@ Define schema for database
 Ex:
 
 movies
-- title
-- rating
-- image
-- genre
+- title: String
+- rating: String
+- image: ? Url to image file?
+- genre: String
 
 showtimes
-- title
-- room
-- startTime
-- endTime
+- title: String
+- room: Number
+- startTime: Start of movie as a number from 00:00-24:00
+- endTime: End of movie as a number from 00:00-24:00
+- takenSeats: Array of seat ids

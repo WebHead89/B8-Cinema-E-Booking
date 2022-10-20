@@ -1,6 +1,6 @@
 import AppBar from '@mui/material/AppBar';
 import ToolBar from '@mui/material/Toolbar'
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
@@ -8,10 +8,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
 
-import React, { useState, MouseEvent } from 'react';
+import React, { useState } from 'react';
 
 
 const GlobalNavBar = () => {
@@ -40,7 +40,7 @@ const GlobalNavBar = () => {
                         E-Booking Cinema
                     </Typography>
                     <Typography variant="h7" component="div" sx={{ display: 'flex', m: 4}}>
-                        Home
+                        <Link to="/">Home</Link>
                     </Typography>  
                     <Typography variant="h7" component="div" sx={{display: 'flex', m: 2}}>
                         View Cart

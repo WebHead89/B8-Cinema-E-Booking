@@ -1,11 +1,17 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BookingPage from "./pages/BookingPage/BookingPage";
+import App from './App'
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import HomePage from './pages/HomePage/HomePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <HomePage />
-  </React.StrictMode>
+
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App/>}/>
+      <Route path="/booking" element={<BookingPage/>} />
+    </Routes>
+  </BrowserRouter>
+
 );

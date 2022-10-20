@@ -1,8 +1,13 @@
 import { Card, CardActions, CardMedia, Typography, Grid, CardContent, Button } from '@mui/material'
-import React from 'react'
+import React, {useCallback} from 'react'
 import GlobalNavBar from '../GlobalNavBar/GlobalNavBar'
 import * as posters from '../../assets/moviePosters/index'
+import {useNavigate} from 'react-router-dom';
+
 const HomePage = () => {
+
+    const navigate = useNavigate();
+    const handleOnClick = useCallback((Title, Rating, Genre) => navigate('/booking', {state: {title: Title, rating: Rating, genre: Genre}}), [navigate]);
 
 
     return (
@@ -10,11 +15,13 @@ const HomePage = () => {
         // Trailer - Grid
         // Further search functionality - Dropdown?
         // Movies - Grid
+
+        
         <div>
             <GlobalNavBar />
             <Grid container spacing={2}>
                 <Grid item xs={7} sx={{ml: '4%'}}>
-                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe width="100%" height="500" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </Grid>
                 <Grid item xs={4} style={{textAlign: 'center', backgroundColor: '', margin: '100'}}>
                     <h2 style={{textAlign: 'center'}}>{movieTrailer.title}</h2>
@@ -42,7 +49,7 @@ const HomePage = () => {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size='small' variant='contained'>Buy Tickets/View Showtimes</Button>
+                                <Button size='small' variant='contained' onClick={() => {handleOnClick(element.title, element.rating, element.genre)}}>Buy Tickets/View Showtimes</Button>
                             </CardActions>
                         </Card>
                     </Grid>
