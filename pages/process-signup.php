@@ -1,8 +1,11 @@
 <?php 
 
 // Server-side validation to make sure name is not NULL
-if (empty($_POST["name"])) {
-    die("Name is requied");
+if (empty($_POST["first_name"])) {
+    die("First name is requied");
+}
+if (empty($_POST["last_name"])) {
+    die("Las name is requied");
 }
 
 // Server-side validation to check for valid email
@@ -27,8 +30,8 @@ $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 $mysqli = require __DIR__ . "/database.php";
 
 // sql insert statement to insert into the database
-$sql = "INSERT INTO user(name, phone, email, password)
-        VALUES(?, ?, ?, ?)";
+$sql = "INSERT INTO user(first_name, last_name, phone, email, password)
+        VALUES(?, ?, ?, ?, ?)";
 
 // init for sql execution
 $stmt = $mysqli->stmt_init();
@@ -39,8 +42,9 @@ if ( ! $stmt->prepare($sql)) {
 }
 
 // binding params to be added
-$stmt->bind_param("siss",
-                  $_POST['name'],
+$stmt->bind_param("sssss",
+                  $_POST['first_name'],
+                  $_POST['last_name'],
                   $_POST['phone'],
                   $_POST['email'],
                   $password_hash);
