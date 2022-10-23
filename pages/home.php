@@ -65,11 +65,25 @@ if (isset($_SESSION["user_id"])) {
                     <div class="nav-item dropdown justify-content-end">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Account
+                            <?php
+                            if (isset($_SESSION["user_id"])) {
+                                echo $user['first_name'];
+                            } else {
+                                echo "Profile";
+                            }
+                            ?>
+                            <!-- Account -->
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="login.html">Login</a></li>
-                            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+                            <?php
+                            if (isset($_SESSION["user_id"])) {
+                                echo "<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>";
+                                echo "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
+                            } else {
+                                echo "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
+                                echo "<li><a class='dropdown-item' href='register.php'>Register</a></li>";
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -78,7 +92,7 @@ if (isset($_SESSION["user_id"])) {
     </nav>
 
     <div class="trailer">
-        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="container">

@@ -12,7 +12,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $result = $mysqli->query($sql);
 
+    // die($sql);
+
     $user = $result->fetch_assoc();
+
 
     if ($user) {
 
@@ -46,13 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>E-Booking Login</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
-
-    
-
-    
-
-
-
 
     <style>
       .bd-placeholder-img {
@@ -110,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
 </head>
   
-  
+
 <body class="text-center" id="bg">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
