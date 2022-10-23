@@ -81,7 +81,7 @@ if (isset($_SESSION["user_id"])) {
                                 echo "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
                             } else {
                                 echo "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
-                                echo "<li><a class='dropdown-item' href='register.php'>Register</a></li>";
+                                echo "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
                             }
                             ?>
                         </ul>
