@@ -26,6 +26,13 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
     die("Passwords must match");
 }
 
+// Set promo value to a variable
+if ($_POST["promo"] == "Yes") {
+    $promo = 1;
+} else {
+    $promo = 0;
+}
+
 // Password hash to store passwords securely
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
@@ -37,8 +44,8 @@ echo $hash;
 $mysqli = require __DIR__ . "/database.php";
 
 // sql insert statement to insert into the database
-$sql = "INSERT INTO user(first_name, last_name, phone, email, password, emailHash)
-        VALUES(?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO user(first_name, last_name, phone, email, password, promo, emailHash)
+        VALUES(?, ?, ?, ?, ?, ?, ?)";
 
 // init for sql execution
 $stmt = $mysqli->stmt_init();
@@ -77,12 +84,13 @@ if (mail($to, $subject, $message, $headers)) {
 
 
 // binding params to be added
-$stmt->bind_param("ssssss",
+$stmt->bind_param("sssssis",
                   $_POST['first_name'],
                   $_POST['last_name'],
                   $_POST['phone'],
                   $_POST['email'],
                   $password_hash,
+                  $promo,
                   $hash);
 
 
