@@ -39,7 +39,8 @@ CREATE TABLE `user` (
   `state` varchar(255) DEFAULT NULL,
   `zip` varchar(255) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0,
-  `admin` tinyint(1) NOT NULL DEFAULT 0
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
+  `emailHash` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
