@@ -1,5 +1,8 @@
 <?php 
 
+ini_set("SMTP", "smtp.gmail.com");
+ini_set("smtp_port", "587");
+
 // Server-side validation to make sure name is not NULL
 if (empty($_POST["first_name"])) {
     die("First name is requied");
@@ -28,6 +31,7 @@ $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
 // Generates random 32 char hash for email verification
 $hash = md5( rand(0, 1000));
+echo $hash;
 
 // require database.php for database connection
 $mysqli = require __DIR__ . "/database.php";
@@ -62,8 +66,13 @@ http://localhost/EBooking/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['e
 
 ';
 
-$headers = 'From:noreply@yourwebsite.com' . "\r\n"; // Set from headers
-mail($to, $subject, $message, $headers); // Send our email
+$headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
+if (mail($to, $subject, $message, $headers)) {
+    echo "Email sent";
+} else {
+    echo "Email sending failed";
+} // Send our email
+
 
 
 
