@@ -40,25 +40,24 @@ if (isset($_SESSION["user_id"])) {
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="home.html">E-Booking Cinema</a>
+            <a class="navbar-brand" href="home.php">E-Booking Cinema</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle Navigation">
-                <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav me-auto order-0">
-                    <?php
-                    echo '<li class="nav-item">
-                        <a class="nav-link" href="home.php">Home</a>
-                    </li>';
-
-                    echo '<li class="nav-item">
-                        <a class="nav-link" href="checkout.php">Movies</a>';
-                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="home.php" aria-current="page">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" href="checkout.html" aria-current="page">View Cart</a>
+                    </li>
                 </ul>
                 <div class="mx-auto">
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search Movies" aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search Movies"
+                            aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
@@ -66,25 +65,11 @@ if (isset($_SESSION["user_id"])) {
                     <div class="nav-item dropdown justify-content-end">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <?php
-                            if (isset($_SESSION["user_id"])) {
-                                echo $user['first_name'];
-                            } else {
-                                echo "Profile";
-                            }
-                            ?>
-                            <!-- Account -->
+                            Account
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                            <?php
-                            if (isset($_SESSION["user_id"])) {
-                                echo "<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>";
-                                echo "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
-                            } else {
-                                echo "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
-                                echo "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
-                            }
-                            ?>
+                            <li><a class="dropdown-item" href="login.php">Login</a></li>
+                            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
                         </ul>
                     </div>
                 </div>
@@ -93,10 +78,7 @@ if (isset($_SESSION["user_id"])) {
     </nav>
 
     <div class="trailer">
-        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=0"
-            title="YouTube video player" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
+        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="container">
@@ -163,8 +145,8 @@ if (isset($_SESSION["user_id"])) {
     <script type="text/javascript" src="Scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
-    </script>
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
