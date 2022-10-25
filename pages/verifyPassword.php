@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Password Change </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../css/signin.css" rel="stylesheet">
+	<link href="../css/homepage.css" rel="stylesheet">
+    <title> Password Change </title>
     </head>
 
 
@@ -40,10 +45,17 @@
                 header("Location: login.php");
             }
         ?>
-                    <form method='POST'>
-                <label for='password' style='color: black'>New Password: </label>
-                <input type='text' value='' name='password'><br>
-                <button type='submit' name='submit'>Submit</button>
-            </form>
+        <div class="centerBlock form-control">
+		<main class="form-signin w-100 m-auto">
+ 		<form method='POST'>
+			    <h1 class="h3 mb-3 fw-normal">Change Password</h1>
+             	 <label for='password' style='color: black'>New Password: </label>
+            	 <input type='text' value='' name='password'><br><br>
+            	 <button  class="w-100 btn btn-lg btn-primary" type='submit' name='submit'>Submit</button>
+        </form>
+		</main>
+	    </div>
+</body>
+</html>
 
 <!-- In this file, we have the user input a new password to use -->
