@@ -10,7 +10,7 @@
     </head>
 
 
-    <body>
+    <body class="text-center" id="bg">
         <?php
 
             $mysqli = require __DIR__ . "/database.php";
