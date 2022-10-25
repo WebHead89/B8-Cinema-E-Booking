@@ -68,8 +68,15 @@ if (isset($_SESSION["user_id"])) {
                             Account
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="login.php">Login</a></li>
-                            <li><a class="dropdown-item" href="signup.html">Sign Up</a></li>
+                        <?php
+                            if (isset($_SESSION["user_id"])) {
+                                echo "<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>";
+                                echo "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
+                            } else {
+                                echo "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
+                                echo "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
