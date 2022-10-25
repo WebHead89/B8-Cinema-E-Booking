@@ -2,6 +2,15 @@
 //php to connect to server and check validation upon submitting the login
 $is_invalid = false;
 
+function resetPassword() {
+  header("Location: resetPassword.php");
+}
+
+if (array_key_exists('resetPassword', $_POST)) {
+  resetPassword();
+} else {
+
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $mysqli = require __DIR__ . "/database.php";
@@ -36,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     $is_invalid = true;
+}
 }
 
 ?>
@@ -186,7 +196,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 		
 		<input type="checkbox" onclick="myFunction()">Show Password
 		
-		<button class="w-100 btn btn-lg btn-primary">Sign in</button>
+		<button class="w-100 btn btn-lg btn-primary" name="signIn">Sign in</button>
+
+    <button class="w-100 btn btn-lg btn-primary" name="resetPassword" style='margin-top: 5px'>Forgot Password</button>
+
 	  </form>
 	</main>
 </div>

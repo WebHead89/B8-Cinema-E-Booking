@@ -69,7 +69,7 @@ Password: '.$_POST['password'].'
 ------------------------
 
 Please click this link to activate your account:
-http://localhost/EBooking/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
+http://localhost/Ebook25/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
 
 ';
 
