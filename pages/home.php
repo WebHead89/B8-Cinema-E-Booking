@@ -51,7 +51,7 @@ if (isset($_SESSION["user_id"])) {
                         <a class="nav-link active" href="home.php" aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a class="nav-link active" href="checkout.html" aria-current="page">View Cart</a>
+                        <a class="nav-link active" href="checkout.php" aria-current="page">View Cart</a>
                     </li>
                 </ul>
                 <div class="mx-auto">
