@@ -84,14 +84,14 @@ if (mail($to, $subject, $message, $headers)) {
 
 
 // binding params to be added
-$stmt->bind_param("ssssssi",
+$stmt->bind_param("sssssis",
                   $_POST['first_name'],
                   $_POST['last_name'],
                   $_POST['phone'],
                   $_POST['email'],
                   $password_hash,
-                  $hash,
-                  $promo);
+                  $promo,
+                  $hash);
 
 
 
