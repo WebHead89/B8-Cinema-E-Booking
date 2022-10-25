@@ -1,5 +1,8 @@
 <?php 
 
+ini_set("SMTP", "smtp.gmail.com");
+ini_set("smtp_port", "587");
+
 // Server-side validation to make sure name is not NULL
 if (empty($_POST["first_name"])) {
     die("First name is requied");
@@ -23,13 +26,6 @@ if ($_POST["password"] !== $_POST["password_confirmation"]) {
     die("Passwords must match");
 }
 
-// Set promo value to a variable
-if ($_POST["promo"] == "Yes") {
-    $promo = 1;
-} else {
-    $promo = 0;
-}
-
 // Password hash to store passwords securely
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
@@ -39,6 +35,10 @@ if ($_POST["promo"] == "Yes") {
 } else {
     $promo = 0;
 }
+
+// Generates random 32 char hash for email verification
+$hash = md5( rand(0, 1000));
+echo $hash;
 
 // require database.php for database connection
 $mysqli = require __DIR__ . "/database.php";
@@ -55,15 +55,43 @@ if ( ! $stmt->prepare($sql)) {
     die("SQL error: " . $mysqli->error);
 }
 
+// Email verification
+$to = $_POST['email'];
+$subject = 'Signup | Verification';
+$message = '
+
+Thanks for signing up!
+Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+
+------------------------
+Username: '.$_POST['email'].'
+Password: '.$_POST['password'].'
+------------------------
+
+Please click this link to activate your account:
+http://localhost/EBooking/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
+
+';
+
+$headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
+if (mail($to, $subject, $message, $headers)) {
+    echo "Email sent";
+} else {
+    echo "Email sending failed";
+} // Send our email
+
+
+
+
 // binding params to be added
-$stmt->bind_param("sssssis",
+$stmt->bind_param("ssssssi",
                   $_POST['first_name'],
                   $_POST['last_name'],
                   $_POST['phone'],
                   $_POST['email'],
                   $password_hash,
-                  $promo,
-                  $hash);
+                  $hash,
+                  $promo);
 
 
 
