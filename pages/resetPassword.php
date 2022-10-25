@@ -12,13 +12,19 @@
 
 <body id="bg">
 
-<div class="centerText">
-	<h1 style="color:white;">Fill in the following field(s) to get a link to reset your password</h1>
+<div class="centerBlock form-control">
+	<main class="form-signin w-100 m-auto">
+	<h1 style="color:white;font-size:20px;">Fill in the following field(s) to get a link to reset your password</h1>
 
 	<form action="sendPassword.php" method="POST">
-        <label for='email' style='color: white'>Current Email:  </label>
-        <input type='text' id='email' name='email'><br><br>
-        <button type='submit'>Send Password Reset Link</button>
+	<div class="form-floating">
+
+	  <input type='text' class='form-control' id='email' name='email'><br>
+        <label for='email'>Current Email:  </label>  
+	</div>
+
+      <button type='submit' class="w-100 btn btn-lg btn-primary">Send Password Reset Link</button>
+
 	</form>
 
 </div>
