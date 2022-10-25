@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($user) {
 
-      if (password_verify($_POST["password"], $user["password"]) && $user["status"] == 1) {
+      if (password_verify($_POST["password"], $user["password"])) {
 
         session_start();
 
@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 	  <form method="post">
 		<h1 class="h3 mb-3 fw-normal">Login</h1>
 
-    <?php if ($is_invalid): ?>
+  <?php if ($is_invalid): ?>
   <em>Invalid Login</em>
   <?php endif; ?>
 
