@@ -15,11 +15,11 @@ $mysqli = require __DIR__ . "/database.php";
 if (isset($_GET['email']) && isset($_GET['emailHash'])) {
     $email = $_GET['email'];
     $emailHash = $_GET['emailHash'];
-    $status = 0;
+    $status = 2;
 } else {
     $email = '';
     $emailHash = '';
-    $status = 0;
+    $status = 2;
 }
 
 echo $email;
