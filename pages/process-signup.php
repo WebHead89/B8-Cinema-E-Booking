@@ -59,18 +59,14 @@ if ( ! $stmt->prepare($sql)) {
 $to = $_POST['email'];
 $subject = 'Signup | Verification';
 $message = '
-
 Thanks for signing up!
 Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
-
 ------------------------
 Username: '.$_POST['email'].'
 Password: '.$_POST['password'].'
 ------------------------
-
 Please click this link to activate your account:
 http://localhost/EBooking/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
-
 ';
 
 $headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
