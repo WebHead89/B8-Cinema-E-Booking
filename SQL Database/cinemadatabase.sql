@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Oct 26, 2022 at 02:46 AM
+-- Generation Time: Oct 26, 2022 at 03:00 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -115,9 +115,15 @@ CREATE TABLE `payment_card_table` (
   `idPaymentCard` int(11) NOT NULL,
   `cardNum` varchar(45) NOT NULL,
   `experationDate` varchar(45) NOT NULL,
-  `billingAddress` varchar(100) DEFAULT NULL,
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store payment cards of the users';
+
+--
+-- Dumping data for table `payment_card_table`
+--
+
+INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES
+(1, '123456789', '5/26 2000', 15);
 
 -- --------------------------------------------------------
 
@@ -436,7 +442,7 @@ ALTER TABLE `movie_category`
 -- AUTO_INCREMENT for table `payment_card_table`
 --
 ALTER TABLE `payment_card_table`
-  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `promotions_table`
