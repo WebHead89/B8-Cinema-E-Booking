@@ -59,7 +59,7 @@ $stmt = $mysqli->prepare("UPDATE user SET first_name='$first_name', last_name='$
 
         $stmt2 = $mysqli->stmt_init();
 
-        $stmt2->prepare($sql);
+        $stmt2->prepare($sql3);
 
         $stmt2->bind_param("ssi",
                   $cc_hash,

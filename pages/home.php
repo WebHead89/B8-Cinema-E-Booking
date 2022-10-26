@@ -85,7 +85,7 @@ if (isset($_SESSION["user_id"])) {
     </nav>
 
     <div class="trailer">
-        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
     <div class="container">

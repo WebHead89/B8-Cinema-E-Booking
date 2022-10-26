@@ -1,4 +1,5 @@
 <?php
+// add  value="<?php echo $card_number " line 171 at end with php closing >?
 session_start();
 
 
@@ -115,10 +116,13 @@ $expiration = $user2["expiration"];
 		<label for="phone">Edit phone number:<br></label>
 		<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone?>">
 		
-		<label for="floatingPassword">Edit password: (Leave blank for no changes)</label>
+    <label for="floatingPassword">Current Password: </label>
+		<input type="text" class="form-control" id="current_password" name="current_password">
+
+		<label for="floatingPassword">Edit password: </label>
 		<input type="password" class="form-control" id="password" name="password">
 		
-		<label for="floatingPassword">Confirm password:</label>
+		<label for="floatingPassword">Confirm password: </label>
 		<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 		<br>
 		
@@ -164,7 +168,7 @@ $expiration = $user2["expiration"];
 
             <div class="col-md-6">
               <label for="cc_number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc_number" name="cc_number" value="<?php echo $card_number?>">
+              <input type="text" class="form-control" id="cc_number" name="cc_number">
             </div>
 
             <div class="col-md-3">
