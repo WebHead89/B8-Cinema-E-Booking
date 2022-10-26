@@ -107,13 +107,6 @@ $zip = $user["zip"];
 		<label for="floatingPassword">Confirm password:</label>
 		<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="<?php echo $password ?>">
 		<br>
-	
-	<h2>promotion</h2>
-		<label for="promo">Sign up for promotion?</label>
-		<select class="form-control" id="promo", name="promo">
-			<option>Yes</option>
-			<option>No</option>
-		</select><br>
 		
     <h2>Edit Billing Address</h2>
 
