@@ -4,7 +4,7 @@ session_start();
 
 
   $mysqli = require __DIR__ . "/database.php";
-
+  // get user information
   $sql = "SELECT * FROM user
           WHERE id = {$_SESSION["user_id"]}";
           $result = $mysqli->query($sql);
@@ -19,6 +19,13 @@ $address = $user["address"];
 $city = $user["city"];
 $state = $user["state"];
 $zip = $user["zip"];
+
+// get payment card info
+$counter = 0;
+$sql = "SELECT * FROM payment_card_table
+        WHERE userID = {$_SESSION["user_id"]}";
+        $result = $mysqli->query($sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -100,6 +107,12 @@ $zip = $user["zip"];
 		<label for="floatingPassword">Confirm password:</label>
 		<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="<?php echo $password ?>">
 		<br>
+
+    <label for="promo">Sign up for promotion?</label>
+				<select class="form-control" id="promo", name="promo">
+					<option>Yes</option>
+					<option>No</option>
+				</select>
 		
     <h2>Edit Billing Address</h2>
 
@@ -136,31 +149,48 @@ $zip = $user["zip"];
 
 		
 		<h2>Save Payment Information</h2>
-		
+
 		<div class="my-3">
 
           <div class="row gy-3">
+            <?php while($row = $result->fetch_assoc()) { ?>
+              <?php
+                $counter++;
+                $idPaymentCard = $row["idPaymentCard"]; // use this to update the database
+                $cardNum = $row["cardNum"];
+                $expireDate = $row["experationDate"];
+              ?>
 
-            <div class="col-md-6">
-              <label for="cc_number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc_number" name="cc_number">
-            </div>
+              <div class="col-md-6">
+                <label for="cc_number" class="form-label">Credit card number</label>
+                <input type="text" class="form-control" id="cc_number" name="cc_number" value="<?php echo $cardNum ?>">
+              </div>
 
-            <div class="col-md-3">
-              <label for="cc_expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc_expiration" name="cc_expiration">
-            </div>
+              <div class="col-md-3">
+                <label for="cc_expiration" class="form-label">Expiration</label>
+                <input type="text" class="form-control" id="cc_expiration" name="cc_expiration" value="<?php echo $expireDate ?>">
+              </div>
 
+            <?php } ?>
           </div>
 
-          <label for="promo">Sign up for promotion?</label>
-				<select class="form-control" id="promo", name="promo">
-					<option>Yes</option>
-					<option>No</option>
-				</select>
+          <?php if($counter != 3) { ?>
+            <?php // if the textboxes are not null then create a new row in the table for credit cards ?>
+            <div class="row gy-3">
 
+              <div class="col-md-6">
+                <label for="cc_number" class="form-label">Credit card number</label>
+                <input type="text" class="form-control" id="cc_number" name="cc_number" >
+              </div>
 
-		
+              <div class="col-md-3">
+                <label for="cc_expiration" class="form-label">Expiration</label>
+                <input type="text" class="form-control" id="cc_expiration" name="cc_expiration" >
+              </div>
+
+            </div>
+          
+          <?php } ?>
     </div>
 		
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Confirm</button>
