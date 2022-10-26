@@ -19,6 +19,20 @@ $address = $user["address"];
 $city = $user["city"];
 $state = $user["state"];
 $zip = $user["zip"];
+
+try {
+  $sql2 = "SELECT * FROM card_info_table
+         WHERE user_id = {$_SESSION["user_id"]}";
+         $result2 = $mysqli->query($sql2);
+
+         $user2 = $result2->fetch_assoc();
+} catch(Exception $e) {
+  $card_number = "";
+  $expiration = "";
+}
+
+$card_number = $user2["card_number"];
+$expiration = $user2["expiration"];
 ?>
 
 <!DOCTYPE html>
@@ -90,22 +104,22 @@ $zip = $user["zip"];
 		
 			<div class="col-sm-6">
               <label for="first_name" class="form-label">Edit First name</label>
-              <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $first_name ?>">
+              <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $first_name?>">
             </div>
 
             <div class="col-sm-6">
               <label for="last_name" class="form-label">Edit Last name</label>
-              <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $last_name ?>">
+              <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $last_name?>">
             </div>
 		
 		<label for="phone">Edit phone number:<br></label>
-		<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone ?>">
+		<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone?>">
 		
-		<label for="floatingPassword">Edit password:</label>
-		<input type="password" class="form-control" id="password" name="password" value="<?php echo $password ?>">
+		<label for="floatingPassword">Edit password: (Leave blank for no changes)</label>
+		<input type="password" class="form-control" id="password" name="password">
 		
 		<label for="floatingPassword">Confirm password:</label>
-		<input type="password" class="form-control" id="password_confirmation" name="password_confirmation" value="<?php echo $password ?>">
+		<input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
 		<br>
 		
     <h2>Edit Billing Address</h2>
@@ -116,22 +130,22 @@ $zip = $user["zip"];
 
         <div class="col-md-6">
           <label for="address" class="form-label">Address Line:</label>
-          <input type="text" class="form-control" id="address" name="address" value="<?php echo $address ?>">
+          <input type="text" class="form-control" id="address" name="address" value="<?php echo $address?>">
         </div>
 
         <div class="col-md-6">
           <label for="city" class="form-label">City:</label>
-          <input type="text" class="form-control" id="city" name="city" value="<?php echo $city ?>">
+          <input type="text" class="form-control" id="city" name="city" value="<?php echo $city?>">
         </div>
 
         <div class="col-md-6">
           <label for="state" class="form-label">State:</label>
-          <input type="text" class="form-control" id="state" name="state" value="<?php echo $state ?>">
+          <input type="text" class="form-control" id="state" name="state" value="<?php echo $state?>">
         </div>
 
         <div class="col-md-3">
           <label for="zip" class="form-label">Zip Code:</label>
-          <input type="text" class="form-control" id="zip" name="zip" value="<?php echo $zip ?>">
+          <input type="text" class="form-control" id="zip" name="zip" value="<?php echo $zip?>">
         </div>
 
       </div>
@@ -150,12 +164,12 @@ $zip = $user["zip"];
 
             <div class="col-md-6">
               <label for="cc_number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc_number" name="cc_number">
+              <input type="text" class="form-control" id="cc_number" name="cc_number" value="<?php echo $card_number?>">
             </div>
 
             <div class="col-md-3">
               <label for="cc_expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc_expiration" name="cc_expiration">
+              <input type="text" class="form-control" id="cc_expiration" name="cc_expiration" value="<?php echo $expiration?>">
             </div>
 
           </div>
