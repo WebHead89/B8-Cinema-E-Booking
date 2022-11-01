@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Oct 26, 2022 at 03:00 AM
+-- Generation Time: Nov 02, 2022 at 12:52 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -91,8 +91,18 @@ CREATE TABLE `movies_table` (
   `trailerPicture` varchar(45) DEFAULT NULL,
   `trailerVideo` varchar(45) DEFAULT NULL,
   `filmRating` varchar(45) DEFAULT NULL,
-  `categoryID` int(11) NOT NULL
+  `categoryID` int(11) NOT NULL,
+  `isCurrentlyPlaying` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store all information on a movie';
+
+--
+-- Dumping data for table `movies_table`
+--
+
+INSERT INTO `movies_table` (`idMovie`, `title`, `cast`, `director`, `producer`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) VALUES
+(1, 'Avatar', '[cast]', '[director]', '[producer]', '[synopsis]', NULL, NULL, 'rating', 1, 1),
+(2, 'Happy Gilmore', '[cast]', '[director]', '[producer[', '[synopsis]', NULL, NULL, 'rating', 2, 0),
+(3, 'Star Wars Rouge One', '[cast]', '[director]', '[produer]', '[synopsis]', NULL, NULL, 'rating', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -104,6 +114,17 @@ CREATE TABLE `movie_category` (
   `idCategory` int(11) NOT NULL,
   `category` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='stores the different categories of movies';
+
+--
+-- Dumping data for table `movie_category`
+--
+
+INSERT INTO `movie_category` (`idCategory`, `category`) VALUES
+(1, 'Action'),
+(2, 'Comedy'),
+(3, 'Horror'),
+(4, 'Sci FI'),
+(5, 'Romance');
 
 -- --------------------------------------------------------
 
@@ -118,13 +139,6 @@ CREATE TABLE `payment_card_table` (
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store payment cards of the users';
 
---
--- Dumping data for table `payment_card_table`
---
-
-INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES
-(1, '123456789', '5/26 2000', 15);
-
 -- --------------------------------------------------------
 
 --
@@ -136,6 +150,13 @@ CREATE TABLE `promotions_table` (
   `code` varchar(45) NOT NULL,
   `discount` decimal(2,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store promotions';
+
+--
+-- Dumping data for table `promotions_table`
+--
+
+INSERT INTO `promotions_table` (`idPromotions`, `code`, `discount`) VALUES
+(1, 'freeMoney', '0.99');
 
 -- --------------------------------------------------------
 
@@ -175,6 +196,18 @@ CREATE TABLE `showroom_table` (
   `seatNumber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store all of the showrooms in the threater';
 
+--
+-- Dumping data for table `showroom_table`
+--
+
+INSERT INTO `showroom_table` (`idRoom`, `name`, `seatNumber`) VALUES
+(1, 'Room 1', 30),
+(2, 'Room 2', 30),
+(3, 'Room 3', 30),
+(4, 'Room 4', 30),
+(5, 'Room 5', 30),
+(6, 'Room 6', 30);
+
 -- --------------------------------------------------------
 
 --
@@ -183,8 +216,18 @@ CREATE TABLE `showroom_table` (
 
 CREATE TABLE `showtime_table` (
   `idShowtime` int(11) NOT NULL,
-  `showtime` time DEFAULT NULL
+  `showtime` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store the showtimes for the theater';
+
+--
+-- Dumping data for table `showtime_table`
+--
+
+INSERT INTO `showtime_table` (`idShowtime`, `showtime`) VALUES
+(1, '1:00 pm'),
+(2, '4:00 pm'),
+(3, '7:00 pm'),
+(4, '10:00 pm');
 
 -- --------------------------------------------------------
 
@@ -199,6 +242,14 @@ CREATE TABLE `show_table` (
   `showroomID` int(11) NOT NULL,
   `showtimeID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store all the shows in a movie';
+
+--
+-- Dumping data for table `show_table`
+--
+
+INSERT INTO `show_table` (`idShow`, `date`, `movieID`, `showroomID`, `showtimeID`) VALUES
+(2, '2022-11-11', 1, 2, 1),
+(3, '2022-11-03', 1, 5, 3);
 
 -- --------------------------------------------------------
 
@@ -261,9 +312,8 @@ INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone`, `email`, `password
 (9, 'Tucker', 'Folsom', '1234567890', 'tucker@treats.com', '$2y$10$UX4i/OvMTFnmDO0SNHsiaOoYuhSKEzwh9KlTlcLaoCLHPv6uxrT8i', 0, NULL, NULL, NULL, 0, 0, NULL, ''),
 (11, 'Tucker', 'Folsom', '1234567890', 'tucker2@treats.com', '$2y$10$aogyfuaJHUyUXs9DtmqE1OOwLGHKCJdq646i7gT/4b6VkVLDQhb1W', 1, NULL, NULL, NULL, 0, 0, NULL, ''),
 (12, 'Tucker', 'Folsom', '1234567890', 'tucker3@treats.com', '$2y$10$92814ycftqjTDHVWBJJJCu6u.xAjyPVmL6EsvX2Zq87f4xhSCD6qO', 0, NULL, NULL, NULL, 0, 0, NULL, ''),
-(14, 'ben', 'prestel', '7703304466', 'bdp67818@uga.edu', '$2y$10$ijNrf6uqudwJr6EnTy8tdOpFJRfxLwRt6zJ8vd0WI9T8TnboN/SLm', 1, NULL, NULL, NULL, 2, 0, NULL, ''),
-(15, 'Ben ', 'Prestel', '7703304466', 'benjamin43.prestel@gmail.com', '$2y$10$3x5.EV3IjgNNKONnLsLMdegWwwM4CSkA5n1bZuvjyMJtphY1Mz4Bu', 1, 'Marietta', '', '', 1, 0, '72da7fd6d1302c0a159f6436d01e9eb0', 'hello'),
-(16, 'Ben', 'Prestel', '7703304466', 'ben@athensbulldogs.com', '$2y$10$X4jwS8mLB9IDkB8H6YpOAu4N8MptyJU6Wffsrsn0baFrtxO9kfDGu', 1, NULL, NULL, NULL, 2, 0, '89fcd07f20b6785b92134bd6c1d0fa42', '');
+(31, 'Ben', 'Prestel', '7703304466', 'benjamin43.prestel@gmail.com', '$2y$10$gkRKY2a03MCt6dWdH547O./z7.ZU1K.qZE.utZJHXy/pTMqQADsv.', 1, '', '', '', 1, 0, '07cdfd23373b17c6b337251c22b7ea57', 'test'),
+(32, 'admin', 'admin', 'admin', 'admin@admin.com', '$2y$10$Dq0OBR455f8WJyG3nq7evepn5uIPzWSpHga2FolJQFuHSEXXbMGYm', 1, NULL, NULL, NULL, 1, 1, '5751ec3e9a4feab575962e78e006250d', '');
 
 -- --------------------------------------------------------
 
@@ -430,25 +480,25 @@ ALTER TABLE `booking_table`
 -- AUTO_INCREMENT for table `movies_table`
 --
 ALTER TABLE `movies_table`
-  MODIFY `idMovie` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idMovie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `movie_category`
 --
 ALTER TABLE `movie_category`
-  MODIFY `idCategory` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCategory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `payment_card_table`
 --
 ALTER TABLE `payment_card_table`
-  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `promotions_table`
 --
 ALTER TABLE `promotions_table`
-  MODIFY `idPromotions` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPromotions` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `review_table`
@@ -460,19 +510,19 @@ ALTER TABLE `review_table`
 -- AUTO_INCREMENT for table `showroom_table`
 --
 ALTER TABLE `showroom_table`
-  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idRoom` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `showtime_table`
 --
 ALTER TABLE `showtime_table`
-  MODIFY `idShowtime` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idShowtime` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `show_table`
 --
 ALTER TABLE `show_table`
-  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tickets_table`
@@ -490,7 +540,7 @@ ALTER TABLE `ticket_type`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `users`
