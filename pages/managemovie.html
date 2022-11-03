@@ -77,12 +77,119 @@
 		
 		
 		<label>Select Available Times</label><br>
-		  <input type="checkbox" id="7" name="7" value="7">
-		  <label for="vehicle1"> 7:00</label><br>
-		  <input type="checkbox" id="7:30" name="7:30" value="7:30">
-		  <label for="vehicle2"> 7:30</label><br>
-		  <input type="checkbox" id="8" name="8" value="8">
-		  <label for="vehicle3"> 8:00</label><br><br>
+		
+		<div class="tab">
+			<button class="tablinks" type="button" onclick="openTab(event, 'T1')" id="Th1">Theater 1</button>
+			<button class="tablinks" type="button" onclick="openTab(event, 'T2')" id="Th2">Theater 2</button>
+			<button class="tablinks" type="button" onclick="openTab(event, 'T3')" id="Th3">Theater 3</button>
+			<button class="tablinks" type="button" onclick="openTab(event, 'T4')" id="Th4">Theater 4</button>
+		</div>
+		
+		<div id="T1" class="tabcontent">
+			<input type="checkbox" id="5:30" name="5:30" value="5:30">
+			<label for="vehicle1"> 5:30</label>
+			
+			<input type="checkbox" id="6" name="6" value="6">
+			<label for="vehicle2"> 6:00</label>
+			
+			<input type="checkbox" id="6:30" name="6:30" value="6:30">
+			<label for="vehicle3"> 6:30</label>
+			
+			<input type="checkbox" id="7" name="7" value="7">
+			<label for="vehicle1"> 7:00</label>
+			
+			<input type="checkbox" id="7:30" name="7:30" value="7:30">
+			<label for="vehicle2"> 7:30</label>
+			
+			<input type="checkbox" id="8" name="8" value="8">
+			<label for="vehicle3"> 8:00</label>
+			
+			<input type="checkbox" id="8:30" name="8:30" value="8:30">
+			<label for="vehicle3"> 8:30</label>
+			
+			<input type="checkbox" id="9" name="9" value="9">
+			<label for="vehicle3"> 9:00</label>
+		</div>
+		
+		<div id="T2" class="tabcontent">
+			<input type="checkbox" id="5:30" name="5:30" value="5:30">
+			<label for="vehicle1"> 5:30</label>
+			
+			<input type="checkbox" id="6" name="6" value="6">
+			<label for="vehicle2"> 6:00</label>
+			
+			<input type="checkbox" id="6:30" name="6:30" value="6:30">
+			<label for="vehicle3"> 6:30</label>
+			
+			<input type="checkbox" id="7" name="7" value="7">
+			<label for="vehicle1"> 7:00</label>
+			
+			<input type="checkbox" id="7:30" name="7:30" value="7:30">
+			<label for="vehicle2"> 7:30</label>
+			
+			<input type="checkbox" id="8" name="8" value="8">
+			<label for="vehicle3"> 8:00</label>
+			
+			<input type="checkbox" id="8:30" name="8:30" value="8:30">
+			<label for="vehicle3"> 8:30</label>
+			
+			<input type="checkbox" id="9" name="9" value="9">
+			<label for="vehicle3"> 9:00</label>
+		</div>
+		
+		<div id="T3" class="tabcontent">
+			<input type="checkbox" id="5:30" name="5:30" value="5:30">
+			<label for="vehicle1"> 5:30</label>
+			
+			<input type="checkbox" id="6" name="6" value="6">
+			<label for="vehicle2"> 6:00</label>
+			
+			<input type="checkbox" id="6:30" name="6:30" value="6:30">
+			<label for="vehicle3"> 6:30</label>
+			
+			<input type="checkbox" id="7" name="7" value="7">
+			<label for="vehicle1"> 7:00</label>
+			
+			<input type="checkbox" id="7:30" name="7:30" value="7:30">
+			<label for="vehicle2"> 7:30</label>
+			
+			<input type="checkbox" id="8" name="8" value="8">
+			<label for="vehicle3"> 8:00</label>
+			
+			<input type="checkbox" id="8:30" name="8:30" value="8:30">
+			<label for="vehicle3"> 8:30</label>
+			
+			<input type="checkbox" id="9" name="9" value="9">
+			<label for="vehicle3"> 9:00</label>
+		</div>
+		
+		<div id="T4" class="tabcontent">
+			<input type="checkbox" id="5:30" name="5:30" value="5:30">
+			<label for="vehicle1"> 5:30</label>
+			
+			<input type="checkbox" id="6" name="6" value="6">
+			<label for="vehicle2"> 6:00</label>
+			
+			<input type="checkbox" id="6:30" name="6:30" value="6:30">
+			<label for="vehicle3"> 6:30</label>
+			
+			<input type="checkbox" id="7" name="7" value="7">
+			<label for="vehicle1"> 7:00</label>
+			
+			<input type="checkbox" id="7:30" name="7:30" value="7:30">
+			<label for="vehicle2"> 7:30</label>
+			
+			<input type="checkbox" id="8" name="8" value="8">
+			<label for="vehicle3"> 8:00</label>
+			
+			<input type="checkbox" id="8:30" name="8:30" value="8:30">
+			<label for="vehicle3"> 8:30</label>
+			
+			<input type="checkbox" id="9" name="9" value="9">
+			<label for="vehicle3"> 9:00</label>
+		</div>
+		
+
 		
 		<button class="w-100 btn btn-lg btn-primary" type="submit">Confirm</button>
 		
@@ -102,6 +209,24 @@
 
 
 <script>
+function openTab(evt, name) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(name).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+</script>
+
+<script type="text/javascript">
+document.getElementById("Th1").click();
 </script>
 
 </body>
