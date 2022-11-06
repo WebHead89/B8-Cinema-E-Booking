@@ -80,67 +80,67 @@ session_start();
 	<h1>Add Movie</h1>
 		<form action="home.php" method="POST">
 		
-			<button type="button" class="btn btn-primary">Upload Poster Image</button>
+			<br><button type="button" class="btn btn-primary">Upload Poster Image</button><br><br>
 
 			<div>
-              <label for="movname" class="form-label">Trailer URL</label>
-              <input type="text" class="form-control" id="movname" placeholder="" value="" !required>
+              <label for="trailerURL" class="form-label">Trailer URL</label>
+              <input type="text" class="form-control" id="trailerURL">
               <div class="invalid-feedback">
                 Valid trailer URL
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Title</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="title" class="form-label">Movie Title</label>
+              <input type="text" class="form-control" id="title">
               <div class="invalid-feedback">
                 Valid movie title is required.
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Cast</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="cast" class="form-label">Movie Cast</label>
+              <input type="text" class="form-control" id="cast">
               <div class="invalid-feedback">
                 Valid cast names is required.
               </div>
             </div>
 		
             <div>
-              <label for="description" class="form-label">Movie Director</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="director" class="form-label">Movie Director</label>
+              <input type="text" class="form-control" id="director">
               <div class="invalid-feedback">
                 Valid director name is required.
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Producer</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="producer" class="form-label">Movie Producer</label>
+              <input type="text" class="form-control" id="producer">
               <div class="invalid-feedback">
                 Valid producer name is required.
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Synopsis</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="synopsis" class="form-label">Movie Synopsis</label>
+              <input type="text" class="form-control" id="synopsis">
               <div class="invalid-feedback">
                 Valid synopsis is required.
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Film Rating</label>
-              <input type="text" class="form-control" id="description" placeholder="" value="" !required>
+              <label for="rating" class="form-label">Movie Film Rating</label>
+              <input type="text" class="form-control" id="rating">
               <div class="invalid-feedback">
                 Valid rating is required.
               </div>
             </div>
 
             <div>
-              <label for="description" class="form-label">Movie Genere</label>
-				    <select class="form-control" id="showtime", name="showtime">
+              <label for="genere" class="form-label">Movie Genere</label>
+				    <select class="form-control" id="genere", name="genere">
                     <?php foreach($categories as $category) {  ?>
                         <option> <?php echo $category["category"]; ?> </option>
                     <?php } ?>
@@ -148,8 +148,8 @@ session_start();
             </div>
 
             <div>
-              <label for="description" class="form-label">Upcoming/Currently Showing</label>
-                <select class="form-control" id="showtime", name="showtime">
+              <label for="isCurrentlyPlaying" class="form-label">Upcoming/Currently Showing</label>
+                <select class="form-control" id="isCurrentlyPlaying", name="isCurrentlyPlaying">
                     <option> Upcoming </option> <!-- set isCurrentlyPlaying  to 0-->
                     <option> Currently Showing </option> <!-- set isCurrentlyPlaying  to 1-->
 				</select>
@@ -158,14 +158,8 @@ session_start();
 		
 		
 
-		
-		<button class="w-100 btn btn-lg btn-primary" type="submit">Add Movie</button>
-		
-		<form class="card p-2" action="home.php" method="POST">
-          <div class="input-group">
-            <button type="submit" class="w-100 btn btn-secondary" style="background-color:red">Delete</button>
-          </div>
-        </form>
+            </br>
+		    <button class="w-100 btn btn-lg btn-primary" type="submit">Add Movie</button>
 
 		</form>
 		

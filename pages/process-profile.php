@@ -36,7 +36,7 @@ $stmt = $mysqli->prepare("UPDATE user SET first_name='$first_name', last_name='$
 
 
 if($stmt->execute()) {
-    header("Location: signup-success.html");
+    header("Location: editprofile.php");
     exit;
 }
 

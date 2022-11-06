@@ -96,7 +96,7 @@ $sql = "SELECT * FROM payment_card_table
             <div class="col-sm-6">
               <label for="last_name" class="form-label">Edit Last name</label>
               <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $last_name ?>">
-            </div>
+      </div>
 		
 		<label for="phone">Edit phone number:<br></label>
 		<input type="text" class="form-control" id="phone" name="phone" value="<?php echo $phone ?>">
