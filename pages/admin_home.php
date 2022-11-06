@@ -58,15 +58,7 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto order-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="home.php" aria-current="page">Currently Playing Movies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="home.php" aria-current="page">Upcoming Movies</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="home.php" aria-current="page">Current Promotions</a>
-                </li>
+
             </ul>
 
             <div class="d-flex ms-auto order-5">
@@ -155,6 +147,10 @@ session_start();
             echo "\tDiscount: ";
             echo $promo["discount"];
         } ?>
+
+        <!-- code to create a new promo -->
+        
+
 
 </div>
 
