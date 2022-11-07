@@ -60,33 +60,32 @@ session_start();
 
 
 <div class="container form-control form-block">
-	<div class="center my-3 gy-3">
-	    <h1>Add Movie</h1>
+	<div class="center">
+        <div class="center text-center">
+	        <h1>Add Movie</h1>
+        </div>
 		<form action="home.php" method="POST">
 		
 		    <label for="file" class="form-label">Upload Poster Image</label><br>
-            <input type="file" class="form-control-file" id="file"><br>
+            <input type="file" class="form-control-file" id="file"><br><br>
 
             <label for="trailerURL" class="form-label">Trailer URL</label>
-            <input type="text" class="form-control" id="trailerURL">
+            <input type="text" class="form-control" id="trailerURL"><br>
 
             <label for="title" class="form-label">Movie Title</label>
-            <input type="text" class="form-control" id="title">
+            <input type="text" class="form-control" id="title"><br>
 
             <label for="cast" class="form-label">Movie Cast</label>
-            <input type="text" class="form-control" id="cast">
+            <input type="text" class="form-control" id="cast"><br>
 
             <label for="director" class="form-label">Movie Director</label>
-            <input type="text" class="form-control" id="director">
+            <input type="text" class="form-control" id="director"><br>
 
             <label for="producer" class="form-label">Movie Producer</label>
-            <input type="text" class="form-control" id="producer">
-
-            <label for="synopsis" class="form-label">Movie Synopsis</label>
-            <input type="text" class="form-control" id="synopsis">
+            <input type="text" class="form-control" id="producer"><br>
 
             <label for="rating" class="form-label">Movie Film Rating</label>
-            <input type="text" class="form-control" id="rating">
+            <input type="text" class="form-control" id="rating"><br>
 
             <div>
               <label for="genere" class="form-label">Movie Genere</label>
@@ -95,6 +94,7 @@ session_start();
                         <option> <?php echo $category["category"]; ?> </option>
                     <?php } ?>
 				    </select>
+                <br>
             </div>
 
             <div>
@@ -103,19 +103,16 @@ session_start();
                     <option> Upcoming </option> <!-- set isCurrentlyPlaying  to 0-->
                     <option> Currently Showing </option> <!-- set isCurrentlyPlaying  to 1-->
 				</select>
+                <br>
             </div>
-		
-		
-		
+
+            <label for="synopsis" class="form-label">Movie Synopsis</label>
+            <textarea rows="5" class="form-control" id="synopsis"></textarea><br>
 
             </br>
 		    <button class="w-100 btn btn-lg btn-primary" type="submit">Add Movie</button>
 
 		</form>
-		
-	
-	
-	
 	</div>
 </div>
 
