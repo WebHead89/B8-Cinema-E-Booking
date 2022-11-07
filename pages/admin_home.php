@@ -82,6 +82,30 @@ session_start();
 	<div class="center my-3 gy-3">
 
     <div class="center text-center">
+        <h1>Current Promotions</h1>
+    </div>
+        <?php foreach($promotions as $promo) { 
+            echo "Promo Code: ";
+            echo $promo["code"];
+            echo "\tDiscount: ";
+            echo $promo["discount"];
+        } ?>
+
+        <!-- code to create a new promo -->
+        <div class="row my-3 gy-3">
+            <div class="col-md-4">
+                <label for="promo">Promo-Code</label>
+                <input type="text" class="form-control" id="promocode" name="promocode">
+            </div>
+            <div class="col-md-4">
+                <label for="promo">Discount</label>
+                <input type="text" class="form-control" id="discount" name="dicount">
+            </div>
+            
+        </div>
+        <button class="w-20 btn btn-lg btn-primary" type="submit">Add Promotion</button><br>
+
+    <div class="center text-center">
 	    <h1>Currently Playing Movies</h1><br>
     </div>
         <?php foreach($currentMovies as $rowMovie) { ?>
@@ -120,8 +144,9 @@ session_start();
                                     <?php } ?>
                                     </select>
                             </div>
-                            <div class="col-md-4">
-                                <h6> Enter calendar here to choose date </h6>
+                            <div class="col-md-4 gy-5 center">
+                                <label for="promo">Show Date</label>
+                                <input type="date" id="showdate" name="showdate">
                             </div>
                             <div class="col-md-4">
                                 <label for="promo">Showtime</label>
@@ -137,8 +162,9 @@ session_start();
 
                 </br>
         <?php } // end loop for displaying currentMovies ?> 
-
-    <br><h1>Upcoming Movies</h1>
+        <div class="center text-center">
+            <br><h1>Upcoming Movies</h1>
+        </div>
         <div class="row my-3 gy-3">
             <div class="col-md-2">
                 <?php foreach($upcomingMovies as $rowMovie) { ?>
@@ -154,16 +180,7 @@ session_start();
             </div>
         </div>
 
-    <br><h1>Current Promotions</h1>
-        <?php foreach($promotions as $promo) { 
-            echo "Promo Code: ";
-            echo $promo["code"];
-            echo "\tDiscount: ";
-            echo $promo["discount"];
-        } ?>
-
-        <!-- code to create a new promo -->
-        
+    <button class="col-md-12 btn btn-lg btn-primary" type="submit" onclick="window.location.href = 'add_movie.php';">Create New Movie</button><br>
 
 
 </div>
