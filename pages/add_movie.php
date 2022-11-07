@@ -64,28 +64,28 @@ session_start();
         <div class="center text-center">
 	        <h1>Add Movie</h1>
         </div>
-		<form action="home.php" method="POST">
+		<form action="process_add_movie.php" method="POST">
 		
-		    <label for="file" class="form-label">Upload Poster Image</label><br>
-            <input type="file" class="form-control-file" id="file"><br><br>
+		    <label for="image" class="form-label">Upload Poster Image</label><br>
+            <input type="file" class="form-control-file" id="image" name="image"><br><br>
 
             <label for="trailerURL" class="form-label">Trailer URL</label>
-            <input type="text" class="form-control" id="trailerURL"><br>
+            <input type="text" class="form-control" id="trailerURL" name="trailerURL"><br>
 
             <label for="title" class="form-label">Movie Title</label>
-            <input type="text" class="form-control" id="title"><br>
+            <input type="text" class="form-control" id="title" name="title"><br>
 
             <label for="cast" class="form-label">Movie Cast</label>
-            <input type="text" class="form-control" id="cast"><br>
+            <input type="text" class="form-control" id="cast" name="cast"><br>
 
             <label for="director" class="form-label">Movie Director</label>
-            <input type="text" class="form-control" id="director"><br>
+            <input type="text" class="form-control" id="director" name="director"><br>
 
             <label for="producer" class="form-label">Movie Producer</label>
-            <input type="text" class="form-control" id="producer"><br>
+            <input type="text" class="form-control" id="producer" name="producer"><br>
 
             <label for="rating" class="form-label">Movie Film Rating</label>
-            <input type="text" class="form-control" id="rating"><br>
+            <input type="text" class="form-control" id="rating" name="rating"><br>
 
             <div>
               <label for="genere" class="form-label">Movie Genere</label>
@@ -107,7 +107,7 @@ session_start();
             </div>
 
             <label for="synopsis" class="form-label">Movie Synopsis</label>
-            <textarea rows="5" class="form-control" id="synopsis"></textarea><br>
+            <textarea rows="5" class="form-control" id="synopsis" name="synopsis"></textarea><br>
 
             </br>
 		    <button class="w-100 btn btn-lg btn-primary" type="submit">Add Movie</button>
