@@ -79,9 +79,11 @@ session_start();
 
 
 <div class="container form-control form-block">
-	<div class="center">
+	<div class="center my-3 gy-3">
 
-	<h1>Currently Playing Movies</h1>
+    <div class="center text-center">
+	    <h1>Currently Playing Movies</h1><br>
+    </div>
         <?php foreach($currentMovies as $rowMovie) { ?>
                 <?php // loop to print all currently playing movies
                     $movieTitle = $rowMovie["title"];
@@ -109,38 +111,50 @@ session_start();
                     <?php } ?>
 
                     <!-- add code to create a new show -->
-                    </br>
-                    <label for="promo">Showroom</label>
-				        <select class="form-control" id="showRoom", name="showRoom">
-                        <?php foreach($showRooms as $room) {  // pasting all showrooms in list ?>
-                            <option> <?php echo $room["name"]; ?> </option>
-                        <?php } ?>
-				        </select>
+                        <div class="row my-3 gy-3">
+                            <div class="col-md-4">
+                                <label for="promo">Showroom</label>
+                                    <select class="form-control" id="showRoom", name="showRoom">
+                                    <?php foreach($showRooms as $room) {  // pasting all showrooms in list ?>
+                                        <option> <?php echo $room["name"]; ?> </option>
+                                    <?php } ?>
+                                    </select>
+                            </div>
+                            <div class="col-md-4">
+                                <h6> Enter calendar here to choose date </h6>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="promo">Showtime</label>
+                                    <select class="form-control" id="showtime", name="showtime">
+                                    <?php foreach($showTimes as $time) {  // pasting all showrooms in list ?>
+                                        <option> <?php echo $time["showtime"]; ?> </option>
+                                    <?php } ?>
+                                    </select>
+                            </div>
+                        </div>
+                                <button class="w-20 btn btn-lg btn-primary" type="submit">Add Showtime</button><br>
 
-                    <h6> Enter calendar here to choose date </h6>
-
-                    <label for="promo">Showtime</label>
-				        <select class="form-control" id="showtime", name="showtime">
-                        <?php foreach($showTimes as $time) {  // pasting all showrooms in list ?>
-                            <option> <?php echo $time["showtime"]; ?> </option>
-                        <?php } ?>
-				        </select>
-
-                        <button class="w-20 btn btn-lg btn-primary" type="submit">Add Showtime</button>
 
                 </br>
         <?php } // end loop for displaying currentMovies ?> 
 
-    <h1>Upcoming Movies</h1>
-        <?php foreach($upcomingMovies as $rowMovie) { ?>
-            <?php // loop to print all currently playing movies
-                $movieTitle = $rowMovie["title"];
-            ?>
-            <h2> <?php echo $movieTitle ?> </h2>
-        <?php } ?>
-        <button class="w-20 btn btn-lg btn-primary" type="submit">Add To Current Movies</button>
+    <br><h1>Upcoming Movies</h1>
+        <div class="row my-3 gy-3">
+            <div class="col-md-2">
+                <?php foreach($upcomingMovies as $rowMovie) { ?>
+                    <?php // loop to print all currently playing movies
+                        $movieTitle = $rowMovie["title"];
+                    ?>
+                    <?php echo $movieTitle ?>
+                <?php } ?>
+            </div>
 
-    <h1>Current Promotions</h1>
+            <div class="col-md-3">
+                <button class="w-20 btn btn-sm btn-primary" type="submit">Add To Current Movies</button>
+            </div>
+        </div>
+
+    <br><h1>Current Promotions</h1>
         <?php foreach($promotions as $promo) { 
             echo "Promo Code: ";
             echo $promo["code"];

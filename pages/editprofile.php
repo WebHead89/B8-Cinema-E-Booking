@@ -37,7 +37,7 @@ $sql = "SELECT * FROM payment_card_table
 <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/signin.css" rel="stylesheet">
 <link href="../css/form-validation.css" rel="stylesheet">
-<link href="../css/homepage.css" rel="stylesheet"> <!Only needed for background>
+<link href="../css/homepage.css" rel="stylesheet"> 
 <title>E-Booking Edit Profile</title>
 </head>
 
