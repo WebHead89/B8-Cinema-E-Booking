@@ -33,6 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         header("Location: home.php");
 
+        /*
+        if($user["admin"] = 0) {
+          header("Location: home.php");
+        } else {
+          header("Location: admin_home.php");
+        }
+        */
+
       } elseif ($user["status"] == 2) {
 
         echo '
