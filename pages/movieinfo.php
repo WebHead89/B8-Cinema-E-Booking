@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,7 +134,7 @@
             <div class="col-md-2">
                 <a href="booking.html" class="btn btn-primary">Buy Tickets</a>
             </div>
-
+                <br><br><br>
         </div>
 
     </div>
