@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($user) {
 
-      if (password_verify($_POST["password"], $user["password"])) {
+      if (password_verify($_POST["password"], $user["password"]) && $user['status'] == 1) {
 
         session_start();
 

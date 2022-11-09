@@ -33,6 +33,7 @@ if (isset($_SESSION["user_id"])) {
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="../css/homepage.css" rel="stylesheet">
+    <script src="../components/movieCard.js" type="text/javascript" defer></script>
 
 </head>
 
@@ -87,67 +88,40 @@ if (isset($_SESSION["user_id"])) {
     <div class="trailer">
         <iframe width="840" height="472.5" src="https://www.youtube.com/embed/In8fuzj3gck?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
+    
+    <!-- Get all movie info from movies_table db -->
+    <!-- For each movie, render <div class="col-sm-4"> <movie-card> with movie info </div> -->
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/avatar.jpg" alt="Avatar">
-                    <div class="card-body">
-                        <h5 class="card-title">Avatar (PG-13)</h5>
-                        <a href="booking.html" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/avengers.jpg" alt="Avengers">
-                    <div class="card-body">
-                        <h5 class="card-title">Avengers (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/topgun.jpg" alt="Top Gun: Maverick">
-                    <div class="card-body">
-                        <h5 class="card-title">Top Gun: Maverick (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/northman.jpg" alt="Prey">
-                    <div class="card-body">
-                        <h5 class="card-title">The Northman (R)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/rogueone.jpg" alt="Rogue One">
-                    <div class="card-body">
-                        <h5 class="card-title">Rogue One (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card text-center">
-                    <img class="card-img-top" src="../assets/elvis.jpg" alt="Elvis">
-                    <div class="card-body">
-                        <h5 class="card-title">Elvis (PG-13)</h5>
-                        <a href="#" class="btn btn-primary">Buy Tickets</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php
 
+    $mysqli = require __DIR__ . "/database.php";
 
+    // Get all movies from movies_table
+    $sql = "SELECT * FROM movies_table";
+
+    $result = $mysqli->query($sql);
+
+    $num_movies = $result->num_rows;
+
+    echo "<div class='container'>";
+    echo "<div class='row'>";
+
+    for ($i = 0; $i < $num_movies; $i++) {
+        $movie = $result->fetch_assoc();
+
+        // Use this for getting genre lol
+        // $ratingID = $movie["categoryID"];
+        // $rating = $mysqli->query("SELECT category FROM movie_category WHERE idCategory = $ratingID")->fetch_assoc();
+
+        echo "<div class='col-sm-4'>";
+        echo "<movie-card imgSrc='{$movie['trailerPicture']}' title='{$movie['title']}' rating='{$movie['filmRating']}' id='{$movie['idMovie']}'/>";
+        echo "</div>";
+    }
+
+    echo "</div>";
+    echo "</div>";
+
+    ?>
 
     <script type="text/javascript" src="Scripts/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
