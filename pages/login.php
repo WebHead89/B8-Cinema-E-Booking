@@ -31,15 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $_SESSION["user_id"] = $user["id"];
 
-        header("Location: home.php");
-
-        /*
+        
         if($user["admin"] = 0) {
           header("Location: home.php");
         } else {
           header("Location: admin_home.php");
         }
-        */
+        
 
       } elseif ($user["status"] == 2) {
 
