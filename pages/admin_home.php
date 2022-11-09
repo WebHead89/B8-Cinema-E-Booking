@@ -51,7 +51,7 @@ session_start();
 <body id="bg">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="home.php">E-Booking Cinema</a>
+        <a class="navbar-brand" href="admin_home.php">E-Booking Cinema</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle Navigation">
         <span class="navbar-toggler-icon"></span>
