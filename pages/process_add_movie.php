@@ -14,14 +14,34 @@ $isCurrentlyPlaying=$_POST["isCurrentlyPlaying"];
 $synopsis=$_POST["synopsis"];
 
 // copy file to website folder
+$filename = basename($posterImage);
+$filepath = "assets/" . $filename;
+copy($posterImage, $filepath);
+$filepath = "pages/" . $filepath;
 
 
 // require database.php for database connection
 $mysqli = require __DIR__ . "/database.php";
 
+// get isCurrentlyPlaying and genere
+if($isCurrentlyPlaying == "Upcoming") {
+    $x = 0;
+} else {
+    $x = 1;
+}
+
+// get movie categories
+$sql = "SELECT * FROM `movie_category`";
+$result = $mysqli->query($sql);
+$categories = $result->fetch_all(MYSQLI_ASSOC);
+$generes = array_column($categories, "idCategory", "category");
+$genereID = $generes[$genere];
+
 // sql insert statement to update the database 
 $stmt = $mysqli->stmt_init();
-$stmt = $mysqli->prepare("UPDATE user SET first_name='$first_name', last_name='$last_name', phone='$phone', password='$password_hash', promo='$promo', address='$address', city='$city', state='$state', zip='$zip' WHERE id='$id'");
+$sql = "INSERT INTO `movies_table`(`title`, `cast`, `director`, `producer`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) 
+        VALUES ('{$title}','{$cast}','{$director}','{$producer}','{$synopsis}','{$filepath}','{$trailerURL}','{$rating}','{$genereID}','{$x}')";
+$stmt = $mysqli->prepare($sql);
 
 
 

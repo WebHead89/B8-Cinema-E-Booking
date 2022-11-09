@@ -92,18 +92,19 @@ session_start();
         } ?>
 
         <!-- code to create a new promo -->
-        <div class="row my-3 gy-3">
-            <div class="col-md-4">
-                <label for="promo">Promo-Code</label>
-                <input type="text" class="form-control" id="promocode" name="promocode">
+        <form action="process_new_promo.php" method="POST">
+            <div class="row my-3 gy-3">
+                <div class="col-md-4">
+                    <label for="promo">Promo-Code</label>
+                    <input type="text" class="form-control" id="promocode" name="promocode">
+                </div>
+                <div class="col-md-4">
+                    <label for="promo">Discount</label>
+                    <input type="text" class="form-control" id="discount" name="dicount">
+                </div>
             </div>
-            <div class="col-md-4">
-                <label for="promo">Discount</label>
-                <input type="text" class="form-control" id="discount" name="dicount">
-            </div>
-            
-        </div>
-        <button class="w-20 btn btn-lg btn-primary" type="submit">Add Promotion</button><br>
+            <button class="w-20 btn btn-lg btn-primary" type="submit">Add Promotion</button><br>
+        </form>
 
     <div class="center text-center">
 	    <h1>Currently Playing Movies</h1><br>
@@ -135,6 +136,7 @@ session_start();
                     <?php } ?>
 
                     <!-- add code to create a new show -->
+                    <form action="process_new_show.php" method="POST">
                         <div class="row my-3 gy-3">
                             <div class="col-md-4">
                                 <label for="promo">Showroom</label>
@@ -157,7 +159,8 @@ session_start();
                                     </select>
                             </div>
                         </div>
-                                <button class="w-20 btn btn-lg btn-primary" type="submit">Add Showtime</button><br>
+                        <button class="w-20 btn btn-lg btn-primary" type="submit">Add Showtime</button><br>
+                    </form>
 
 
                 </br>
@@ -166,17 +169,20 @@ session_start();
             <br><h1>Upcoming Movies</h1>
         </div>
         <div class="row my-3 gy-3">
-            <div class="col-md-2">
-                <?php foreach($upcomingMovies as $rowMovie) { ?>
-                    <?php // loop to print all currently playing movies
-                        $movieTitle = $rowMovie["title"];
-                    ?>
+            <?php foreach($upcomingMovies as $rowMovie) { ?>
+                <?php $movieTitle = $rowMovie["title"]; // loop to print all currently playing movies ?>
+                <div class="col-md-9">
                     <?php echo $movieTitle ?>
-                <?php } ?>
-            </div>
-
+                </div>
             <div class="col-md-3">
-                <button class="w-20 btn btn-sm btn-primary" type="submit">Add To Current Movies</button>
+                <form action="process_add_current_movie.php" method="POST">
+                    <?php $idMovie = $rowMovie["idMovie"]; ?>
+                    <input type="hidden" id="movieID" name="movieID" value="<?php echo $idMovie; ?>">
+                    <button class="w-20 btn btn-sm btn-primary" type="submit">Add To Current Movies</button>
+                </form>
+            </div>
+            <br>
+                <?php } ?>
             </div>
         </div>
 

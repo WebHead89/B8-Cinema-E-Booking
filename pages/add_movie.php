@@ -66,8 +66,8 @@ session_start();
         </div>
 		<form action="process_add_movie.php" method="POST">
 		
-		    <label for="image" class="form-label">Upload Poster Image</label><br>
-            <input type="file" class="form-control-file" id="image" name="image"><br><br>
+		    <label for="image" class="form-label">Upload Poster Image (filepath)</label><br>
+            <input type="text" class="form-control" id="image" name="image"><br>
 
             <label for="trailerURL" class="form-label">Trailer URL</label>
             <input type="text" class="form-control" id="trailerURL" name="trailerURL"><br>
