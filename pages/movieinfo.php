@@ -1,7 +1,13 @@
 <?php
 session_start();
 
+// query  AVATAR-> SELECT `idMovie` FROM `movies_table` WHERE 1
+$mysqli = require __DIR__ . "/database.php";
 
+$sql = "SELECT `idMovie` FROM `movies_table` WHERE 1";
+        $result = $mysqli->query($sql);
+        $movie = $result->fetch_all(MYSQLI_ASSOC);
+        echo $movie["title"];
 
 ?>
 
@@ -88,7 +94,7 @@ session_start();
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h5>Description</h5>
+                <h5>Description</h5> 
                 <p>It is the year 1250 B.C. during the late Bronze age. Two emerging nations begin to clash 
                     after Paris, the Trojan prince, convinces Helen, Queen of Sparta, to leave her husband, 
                     Menelaus, and sail with him back to Troy. After Menelaus finds out that his wife was taken 
