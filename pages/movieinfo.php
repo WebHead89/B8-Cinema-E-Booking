@@ -4,10 +4,11 @@ session_start();
 // query  AVATAR-> SELECT `idMovie` FROM `movies_table` WHERE 1
 $mysqli = require __DIR__ . "/database.php";
 
-$sql = "SELECT `idMovie` FROM `movies_table` WHERE 1";
+$sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
         $result = $mysqli->query($sql);
-        $movie = $result->fetch_all(MYSQLI_ASSOC);
-        echo $movie["title"];
+        $movieArr = $result->fetch_all(MYSQLI_ASSOC);
+        $movie = $movieArr[0];
+        echo $movie["synopsis"];
 
 ?>
 
@@ -94,15 +95,8 @@ $sql = "SELECT `idMovie` FROM `movies_table` WHERE 1";
 
             <div class="col-md-1"></div>
             <div class="col-md-10">
-                <h5>Description</h5> 
-                <p>It is the year 1250 B.C. during the late Bronze age. Two emerging nations begin to clash 
-                    after Paris, the Trojan prince, convinces Helen, Queen of Sparta, to leave her husband, 
-                    Menelaus, and sail with him back to Troy. After Menelaus finds out that his wife was taken 
-                    by the Trojans, he asks his brother Agamemnon to help him get her back. Agamemnon sees this 
-                    as an opportunity for power. So they set off with 1,000 ships holding 50,000 Greeks to Troy. 
-                    With the help of Achilles, the Greeks are able to fight the never before defeated Trojans. 
-                    But they come to a stop by Hector, Prince of Troy. The whole movie shows their battle 
-                    struggles and the foreshadowing of fate in this adaptation of Homer's classic "The Iliad."</p>
+                <h5>Description:</h5> 
+                <p> <?php echo $movie["synopsis"]; ?> </p>
             </div>
             <div class="col-md-1"></div>
 
