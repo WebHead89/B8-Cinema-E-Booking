@@ -7,7 +7,7 @@ if (isset($_POST['email'])) {
     echo $email;
     $hash = md5( rand(0, 1000));
     $subject = 'Password | Reset';
-    $message = 'Your password reset link is: http://localhost/Ebook25/B8-Cinema-E-Booking/pages/verifyPassword.php?email='.$email.'&emailHash='.$hash;
+    $message = 'Your password reset link is: http://localhost/EBookDemo/B8-Cinema-E-Booking/pages/verifyPassword.php?email='.$email.'&emailHash='.$hash;
     $headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
     if (mail($email, $subject, $message, $headers)) {
         echo "Email sent";
