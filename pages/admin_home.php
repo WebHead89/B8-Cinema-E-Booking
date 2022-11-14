@@ -89,7 +89,8 @@ session_start();
             echo $promo["code"];
             echo "\tDiscount: ";
             echo $promo["discount"];
-        } ?>
+            ?>
+            <br> <?php } ?>
 
         <!-- code to create a new promo -->
         <form action="process_new_promo.php" method="POST">
@@ -100,7 +101,7 @@ session_start();
                 </div>
                 <div class="col-md-4">
                     <label for="promo">Discount</label>
-                    <input type="text" class="form-control" id="discount" name="dicount">
+                    <input type="text" class="form-control" id="discount" name="discount">
                 </div>
             </div>
             <button class="w-20 btn btn-lg btn-primary" type="submit">Add Promotion</button><br>
