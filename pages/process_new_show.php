@@ -24,7 +24,6 @@ $showTimeArr = array_column($showTimes, "idShowtime", "showtime");
 $showroomID = $roomNames[$showroom];
 $showtimeID = $showTimeArr[$showtime];
 
-
 // sql insert statement to update the database 
 $stmt = $mysqli->stmt_init();
 $stmt = $mysqli->prepare("INSERT INTO `show_table` (`date`, `movieID`, `showroomID`, `showtimeID`) VALUES ('$showdate', '$movieID', '$showroomID', '$showtimeID');");

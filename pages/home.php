@@ -109,7 +109,6 @@ if (isset($_SESSION["user_id"])) {
                             <option value="-1">Currently Playing</option>
                             <option value="-2">Coming Soon</option>
                         </select>
-                        <button class="btn btn-outline-success" onclick="sortMovies(event)">Search</button>
                     </form>
                 </div>
                 <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->

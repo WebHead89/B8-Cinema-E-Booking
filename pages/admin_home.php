@@ -5,6 +5,47 @@ session_start();
 
   $mysqli = require __DIR__ . "/database.php";
 
+    // handle add new show
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        // setting all variables from $_POST
+        $movieID = $_POST["movieID"];
+        $showroom = $_POST["showRoom"];
+        $showdate = $_POST["showdate"];
+        $showtime = $_POST["showtime"];
+
+        // convert showRoom and showTime to showroomID and showtimeID
+        // get showrooms
+        $sql = "SELECT * FROM `showroom_table`";
+        $result = $mysqli->query($sql);
+        $showRooms = $result->fetch_all(MYSQLI_ASSOC);
+        $roomNames = array_column($showRooms, "idRoom", "name"); // create an array with indices as name and value of idRoom
+        // get showtimes
+        $sql = "SELECT * FROM `showtime_table`";
+        $result = $mysqli->query($sql);
+        $showTimes = $result->fetch_all(MYSQLI_ASSOC);
+        $showTimeArr = array_column($showTimes, "idShowtime", "showtime");
+
+        $showroomID = $roomNames[$showroom];
+        $showtimeID = $showTimeArr[$showtime];
+
+        // check if time, date, room is unique
+        $sql = "SELECT * FROM `show_table` WHERE showroomID = $showroomID and showtimeID = $showtimeID and date = '$showdate';";
+        echo $sql;
+            $result = $mysqli->query($sql);
+            $result = $result->fetch_assoc();
+        if($result) {
+            echo '<script>alert("Show is not unique.")</script>';
+        } else {
+            // sql insert statement to update the database 
+            $stmt = $mysqli->stmt_init();
+            $stmt = $mysqli->prepare("INSERT INTO `show_table` (`date`, `movieID`, `showroomID`, `showtimeID`) 
+                VALUES ('$showdate', '$movieID', '$showroomID', '$showtimeID');");
+            $stmt->execute();
+        }
+
+    }
+
      // get currently playing movies
     $sql = "SELECT * FROM `movies_table` WHERE isCurrentlyPlaying = 1";
         $result = $mysqli->query($sql);
@@ -46,6 +87,9 @@ session_start();
 <link href="../css/form-validation.css" rel="stylesheet">
 <link href="../css/homepage.css" rel="stylesheet"> <!Only needed for background>
 <title>E-Booking Edit Profile</title>
+
+
+
 </head>
 
 <body id="bg">
@@ -97,11 +141,11 @@ session_start();
             <div class="row my-3 gy-3">
                 <div class="col-md-4">
                     <label for="promo">Promo-Code</label>
-                    <input type="text" class="form-control" id="promocode" name="promocode">
+                    <input type="text" class="form-control" id="promocode" name="promocode" required>
                 </div>
                 <div class="col-md-4">
                     <label for="promo">Discount</label>
-                    <input type="text" class="form-control" id="discount" name="discount">
+                    <input type="text" class="form-control" id="discount" name="discount" required>
                 </div>
             </div>
             <button class="w-20 btn btn-lg btn-primary" type="submit">Add Promotion</button><br>
@@ -139,7 +183,7 @@ session_start();
                     <?php } ?>
 
                     <!-- add code to create a new show -->
-                    <form action="process_new_show.php" method="POST">
+                    <form name="addShow" method="POST">
                         <?php $idMovie = $rowMovie["idMovie"]; ?>
                         <input type="hidden" id="movieID" name="movieID" value="<?php echo $idMovie; ?>">
                         <div class="row my-3 gy-3">
@@ -153,7 +197,7 @@ session_start();
                             </div>
                             <div class="col-md-4 gy-5 center">
                                 <label for="promo">Show Date</label>
-                                <input type="date" id="showdate" name="showdate">
+                                <input type="date" id="showdate" name="showdate" required>
                             </div>
                             <div class="col-md-4">
                                 <label for="promo">Showtime</label>

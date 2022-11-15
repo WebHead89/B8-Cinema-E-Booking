@@ -67,25 +67,25 @@ session_start();
 		<form action="process_add_movie.php" method="POST">
 		
 		    <label for="image" class="form-label">Upload Poster Image (filepath)</label><br>
-            <input type="text" class="form-control" id="image" name="image"><br>
+            <input type="text" class="form-control" id="image" name="image" required><br>
 
             <label for="trailerURL" class="form-label">Trailer URL</label>
-            <input type="text" class="form-control" id="trailerURL" name="trailerURL"><br>
+            <input type="text" class="form-control" id="trailerURL" name="trailerURL" required><br>
 
             <label for="title" class="form-label">Movie Title</label>
-            <input type="text" class="form-control" id="title" name="title"><br>
+            <input type="text" class="form-control" id="title" name="title" required><br>
 
             <label for="cast" class="form-label">Movie Cast</label>
-            <input type="text" class="form-control" id="cast" name="cast"><br>
+            <input type="text" class="form-control" id="cast" name="cast" required><br>
 
             <label for="director" class="form-label">Movie Director</label>
-            <input type="text" class="form-control" id="director" name="director"><br>
+            <input type="text" class="form-control" id="director" name="director" required><br>
 
             <label for="producer" class="form-label">Movie Producer</label>
-            <input type="text" class="form-control" id="producer" name="producer"><br>
+            <input type="text" class="form-control" id="producer" name="producer" required><br>
 
             <label for="rating" class="form-label">Movie Film Rating</label>
-            <input type="text" class="form-control" id="rating" name="rating"><br>
+            <input type="text" class="form-control" id="rating" name="rating" required><br>
 
             <div>
               <label for="genere" class="form-label">Movie Genere</label>
@@ -107,7 +107,7 @@ session_start();
             </div>
 
             <label for="synopsis" class="form-label">Movie Synopsis</label>
-            <textarea rows="5" class="form-control" id="synopsis" name="synopsis"></textarea><br>
+            <textarea rows="5" class="form-control" id="synopsis" name="synopsis" required></textarea><br>
 
             </br>
 		    <button class="w-100 btn btn-lg btn-primary" type="submit">Add Movie</button>
