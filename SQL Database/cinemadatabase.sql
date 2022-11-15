@@ -87,6 +87,7 @@ CREATE TABLE `movies_table` (
   `cast` varchar(200) DEFAULT NULL,
   `director` varchar(45) DEFAULT NULL,
   `producer` varchar(45) DEFAULT NULL,
+  `genre` varchar(45) DEFAULT NULL,
   `synopsis` varchar(500) DEFAULT NULL,
   `trailerPicture` varchar(45) DEFAULT NULL,
   `trailerVideo` varchar(45) DEFAULT NULL,
@@ -99,10 +100,10 @@ CREATE TABLE `movies_table` (
 -- Dumping data for table `movies_table`
 --
 
-INSERT INTO `movies_table` (`idMovie`, `title`, `cast`, `director`, `producer`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) VALUES
-(1, 'Avatar', '[cast]', '[director]', '[producer]', '[synopsis]', NULL, NULL, 'rating', 1, 1),
-(2, 'Happy Gilmore', '[cast]', '[director]', '[producer[', '[synopsis]', NULL, NULL, 'rating', 2, 0),
-(3, 'Star Wars Rouge One', '[cast]', '[director]', '[produer]', '[synopsis]', NULL, NULL, 'rating', 4, 1);
+INSERT INTO `movies_table` (`idMovie`, `title`, `cast`, `director`, `producer`, `genre`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) VALUES
+(1, 'Avatar', '[cast]', '[director]', '[producer]','[genre]', '[synopsis]', NULL, NULL, 'rating', 1, 1),
+(2, 'Happy Gilmore', '[cast]', '[director]', '[producer]', '[genre]', '[synopsis]', NULL, NULL, 'rating', 2, 0),
+(3, 'Star Wars Rouge One', '[cast]', '[director]', '[produer]', '[genre]', '[synopsis]', NULL, NULL, 'rating', 4, 1);
 
 -- --------------------------------------------------------
 
