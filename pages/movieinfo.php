@@ -4,13 +4,18 @@ session_start();
 // query  AVATAR-> SELECT `idMovie` FROM `movies_table` WHERE 1
 $mysqli = require __DIR__ . "/database.php";
 
+
+
 $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
         $result = $mysqli->query($sql);
+		
         $movieArr = $result->fetch_all(MYSQLI_ASSOC);
         $movie = $movieArr[0];
         echo $movie["synopsis"];
-
+		
+$res = mysqli_query($mysqli, "SELECT * FROM showtime_table");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +84,7 @@ $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
             <!Buffer spacing using bootstrap format>
         </div>
         <div class="col-md-12">
-            <iframe width="840" height="472.5" src="https://www.youtube.com/embed/6FG3BfPuwBA" title="YouTube video player"
+            <iframe width="840" height="472.5" src="<?php echo $movie["trailerVideo"]; ?>" title="YouTube video player"
                 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
@@ -90,7 +95,7 @@ $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
     <div class="container form-control form-block">
         <div class="row">
             <div class="center text-center">
-	            <h1>Troy</h1>
+	            <p style="font-size:45px;"> <?php echo $movie["title"]; ?> </p>
             </div><br>
 
             <div class="col-md-1"></div>
@@ -102,10 +107,10 @@ $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
 
             <div class="col-md-1"></div>
             <div class="col-md-2">
-                <h5>Movie Genere:</h5>
+                <h5>Movie Genre:</h5>
             </div>
             <div class="col-md-9">
-                <p>Action, Adventure, Drama</p>
+                <p> <?php echo $movie["genre"]; ?> </p>
             </div>
 
             <div class="col-md-1"></div>
@@ -113,7 +118,7 @@ $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
                 <h5>Director:</h5>
             </div>
             <div class="col-md-9">
-                <p>Wolfgang Petersen</p>
+                <p> <?php echo $movie["director"]; ?> </p>
             </div>
 
             <div class="col-md-1"></div>
@@ -121,13 +126,17 @@ $sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
                 <h5>Movie Cast:</h5>
             </div>
             <div class="col-md-9">
-                <p>rad Pitt, Eric Bana, Orlando Bloom</p>
+                <p> <?php echo $movie["cast"]; ?> </p>
             </div>
 
             <div class="col-md-1"></div>
             <div class="col-md-4">
-                <select class="form-control" id="showtime", name="showtime">
-                        <option> Showtimes </option>
+                <select class="form-control" id="showtime", name="showtime">	
+					<?php while($row = mysqli_fetch_array($res)):;?>
+						<option value = "<?php echo($row['showtime']) ?>" >
+							<?php echo ($row['showtime']) ?>		
+						</option>
+					<?php endwhile;?>
                 </select>
             </div>
             <div class="col-md-4"></div>
