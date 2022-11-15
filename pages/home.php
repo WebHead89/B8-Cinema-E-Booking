@@ -208,7 +208,6 @@ if (isset($_SESSION["user_id"])) {
 
                     // Currently Playing
                     if (sortingID == -1) {
-                        console.log("Playing status: " + movie.getAttribute("playing"));
                         if (movie.getAttribute("playing") == "0") {
                             // movie.setAttribute("disabled", "1");
                             classListChange.classList.add("d-none");
@@ -218,11 +217,30 @@ if (isset($_SESSION["user_id"])) {
                         }
                     }
 
-                    // Show all movies
+                    // Coming Soon
+                    if (sortingID == -2) {
+                        if (movie.getAttribute("playing") == "1") {
+                            // movie.setAttribute("disabled", "1");
+                            classListChange.classList.add("d-none");
+                        } else {
+                            classListChange.classList.remove("d-none");
+                            // movie.setAttribute("disabled", "0");
+                        }
+                    }
+
+                // Show all movies
                 } else if (sortingID == 0) {
+                    classListChange.classList.remove("d-none");
 
                     // Sort by genre
                 } else {
+
+                    if (movie.getAttribute("genre") != sortingID) {
+                        classListChange.classList.add("d-none");
+                    } else {
+                        classListChange.classList.remove("d-none");
+
+                    }
 
                 }
             }
