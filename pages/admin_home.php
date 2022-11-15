@@ -31,7 +31,6 @@ session_start();
 
         // check if time, date, room is unique
         $sql = "SELECT * FROM `show_table` WHERE showroomID = $showroomID and showtimeID = $showtimeID and date = '$showdate';";
-        echo $sql;
             $result = $mysqli->query($sql);
             $result = $result->fetch_assoc();
         if($result) {
