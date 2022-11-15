@@ -131,13 +131,17 @@ session_start();
 
                                 // get showtime for the show
                                 echo $showTimeArr[$rowShow["showtimeID"]];
+                                ?>
+                                </br>
+                                <?php
                             }
                         ?>
-                        </br>
                     <?php } ?>
 
                     <!-- add code to create a new show -->
                     <form action="process_new_show.php" method="POST">
+                        <?php $idMovie = $rowMovie["idMovie"]; ?>
+                        <input type="hidden" id="movieID" name="movieID" value="<?php echo $idMovie; ?>">
                         <div class="row my-3 gy-3">
                             <div class="col-md-4">
                                 <label for="promo">Showroom</label>
@@ -191,27 +195,6 @@ session_start();
 
 
 </div>
-
-
-		<?php while($row = $result->fetch_assoc()) { ?>
-              <?php
-                $counter++;
-                $idPaymentCard = $row["idPaymentCard"]; // use this to update the database
-                $cardNum = $row["cardNum"];
-                $expireDate = $row["experationDate"];
-              ?>
-
-              <div class="col-md-6">
-                <label for="cc_number" class="form-label">Credit card number</label>
-                <input type="text" class="form-control" id="cc_number" name="cc_number" value="<?php echo $cardNum ?>">
-              </div>
-
-              <div class="col-md-3">
-                <label for="cc_expiration" class="form-label">Expiration</label>
-                <input type="text" class="form-control" id="cc_expiration" name="cc_expiration" value="<?php echo $expireDate ?>">
-              </div>
-
-            <?php } ?>
 
 
 
