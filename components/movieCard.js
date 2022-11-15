@@ -11,8 +11,13 @@ class movieCard extends HTMLElement {
     var title = this.attributes.title.value
     var rating = this.attributes.rating.value
     var id = this.attributes.id.value
+    var genre = this.attributes.genre.value
+    var playing = this.attributes.playing.value
+    var disabled = this.attributes.disabled.value
 
-    this.innerHTML = `
+    if (!disabled) {
+
+      this.innerHTML = `
     <div class="card text-center">
         <img class="card-img-top" src="${imgSrc}" alt="Avatar">
         <div class="card-body">
@@ -22,6 +27,7 @@ class movieCard extends HTMLElement {
         </div>
     </div>
     `;
+    }
   }
 }
 
