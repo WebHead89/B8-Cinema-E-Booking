@@ -21,6 +21,30 @@ $sql = "SELECT * FROM movie_category";
 $result = $mysqli->query($sql);
 $category = $result->fetch_all(MYSQLI_ASSOC);
 
+// Get all movies from movies_table
+$sql = "SELECT * FROM movies_table";
+
+$result = $mysqli->query($sql);
+
+$num_movies = $result->num_rows;
+
+$movie_array = [];
+for ($i = 0; $i < $num_movies; $i++) {
+    $movie = $result->fetch_assoc();
+    $disabled = "0"; // 1 means disabled, 0 is not disabled
+    // Use this for getting genre lol
+    // $ratingID = $movie["categoryID"];
+    // $rating = $mysqli->query("SELECT category FROM movie_category WHERE idCategory = $ratingID")->fetch_assoc();
+
+    
+    $div_start = "<div class='col-sm-4'>";
+    $body = "<movie-card imgSrc='{$movie['trailerPicture']}' title='{$movie['title']}' rating='{$movie['filmRating']}' id='{$movie['idMovie']}' genre='{$movie['categoryID']}' playing='{$movie['isCurrentlyPlaying']}' disabled={$disabled} />";
+    $div_end = "</div>";
+
+    array_push($movie_array, $div_start . $body . $div_end);
+
+
+}
 
 // Example for grabing information from the database 
 if (isset($_SESSION["user_id"])) {
@@ -76,13 +100,14 @@ if (isset($_SESSION["user_id"])) {
                 <div class="col-md-4">
                     <form name="movieSorting">
                         <select class="form-control" id="movieCategories" , name="movieCategories" id="movieCategories" onchange="sortMovies()">
-                            <option>Test</option>
+                            <option disabled="true">Sort By Category</option>
+                            <option value="0">All Movies</option>
                             <?php foreach ($category as $cat) {  // pasting all categories in list 
-                            ?>
-                                <option value="<?php echo $cat["categoryID"]; ?>"> <?php echo $cat["category"]; ?> </option>
-                            <?php } ?>
-
-
+                                echo "<option value='" . $cat["idCategory"] . "'>" . $cat["category"] . "</option>";
+                            } ?>
+                            <option disabled="true">Sort by available movies</option>
+                            <option value="-1">Currently Playing</option>
+                            <option value="-2">Coming Soon</option>
                         </select>
                         <button class="btn btn-outline-success" onclick="sortMovies(event)">Search</button>
                     </form>
@@ -118,7 +143,6 @@ if (isset($_SESSION["user_id"])) {
 
     <!-- Get all movie info from movies_table db -->
     <!-- For each movie, render <div class="col-sm-4"> <movie-card> with movie info </div> -->
-
     <?php
 
     $mysqli = require __DIR__ . "/database.php";
@@ -135,13 +159,13 @@ if (isset($_SESSION["user_id"])) {
 
     for ($i = 0; $i < $num_movies; $i++) {
         $movie = $result->fetch_assoc();
-        $disabled = "1"; // 1 means disabled, 0 is not disabled
+        $disabled = "0"; // 1 means disabled, 0 is not disabled
         // Use this for getting genre lol
         // $ratingID = $movie["categoryID"];
         // $rating = $mysqli->query("SELECT category FROM movie_category WHERE idCategory = $ratingID")->fetch_assoc();
 
-        echo "<div class='col-sm-4'>";
-        echo "<movie-card imgSrc='{$movie['trailerPicture']}' title='{$movie['title']}' rating='{$movie['filmRating']}' id='{$movie['idMovie']}' genre='{$movie['categoryID']}' playing='{$movie['isCurrentlyPlaying']}' disabled={$disabled} />";
+        echo "<div class='col-sm-4' name='movieCardCol'>";
+        echo "<movie-card imgSrc='{$movie['trailerPicture']}' title='{$movie['title']}' rating='{$movie['filmRating']}' id='{$movie['idMovie']}' genre='{$movie['categoryID']}' playing='{$movie['isCurrentlyPlaying']}' disabled='{$disabled}' />";
         echo "</div>";
     }
 
@@ -153,12 +177,65 @@ if (isset($_SESSION["user_id"])) {
     <script type="text/javascript">
         // Get all movie cards
         function sortMovies() {
-            // // var movie_cards = document.getElementsByTagName("movie-card");
+            // 0 = All movies
+            // 1 = Action
+            // 2 = Comedy
+            // 3 = Horror
+            // 4 = Sci Fi
+            // 5 = Romance
+            // -1 = Currently Playing
+            // -2 = Coming Soon
+
+            // var movie_cards = document.getElementsByTagName("movie-card");
+            // var movie_cards = document.getElementById("movieCardCol");
+            var col_cards = document.getElementsByName("movieCardCol")
+            var movie_cards = document.getElementsByTagName("movie-card")
+            var sortingID = document.movieSorting.movieCategories.options[document.movieSorting.movieCategories.selectedIndex].value;
+            console.log(movie_cards)
+            console.log("Movie card length: " + movie_cards.length)
+            console.log("Sorting ID: " + sortingID)
+
+            for (let i = 0; i < movie_cards.length; i++) {
+
+                let classListChange = col_cards[i]
+                let movie = movie_cards[i]
+
+                console.log(movie)
+                console.log(classListChange)
+                
+                // Sort by playing status
+                if (sortingID < 0) {
+
+                    // Currently Playing
+                    if (sortingID == -1) {
+                        console.log("Playing status: " + movie.getAttribute("playing"));
+                        if (movie.getAttribute("playing") == "0") {
+                            // movie.setAttribute("disabled", "1");
+                            classListChange.classList.add("d-none");
+                        } else {
+                            classListChange.classList.remove("d-none");
+                            // movie.setAttribute("disabled", "0");
+                        }
+                    }
+
+                    // Show all movies
+                } else if (sortingID == 0) {
+
+                    // Sort by genre
+                } else {
+
+                }
+            }
+
+            console.log(movie_cards)
+            // console.log(movie_cards[2].getAttribute("genre"));
             // // var selectedCategory = document.getElementById('movieCategories').value;
             // // // console.log(selectedCategory)
 
-            console.log(document.movieSorting.movieCategories.selectedIndex);
-            console.log(document.movieSorting.movieCategories.options[document.movieSorting.movieCategories.selectedIndex].value);
+            // console.log(document.movieSorting.movieCategories.selectedIndex);
+            // console.log(document.movieSorting.movieCategories.options[document.movieSorting.movieCategories.selectedIndex].value);
+
+
 
 
         }

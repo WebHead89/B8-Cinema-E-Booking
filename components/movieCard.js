@@ -15,7 +15,6 @@ class movieCard extends HTMLElement {
     var playing = this.attributes.playing.value
     var disabled = this.attributes.disabled.value
 
-    if (!disabled) {
 
       this.innerHTML = `
     <div class="card text-center">
@@ -28,7 +27,14 @@ class movieCard extends HTMLElement {
     </div>
     `;
     }
+  
+
+  attributeChangedCallback(oldValue, newValue) {
+    console.log('Custom element attributes changed.');
+    updateStyle(this);
   }
+
 }
+
 
 customElements.define("movie-card", movieCard);
