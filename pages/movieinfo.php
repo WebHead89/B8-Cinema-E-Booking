@@ -1,19 +1,33 @@
 <?php
-session_start();
+    session_start();
 
-// query  AVATAR-> SELECT `idMovie` FROM `movies_table` WHERE 1
-$mysqli = require __DIR__ . "/database.php";
+    // setup connection to db
+    $mysqli = require __DIR__ . "/database.php";
+    // get POST vairables
+    $id = $_POST["movieID"];
 
-
-
-$sql = "SELECT * FROM `movies_table` WHERE idMovie = 1";
+    // get movie categories
+    $sql = "SELECT * FROM `movie_category`";
         $result = $mysqli->query($sql);
-		
+        $categories = $result->fetch_all(MYSQLI_ASSOC);
+        $genere = array_column($categories, "category", "idCategory");
+
+    // get showtimes
+    $sql = "SELECT * FROM `showtime_table`";
+        $result = $mysqli->query($sql);
+        $showTimes = $result->fetch_all(MYSQLI_ASSOC);
+        $showTimeArr = array_column($showTimes, "showtime", "idShowtime");
+
+    // get movie row from database
+    $sql = "SELECT * FROM `movies_table` WHERE idMovie = $id";
+        $result = $mysqli->query($sql);
         $movieArr = $result->fetch_all(MYSQLI_ASSOC);
         $movie = $movieArr[0];
-        echo $movie["synopsis"];
-		
-$res = mysqli_query($mysqli, "SELECT * FROM showtime_table");
+
+    // get shows
+    $sql = "SELECT * FROM `show_table` WHERE movieID = $id;";
+        $result = $mysqli->query($sql);
+        $shows = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 
@@ -110,7 +124,7 @@ $res = mysqli_query($mysqli, "SELECT * FROM showtime_table");
                 <h5>Movie Genre:</h5>
             </div>
             <div class="col-md-9">
-                <p> <?php echo $movie["genre"]; ?> </p>
+                <p> <?php echo $genere[$movie["categoryID"]]; ?> </p>
             </div>
 
             <div class="col-md-1"></div>
@@ -130,16 +144,19 @@ $res = mysqli_query($mysqli, "SELECT * FROM showtime_table");
             </div>
 
             <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <h5>Showtimes:</h5>
+            </div>
+
             <div class="col-md-4">
-                <select class="form-control" id="showtime", name="showtime">	
-					<?php while($row = mysqli_fetch_array($res)):;?>
-						<option value = "<?php echo($row['showtime']) ?>" >
-							<?php echo ($row['showtime']) ?>		
-						</option>
-					<?php endwhile;?>
+                <select class="form-control" id="showtime", name="showtime">
+                    <?php foreach($shows as $show) {  ?>
+                        <option> <?php echo $show["date"]; echo  "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"; 
+                            echo $showTimeArr[$show["showtimeID"]]; ?> </option>
+                    <?php } ?>	
                 </select>
             </div>
-            <div class="col-md-4"></div>
+            <div class="col-md-2"></div>
             <div class="col-md-2">
                 <a href="booking.html" class="btn btn-primary">Buy Tickets</a>
             </div>
