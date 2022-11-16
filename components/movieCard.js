@@ -21,8 +21,18 @@ class movieCard extends HTMLElement {
         <img class="card-img-top" src="${imgSrc}" alt="Avatar">
         <div class="card-body">
             <h5 class="card-title">${title} (${rating})</h5>
-            <a href="booking.html?${id}" class="btn btn-primary">Buy Tickets</a>
-            <a href="movieinfo.html" class="btn btn-primary">View Info</a>
+            <div class="row">
+            <div class="col-md-2"></div>
+              <div class="col-md-4">
+                <a href="booking.html?${id}" class="btn btn-primary">Buy Tickets</a>
+              </div>
+              <div class="col-md-4">
+                <form action="movieinfo.php" method="POST">
+                  <input type="hidden" id="movieID" name="movieID" value=${id}>
+                  <button class="btn btn-primary" type="submit">View Info</button>
+                </form>
+              </div>
+            </div>
         </div>
     </div>
     `;
