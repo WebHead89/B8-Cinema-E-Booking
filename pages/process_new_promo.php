@@ -21,6 +21,15 @@ $stmt = $mysqli->prepare("INSERT INTO `promotions_table` (`code`, `discount`) VA
 foreach($emailAccounts as $account) {
     // send email to each account
     echo $account["email"];
+    $email = $account['email'];
+    $subject = "Promo Code";
+    $message = "Your promo code is: $promo and your discount is: $discount";
+    $headers = "From:ebookingcinema2022@gmail.com" . "\r\n";
+    if (mail($email, $subject, $message, $headers)) {
+        echo "Email successfully sent to $email...";
+    } else {
+        echo "Email sending failed...";
+    }
 }
 
 
