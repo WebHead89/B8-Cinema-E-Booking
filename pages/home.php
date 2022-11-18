@@ -3,7 +3,7 @@
 session_start();
 
 // testing to see if users are logged in/see their ID
-print_r($_SESSION);
+// print_r($_SESSION);
 
 $mysqli = require __DIR__ . "/database.php";
 
