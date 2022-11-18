@@ -145,6 +145,18 @@
 
             <div class="col-md-1"></div>
             <div class="col-md-2">
+                <h5>Movie Status: </h5>
+            </div>
+            <div class="col-md-9">
+                <?php if($movie["isCurrentlyPlaying"]) { ?>
+                    <p> Currently Playing </p>
+                <?php } else { ?>
+                    <p> Upcoming </p>
+                <?php } ?>
+            </div>
+
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
                 <h5>Showtimes:</h5>
             </div>
 
