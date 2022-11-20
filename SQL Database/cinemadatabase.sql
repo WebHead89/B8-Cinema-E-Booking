@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Nov 02, 2022 at 12:52 AM
+-- Generation Time: Nov 20, 2022 at 05:57 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -89,7 +89,7 @@ CREATE TABLE `movies_table` (
   `producer` varchar(45) DEFAULT NULL,
   `genre` varchar(45) DEFAULT NULL,
   `synopsis` varchar(500) DEFAULT NULL,
-  `trailerPicture` varchar(45) DEFAULT NULL,
+  `trailerPicture` varchar(500) DEFAULT NULL,
   `trailerVideo` varchar(45) DEFAULT NULL,
   `filmRating` varchar(45) DEFAULT NULL,
   `categoryID` int(11) NOT NULL,
@@ -101,9 +101,11 @@ CREATE TABLE `movies_table` (
 --
 
 INSERT INTO `movies_table` (`idMovie`, `title`, `cast`, `director`, `producer`, `genre`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) VALUES
-(1, 'Avatar', '[cast]', '[director]', '[producer]','[genre]', '[synopsis]', NULL, NULL, 'rating', 1, 1),
-(2, 'Happy Gilmore', '[cast]', '[director]', '[producer]', '[genre]', '[synopsis]', NULL, NULL, 'rating', 2, 0),
-(3, 'Star Wars Rouge One', '[cast]', '[director]', '[produer]', '[genre]', '[synopsis]', NULL, NULL, 'rating', 4, 1);
+(1, 'Avatar', '[cast]', '[director]', '[producer]', '[genre]', '[synopsis]', '../pages/assets/avatar.jpg', 'https://www.youtube.com/embed/5PSNL1qE6VY', 'rating', 1, 1),
+(4, 'Rogue One', 'Test Cast', 'Test Director', 'Test Producer', NULL, 'Test Synopsis', '../pages/assets/rogueone.jpg', 'https://www.youtube.com/embed/frdj1zb9sMY', 'PG-13', 4, 1),
+(5, 'Elvis', 'Elvis Cast', 'Elvis Director', 'Elvis Producer', NULL, 'Elvis is elvis', '../pages/assets/elvis.jpg', 'https://www.youtube.com/embed/wBDLRvjHVOY', 'R', 1, 0),
+(6, 'Titanic', 'Titanic Cast', 'Titanic Director', 'Titanic Producer', NULL, 'Titanic hits an iceberg. Music plays. People die. Hearts go on.', '../pages/assets/titanic.webp', 'https://www.youtube.com/embed/kVrqfYjkTdQ', 'PG-13', 5, 0),
+(7, 'Nope', 'Nope Cast', 'Jordan Peele', 'Jordan Peele', NULL, 'SCARY MOVIE SCARY SCARY SCARY', '../pages/assets/nope.jpg', 'https://www.youtube.com/embed/In8fuzj3gck', 'R', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -157,7 +159,9 @@ CREATE TABLE `promotions_table` (
 --
 
 INSERT INTO `promotions_table` (`idPromotions`, `code`, `discount`) VALUES
-(1, 'freeMoney', '0.99');
+(1, 'freeMoney', '0.99'),
+(2, 'test', '0.99'),
+(3, 'test', '0.99');
 
 -- --------------------------------------------------------
 
@@ -185,6 +189,174 @@ CREATE TABLE `seats_table` (
   `showID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='holds the all seats for a show, all seats are generated when a new show is created';
 
+--
+-- Dumping data for table `seats_table`
+--
+
+INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
+(1, 0, 15),
+(1, 0, 16),
+(1, 0, 17),
+(1, 0, 18),
+(1, 0, 19),
+(1, 0, 20),
+(2, 0, 15),
+(2, 0, 16),
+(2, 0, 17),
+(2, 0, 18),
+(2, 0, 19),
+(2, 0, 20),
+(3, 0, 15),
+(3, 0, 16),
+(3, 0, 17),
+(3, 0, 18),
+(3, 0, 19),
+(3, 0, 20),
+(4, 0, 15),
+(4, 0, 16),
+(4, 0, 17),
+(4, 0, 18),
+(4, 0, 19),
+(4, 0, 20),
+(5, 0, 15),
+(5, 0, 16),
+(5, 0, 17),
+(5, 0, 18),
+(5, 0, 19),
+(5, 0, 20),
+(6, 0, 15),
+(6, 0, 16),
+(6, 0, 17),
+(6, 0, 18),
+(6, 0, 19),
+(6, 0, 20),
+(7, 0, 15),
+(7, 0, 16),
+(7, 0, 17),
+(7, 0, 18),
+(7, 0, 19),
+(7, 0, 20),
+(8, 0, 15),
+(8, 0, 16),
+(8, 0, 17),
+(8, 0, 18),
+(8, 0, 19),
+(8, 0, 20),
+(9, 0, 15),
+(9, 0, 16),
+(9, 0, 17),
+(9, 0, 18),
+(9, 0, 19),
+(9, 0, 20),
+(10, 0, 15),
+(10, 0, 16),
+(10, 0, 17),
+(10, 0, 18),
+(10, 0, 19),
+(10, 0, 20),
+(11, 0, 15),
+(11, 0, 16),
+(11, 0, 17),
+(11, 0, 18),
+(11, 0, 19),
+(11, 0, 20),
+(12, 0, 15),
+(12, 0, 16),
+(12, 0, 17),
+(12, 0, 18),
+(12, 0, 19),
+(12, 0, 20),
+(13, 0, 15),
+(13, 0, 16),
+(13, 0, 17),
+(13, 0, 18),
+(13, 0, 19),
+(13, 0, 20),
+(14, 0, 15),
+(14, 0, 16),
+(14, 0, 17),
+(14, 0, 18),
+(14, 0, 19),
+(14, 0, 20),
+(15, 0, 15),
+(15, 0, 16),
+(15, 0, 17),
+(15, 0, 18),
+(15, 0, 19),
+(15, 0, 20),
+(16, 0, 15),
+(16, 0, 16),
+(16, 0, 17),
+(16, 0, 18),
+(16, 0, 19),
+(16, 0, 20),
+(17, 0, 15),
+(17, 0, 16),
+(17, 0, 17),
+(17, 0, 18),
+(17, 0, 19),
+(17, 0, 20),
+(18, 0, 15),
+(18, 0, 16),
+(18, 0, 17),
+(18, 0, 18),
+(18, 0, 19),
+(18, 0, 20),
+(19, 0, 15),
+(19, 0, 16),
+(19, 0, 17),
+(19, 0, 18),
+(19, 0, 19),
+(19, 0, 20),
+(20, 0, 15),
+(20, 0, 16),
+(20, 0, 17),
+(20, 0, 18),
+(20, 0, 19),
+(20, 0, 20),
+(21, 0, 15),
+(21, 0, 16),
+(21, 0, 17),
+(21, 0, 18),
+(21, 0, 19),
+(21, 0, 20),
+(22, 0, 15),
+(22, 0, 16),
+(22, 0, 17),
+(22, 0, 18),
+(22, 0, 19),
+(22, 0, 20),
+(23, 0, 15),
+(23, 0, 16),
+(23, 0, 17),
+(23, 0, 18),
+(23, 0, 19),
+(23, 0, 20),
+(24, 0, 15),
+(24, 0, 16),
+(24, 0, 17),
+(24, 0, 18),
+(24, 0, 19),
+(24, 0, 20),
+(25, 0, 15),
+(25, 0, 16),
+(25, 0, 17),
+(25, 0, 18),
+(25, 0, 19),
+(25, 0, 20),
+(26, 0, 15),
+(26, 0, 16),
+(26, 0, 17),
+(26, 0, 18),
+(26, 0, 19),
+(26, 0, 20),
+(27, 0, 15),
+(27, 0, 16),
+(27, 0, 17),
+(27, 0, 18),
+(27, 0, 19),
+(27, 0, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -202,12 +374,12 @@ CREATE TABLE `showroom_table` (
 --
 
 INSERT INTO `showroom_table` (`idRoom`, `name`, `seatNumber`) VALUES
-(1, 'Room 1', 30),
-(2, 'Room 2', 30),
-(3, 'Room 3', 30),
-(4, 'Room 4', 30),
-(5, 'Room 5', 30),
-(6, 'Room 6', 30);
+(1, 'Room 1', 27),
+(2, 'Room 2', 27),
+(3, 'Room 3', 27),
+(4, 'Room 4', 27),
+(5, 'Room 5', 27),
+(6, 'Room 6', 27);
 
 -- --------------------------------------------------------
 
@@ -249,8 +421,12 @@ CREATE TABLE `show_table` (
 --
 
 INSERT INTO `show_table` (`idShow`, `date`, `movieID`, `showroomID`, `showtimeID`) VALUES
-(2, '2022-11-11', 1, 2, 1),
-(3, '2022-11-03', 1, 5, 3);
+(15, '2022-11-24', 1, 3, 2),
+(16, '2022-11-17', 1, 4, 3),
+(17, '2022-11-16', 4, 5, 4),
+(18, '2022-11-30', 1, 1, 1),
+(19, '2022-12-07', 1, 5, 2),
+(20, '2022-11-30', 1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -299,22 +475,6 @@ CREATE TABLE `user` (
   `emailHash` varchar(32) DEFAULT NULL,
   `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone`, `email`, `password`, `promo`, `city`, `state`, `zip`, `status`, `admin`, `emailHash`, `address`) VALUES
-(1, 'Test', '', '1234567890', 'test@test.com', '$2y$10$sKmAmFPogTsC6pUIMO/8eu4YNl9G3xzxrSRf/6Uyf4NkS2qr98FVS', 0, '', '', '', 0, 0, NULL, ''),
-(2, 'test2', '', '987654321', 'test2@test.com', '$2y$10$tZhSQV3qUItCyQ2.c6byrOUYrnr7X2lEsUctI/R.Xk8jX/htGohnK', 0, '', '', '', 0, 0, NULL, ''),
-(3, 'test2', '', '987654321', 'test3@test.com', '$2y$10$1RE7I/DzLunm3QWzpbxpd.7DMIrYI0tbbNzYP2K23YvsmL1rXXYcO', 0, '', '', '', 0, 0, NULL, ''),
-(4, 'test4', '', '987654321', 'test4@test.com', '$2y$10$4LFoeUeMkurMUQxzG3d46.bJD4AuNPtDpYNOvOmXprFMKcJNbCvvC', 0, '', '', '', 0, 0, NULL, ''),
-(8, 'Nick', 'Severson', '1234567890', 'nickseverson@me.com', '$2y$10$xL1XFGGhwdKnIEnby2RVIe4bmfHzwSxfXaiZNMePKkH.XWfkyEaZe', 0, NULL, NULL, NULL, 0, 0, NULL, ''),
-(9, 'Tucker', 'Folsom', '1234567890', 'tucker@treats.com', '$2y$10$UX4i/OvMTFnmDO0SNHsiaOoYuhSKEzwh9KlTlcLaoCLHPv6uxrT8i', 0, NULL, NULL, NULL, 0, 0, NULL, ''),
-(11, 'Tucker', 'Folsom', '1234567890', 'tucker2@treats.com', '$2y$10$aogyfuaJHUyUXs9DtmqE1OOwLGHKCJdq646i7gT/4b6VkVLDQhb1W', 1, NULL, NULL, NULL, 0, 0, NULL, ''),
-(12, 'Tucker', 'Folsom', '1234567890', 'tucker3@treats.com', '$2y$10$92814ycftqjTDHVWBJJJCu6u.xAjyPVmL6EsvX2Zq87f4xhSCD6qO', 0, NULL, NULL, NULL, 0, 0, NULL, ''),
-(31, 'Ben', 'Prestel', '7703304466', 'benjamin43.prestel@gmail.com', '$2y$10$gkRKY2a03MCt6dWdH547O./z7.ZU1K.qZE.utZJHXy/pTMqQADsv.', 1, '', '', '', 1, 0, '07cdfd23373b17c6b337251c22b7ea57', 'test'),
-(32, 'admin', 'admin', 'admin', 'admin@admin.com', '$2y$10$Dq0OBR455f8WJyG3nq7evepn5uIPzWSpHga2FolJQFuHSEXXbMGYm', 1, NULL, NULL, NULL, 1, 1, '5751ec3e9a4feab575962e78e006250d', '');
 
 -- --------------------------------------------------------
 
@@ -481,7 +641,7 @@ ALTER TABLE `booking_table`
 -- AUTO_INCREMENT for table `movies_table`
 --
 ALTER TABLE `movies_table`
-  MODIFY `idMovie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idMovie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `movie_category`
@@ -499,7 +659,7 @@ ALTER TABLE `payment_card_table`
 -- AUTO_INCREMENT for table `promotions_table`
 --
 ALTER TABLE `promotions_table`
-  MODIFY `idPromotions` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idPromotions` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `review_table`
@@ -523,7 +683,7 @@ ALTER TABLE `showtime_table`
 -- AUTO_INCREMENT for table `show_table`
 --
 ALTER TABLE `show_table`
-  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tickets_table`
@@ -541,7 +701,7 @@ ALTER TABLE `ticket_type`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `users`

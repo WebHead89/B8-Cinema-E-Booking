@@ -63,13 +63,7 @@
                         <a class="nav-link active" href="checkout.php" aria-current="page">View Cart</a>
                     </li>
                 </ul>
-                <div class="mx-auto">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search Movies"
-                            aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
+
                 <div class="d-flex ms-auto order-5">
                     <div class="nav-item dropdown justify-content-end">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
@@ -170,7 +164,7 @@
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <a href="booking.html" class="btn btn-primary">Buy Tickets</a>
+                <a href="booking.php" class="btn btn-primary">Buy Tickets</a>
             </div>
                 <br><br><br>
         </div>

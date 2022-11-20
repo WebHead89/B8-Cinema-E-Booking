@@ -41,6 +41,21 @@ session_start();
             $stmt = $mysqli->prepare("INSERT INTO `show_table` (`date`, `movieID`, `showroomID`, `showtimeID`) 
                 VALUES ('$showdate', '$movieID', '$showroomID', '$showtimeID');");
             $stmt->execute();
+
+            // create 27 new seats in the database all open
+            // get the showID
+            $sql = "SELECT * FROM `show_table` WHERE date='$showdate' AND showtimeID=$showtimeID and showroomID=$showroomID";
+            $result = $mysqli->query($sql);
+            $show = $result->fetch_assoc();
+            $showID = $show["idShow"];
+
+            // create new seats for each show created
+            for($i = 1; $i <= 27; $i++) {
+                $stmt = $mysqli->stmt_init();
+                $stmt = $mysqli->prepare("INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES ('$i', '0', '$showID');");
+                $stmt->execute();
+            }
+            
         }
 
     }

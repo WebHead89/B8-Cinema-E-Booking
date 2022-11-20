@@ -24,7 +24,7 @@ class movieCard extends HTMLElement {
             <div class="row">
             <div class="col-md-2"></div>
               <div class="col-md-4">
-                <a href="booking.html?${id}" class="btn btn-primary">Buy Tickets</a>
+                <a href="booking.php?${id}" class="btn btn-primary">Buy Tickets</a>
               </div>
               <div class="col-md-4">
                 <form action="movieinfo.php" method="POST">
