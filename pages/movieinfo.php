@@ -164,7 +164,7 @@
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <a href="booking.php" class="btn btn-primary">Buy Tickets</a>
+                <a href="booking.php?movieID=<?php echo $id ?>" class="btn btn-primary">Buy Tickets</a>
             </div>
                 <br><br><br>
         </div>

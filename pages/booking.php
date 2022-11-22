@@ -1,8 +1,55 @@
 <?php
+    include("Singleton.php");
     session_start();
+
+    $bookingInfo = Singleton::getInstance();
+
+    // get movie id
+    $movieID = $_GET["movieID"];
 
     // setup connection to db
     $mysqli = require __DIR__ . "/database.php";
+
+    // get showtimes
+    $sql = "SELECT * FROM `showtime_table`";
+        $result = $mysqli->query($sql);
+        $showTimes = $result->fetch_all(MYSQLI_ASSOC);
+        $showTimeArr = array_column($showTimes, "showtime", "idShowtime");
+
+    // get shows
+    $sql = "SELECT * FROM `show_table` WHERE movieID = $movieID;";
+        $result = $mysqli->query($sql);
+        $shows = $result->fetch_all(MYSQLI_ASSOC);
+
+    if(isset($_POST['postID'])) {
+        // if the POST is for selecting the showtime
+        if($_POST['postID'] == "showtimeBookingPage") {
+            // set the showID, date, and time
+            $bookingInfo->showID = $_POST['showID'];
+            $bookingInfo->showDate = $_POST['showDate'];
+            $bookingInfo->showTime = $_POST['showTime'];
+
+            // get seats from the database
+            $sql = "SELECT * FROM `seats_table` WHERE `showID` = $bookingInfo->showID";
+                $result = $mysqli->query($sql);
+                $seats = $result->fetch_all(MYSQLI_ASSOC);
+
+            // set the buttonTypeArray
+            for($i = 0; $i < 27; $i++) {
+                if($seats[$i]["isReserved"]) {
+                    $bookingInfo->buttonTypeArray[$i] = 1;
+                }
+            }
+
+        }
+
+        // if the post is for slecting a seat
+
+    }
+
+    // print details of Singleton class
+    echo "Booking Info: ";
+    var_dump($bookingInfo);
    
 
 ?>
@@ -65,59 +112,96 @@
         </div>
         <div class="seats">
             <div class="row first">
-                <div class="open_seat" id="seat1" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat2" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat3" onclick="selectSeat(this.id)"></div>
+                <?php 
+                $i = 0;
+                for($i; $i < 3; $i++) { 
+                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
+                        echo "<button type='button' class='unavailable_seat'></button>";
+                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
+                        echo "<button type='button' class='open_seat'></button>";
+                    } else {
+                        echo "<button type='button' class='selected_seat'></button>";
+                    } ?>
+                <?php } ?>
             </div>
             <div class="row second">
-                <div class="open_seat" id="seat4" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat5" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat6" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat7" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat8" onclick="selectSeat(this.id)"></div>
+                <?php 
+                $i = 3;
+                for($i; $i < 8; $i++) { 
+                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
+                        echo "<button type='button' class='unavailable_seat'></button>";
+                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
+                        echo "<button type='button' class='open_seat'></button>";
+                    } else {
+                        echo "<button type='button' class='selected_seat'></button>";
+                    } ?>
+                <?php } ?>
             </div>
             <div class="row second">
-                <div class="open_seat" id="seat9" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat10" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat11" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat12" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat13" onclick="selectSeat(this.id)"></div>
+                <?php 
+                $i = 8;
+                for($i; $i < 13; $i++) { 
+                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
+                        echo "<button type='button' class='unavailable_seat'></button>";
+                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
+                        echo "<button type='button' class='open_seat'></button>";
+                    } else {
+                        echo "<button type='button' class='selected_seat'></button>";
+                    } ?>
+                <?php } ?>
             </div>
             <div class="row third">
-                <div class="open_seat" id="seat14" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat15" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat16" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat17" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat18" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat19" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat20" onclick="selectSeat(this.id)"></div>
-
-
+                <?php 
+                $i = 13;
+                for($i; $i < 20; $i++) { 
+                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
+                        echo "<button type='button' class='unavailable_seat'></button>";
+                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
+                        echo "<button type='button' class='open_seat'></button>";
+                    } else {
+                        echo "<button type='button' class='selected_seat'></button>";
+                    } ?>
+                <?php } ?>
             </div>
             <div class="row third">
-                <div class="open_seat" id="seat21" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat22" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat23" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat24" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat25" onclick="selectSeat(this.id)"></div>
-                <div class="unavailable_seat" id="seat26" onclick="selectSeat(this.id)"></div>
-                <div class="open_seat" id="seat27" onclick="selectSeat(this.id)"></div>
-
+                <?php 
+                $i = 20;
+                for($i; $i < 27; $i++) { 
+                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
+                        echo "<button type='button' class='unavailable_seat'></button>";
+                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
+                        echo "<button type='button' class='open_seat'></button>";
+                    } else {
+                        echo "<button type='button' class='selected_seat'></button>";
+                    } ?>
+                <?php } ?>
             </div>
         </div>
     </div>
 
     <div class="column booking">
+
         <h3 style="text-align: center;">Showtimes</h3>
         <div class="showtimes">
-            <a href="#" class="btn btn-secondary child">6:45 - 8:00 PM</a>
-            <a href="#" class="btn btn-secondary child">8:15 - 9:30 PM</a>
-            <a href="#" class="btn btn-secondary child">9:45 - 11:00 PM</a>
-            <a href="#" class="btn btn-secondary child">11:15 - 12:30 AM</a>
-
-
-
+        <?php  if(isset($_POST['postID'])) {
+            if($_POST['postID'] == "showtimeBookingPage") { ?>
+                <button class="btn btn-secondary child"> <?php echo $bookingInfo->showDate . "&nbsp-&nbsp" 
+                                . $bookingInfo->showTime; ?> </button>
+            <?php } } else { ?>
+                <?php foreach($shows as $show) { ?>
+                    <form name="addShow" method="POST">
+                        <input type="hidden" id="postID" name="postID" value="showtimeBookingPage">
+                        <input type="hidden" id="showID" name="showID" value="<?php echo $show["idShow"]; ?>">
+                        <input type="hidden" id="showDate" name="showDate" value="<?php echo $show["date"]; ?>">
+                        <input type="hidden" id="showTime" name="showTime" value="<?php echo $showTimeArr[$show["showtimeID"]]; ?>">
+                        <button class="btn btn-secondary child" type="submit"> <?php echo $show["date"] . "&nbsp-&nbsp" 
+                                . $showTimeArr[$show["showtimeID"]]; ?> </button>
+                    </form>
+                <?php } ?>
+            <?php } ?>
+            <h3 style="text-align: center;">Tickets</h3>
         </div>
+
         <div class="ticketSelection">
             <p>You have selected X seats. Please choose your ticket types below:</p>
             <div class="ticketType">
