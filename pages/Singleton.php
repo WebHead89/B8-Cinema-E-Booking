@@ -5,6 +5,7 @@
         private static $instance = null;
 
         // class attributes
+        public $movieID;               // store the movie
         public $showID;                // the ID of the show chosen to book tickets for
         public $showDate;              // store the date of the show
         public $showTime;              // store the time of the show
@@ -18,6 +19,7 @@
         private function __construct() {
             $this->showID = -1;
             $this->buttonTypeArray = array_fill(0, 27, 2); // fill array of size 27 with 2's
+            $this->selectedSeatsArray = array();
         }
 
         public static function getInstance() {

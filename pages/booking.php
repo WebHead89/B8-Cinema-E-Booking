@@ -1,11 +1,20 @@
 <?php
     include("Singleton.php");
+    include("Factory.php");
     session_start();
 
-    $bookingInfo = Singleton::getInstance();
+    if (!isset($_SESSION['bookingInfo'])) {
+        $_SESSION['bookingInfo'] = Singleton::getInstance();
+    }
+    $bookingInfo = $_SESSION['bookingInfo'];
 
     // get movie id
     $movieID = $_GET["movieID"];
+    // reset the object data if user switches to a new movie
+    if($bookingInfo->movieID != $movieID) {
+        $bookingInfo->showID = -1;
+        unset($bookingInfo->selectedSeatsArray);
+    }
 
     // setup connection to db
     $mysqli = require __DIR__ . "/database.php";
@@ -21,30 +30,64 @@
         $result = $mysqli->query($sql);
         $shows = $result->fetch_all(MYSQLI_ASSOC);
 
+    // check for POSTS
     if(isset($_POST['postID'])) {
         // if the POST is for selecting the showtime
         if($_POST['postID'] == "showtimeBookingPage") {
             // set the showID, date, and time
+            $bookingInfo->movieID = $_GET['movieID'];
             $bookingInfo->showID = $_POST['showID'];
             $bookingInfo->showDate = $_POST['showDate'];
             $bookingInfo->showTime = $_POST['showTime'];
+            unset($bookingInfo->selectedSeatsArray);
+        }
 
-            // get seats from the database
-            $sql = "SELECT * FROM `seats_table` WHERE `showID` = $bookingInfo->showID";
-                $result = $mysqli->query($sql);
-                $seats = $result->fetch_all(MYSQLI_ASSOC);
+        // if POST is to reset the showID
+        if($_POST['postID'] == "resetShow") {
+            $bookingInfo->showID = -1;
+        }
 
-            // set the buttonTypeArray
-            for($i = 0; $i < 27; $i++) {
-                if($seats[$i]["isReserved"]) {
-                    $bookingInfo->buttonTypeArray[$i] = 1;
-                }
+        // if POST is to add a seat selected by user
+        if($_POST['postID'] == "userAddSeat") {
+            $seatLoc = $_POST['seatIndex'];
+            // set the seat to selected
+            $bookingInfo->buttonTypeArray[$seatLoc] = 3;
+
+            // add to selectedSeatsArray
+            if($bookingInfo->selectedSeatsArray == NULL) {
+                $bookingInfo->selectedSeatsArray = array();
             }
+            array_push($bookingInfo->selectedSeatsArray, (int)$seatLoc + 1);
 
         }
 
-        // if the post is for slecting a seat
+        // if POST is to remove a seat selected by user
+        if($_POST['postID'] == "userRemoveSeat") {
+            
+        }
 
+    }
+
+    // update the buttons table
+    if($bookingInfo->showID != -1) {
+        // get seats from the database
+        $sql = "SELECT * FROM `seats_table` WHERE `showID` = $bookingInfo->showID";
+        $result = $mysqli->query($sql);
+        $seats = $result->fetch_all(MYSQLI_ASSOC);
+
+        // set the buttonTypeArray from database
+        for($i = 0; $i < 27; $i++) {
+            if($seats[$i]["isReserved"]) {
+                $bookingInfo->buttonTypeArray[$i] = 1;
+            }
+        }
+
+    // if there is no show selected reset seats and selectedSeats array
+    } else {
+        for($i = 0; $i < 27; $i++) {
+            $bookingInfo->buttonTypeArray[$i] = 2;
+        }
+        unset($bookingInfo->selectedSeatsArray);
     }
 
     // print details of Singleton class
@@ -66,7 +109,6 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../css/booking.css" rel="stylesheet">
     <link href="../css/homepage.css" rel="stylesheet">
-
 
 </head>
 
@@ -112,68 +154,48 @@
         </div>
         <div class="seats">
             <div class="row first">
-                <?php 
-                $i = 0;
-                for($i; $i < 3; $i++) { 
-                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
-                        echo "<button type='button' class='unavailable_seat'></button>";
-                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
-                        echo "<button type='button' class='open_seat'></button>";
-                    } else {
-                        echo "<button type='button' class='selected_seat'></button>";
-                    } ?>
+                <?php
+                $i = 0; 
+                for($i; $i < 3; $i++) { ?>
+                    <div class="col-md-1">
+                        <?php echo Factory::getButton($bookingInfo->buttonTypeArray[$i], $i); ?>
+                    </div>
                 <?php } ?>
             </div>
             <div class="row second">
                 <?php 
                 $i = 3;
-                for($i; $i < 8; $i++) { 
-                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
-                        echo "<button type='button' class='unavailable_seat'></button>";
-                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
-                        echo "<button type='button' class='open_seat'></button>";
-                    } else {
-                        echo "<button type='button' class='selected_seat'></button>";
-                    } ?>
+                for($i; $i < 8; $i++) { ?>
+                    <div class="col-md-1">
+                        <?php echo Factory::getButton($bookingInfo->buttonTypeArray[$i], $i); ?>
+                    </div>
                 <?php } ?>
             </div>
             <div class="row second">
                 <?php 
                 $i = 8;
-                for($i; $i < 13; $i++) { 
-                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
-                        echo "<button type='button' class='unavailable_seat'></button>";
-                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
-                        echo "<button type='button' class='open_seat'></button>";
-                    } else {
-                        echo "<button type='button' class='selected_seat'></button>";
-                    } ?>
+                for($i; $i < 13; $i++) { ?>
+                    <div class="col-md-1">
+                        <?php echo Factory::getButton($bookingInfo->buttonTypeArray[$i], $i); ?>
+                    </div>
                 <?php } ?>
             </div>
             <div class="row third">
                 <?php 
                 $i = 13;
-                for($i; $i < 20; $i++) { 
-                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
-                        echo "<button type='button' class='unavailable_seat'></button>";
-                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
-                        echo "<button type='button' class='open_seat'></button>";
-                    } else {
-                        echo "<button type='button' class='selected_seat'></button>";
-                    } ?>
+                for($i; $i < 20; $i++) { ?>
+                    <div class="col-md-1">
+                        <?php echo Factory::getButton($bookingInfo->buttonTypeArray[$i], $i); ?>
+                    </div>
                 <?php } ?>
             </div>
             <div class="row third">
                 <?php 
                 $i = 20;
-                for($i; $i < 27; $i++) { 
-                    if ($bookingInfo->buttonTypeArray[$i] == 1) { 
-                        echo "<button type='button' class='unavailable_seat'></button>";
-                    } else if ($bookingInfo->buttonTypeArray[$i] == 2) {
-                        echo "<button type='button' class='open_seat'></button>";
-                    } else {
-                        echo "<button type='button' class='selected_seat'></button>";
-                    } ?>
+                for($i; $i < 27; $i++) { ?>
+                    <div class="col-md-1">
+                        <?php echo Factory::getButton($bookingInfo->buttonTypeArray[$i], $i); ?>
+                    </div>
                 <?php } ?>
             </div>
         </div>
@@ -183,12 +205,10 @@
 
         <h3 style="text-align: center;">Showtimes</h3>
         <div class="showtimes">
-        <?php  if(isset($_POST['postID'])) {
-            if($_POST['postID'] == "showtimeBookingPage") { ?>
-                <button class="btn btn-secondary child"> <?php echo $bookingInfo->showDate . "&nbsp-&nbsp" 
-                                . $bookingInfo->showTime; ?> </button>
-            <?php } } else { ?>
-                <?php foreach($shows as $show) { ?>
+        <?php  
+            // if no show is selected, display showtimes
+            if($bookingInfo->showID == -1) {
+                foreach($shows as $show) { ?>
                     <form name="addShow" method="POST">
                         <input type="hidden" id="postID" name="postID" value="showtimeBookingPage">
                         <input type="hidden" id="showID" name="showID" value="<?php echo $show["idShow"]; ?>">
@@ -197,9 +217,23 @@
                         <button class="btn btn-secondary child" type="submit"> <?php echo $show["date"] . "&nbsp-&nbsp" 
                                 . $showTimeArr[$show["showtimeID"]]; ?> </button>
                     </form>
-                <?php } ?>
+                <?php } 
+            // if a showtime is selected only display that showtime
+            } else { ?>
+            <div class="row">
+                <div class="col-md-7">
+                <button class="btn btn-secondary child"> <?php echo $bookingInfo->showDate . "&nbsp-&nbsp" 
+                                . $bookingInfo->showTime; ?> </button>
+                </div>
+                <div class="col-md-2">
+                <form name="resetShow" method="POST">
+                    <input type="hidden" id="postID" name="postID" value="resetShow">
+                    <button class="btn btn-secondary child" type="submit"> Reset </button>
+                </form>
+                </div>
+            </div>
             <?php } ?>
-            <h3 style="text-align: center;">Tickets</h3>
+            <h3 style="text-align: center;">Seats</h3>
         </div>
 
         <div class="ticketSelection">
