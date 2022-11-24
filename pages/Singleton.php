@@ -11,6 +11,9 @@
         public $showTime;              // store the time of the show
         public $buttonTypeArray;       // array to store the types of buttons displayed(depends on the seat availability)
         public $selectedSeatsArray;    // array to store the seat numbers selected by the user
+        public $adultTickets;           
+        public $childTickets;
+        public $seniorTickets;
             // 1: reserved/unavailable seat
             // 2: open seat
             // 3: selected seat
@@ -20,6 +23,9 @@
             $this->showID = -1;
             $this->buttonTypeArray = array_fill(0, 27, 2); // fill array of size 27 with 2's
             $this->selectedSeatsArray = array();
+            $this->childTickets = 0;
+            $this->adultTickets = 0;
+            $this->seniorTickets = 0;
         }
 
         public static function getInstance() {

@@ -14,6 +14,11 @@
     if($bookingInfo->movieID != $movieID) {
         $bookingInfo->showID = -1;
         unset($bookingInfo->selectedSeatsArray);
+        $bookingInfo->selectedSeatsArray = array();
+        // set the ticket types
+        $bookingInfo->childTickets = 0;
+        $bookingInfo->adultTickets = 0;
+        $bookingInfo->seniorTickets = 0;
     }
 
     // setup connection to db
@@ -29,6 +34,12 @@
     $sql = "SELECT * FROM `show_table` WHERE movieID = $movieID;";
         $result = $mysqli->query($sql);
         $shows = $result->fetch_all(MYSQLI_ASSOC);
+    
+    // get ticket types
+    $sql = "SELECT * FROM `ticket_type`;";
+        $result = $mysqli->query($sql);
+        $ticketTypes = $result->fetch_all(MYSQLI_ASSOC);
+        $ticketPrices = array_column($ticketTypes, "price", "type");
 
     // check for POSTS
     if(isset($_POST['postID'])) {
@@ -39,7 +50,15 @@
             $bookingInfo->showID = $_POST['showID'];
             $bookingInfo->showDate = $_POST['showDate'];
             $bookingInfo->showTime = $_POST['showTime'];
+
+            // set the ticket types
+            $bookingInfo->childTickets = 0;
+            $bookingInfo->adultTickets = 0;
+            $bookingInfo->seniorTickets = 0;
+
+            // reset the seats array
             unset($bookingInfo->selectedSeatsArray);
+            $bookingInfo->selectedSeatsArray = array();
         }
 
         // if POST is to reset the showID
@@ -63,7 +82,42 @@
 
         // if POST is to remove a seat selected by user
         if($_POST['postID'] == "userRemoveSeat") {
-            
+            $seatLoc = $_POST['seatIndex'];
+            $value = (int)$seatLoc + 1;
+            $index = array_search($value, $bookingInfo->selectedSeatsArray, FALSE);
+            unset($bookingInfo->selectedSeatsArray[$index]);
+            $bookingInfo->buttonTypeArray[$seatLoc] = 2;
+        }
+
+        // following POSTS are to update ticket prices
+        if($_POST['postID'] == "addAdultTicket") {
+            $bookingInfo->adultTickets++;
+        }
+
+        if($_POST['postID'] == "removeAdultTicket") {
+            if($bookingInfo->adultTickets != 0) {
+                $bookingInfo->adultTickets--;
+            }
+        }
+
+        if($_POST['postID'] == "addChildTicket") {
+            $bookingInfo->childTickets++;
+        }
+
+        if($_POST['postID'] == "removeChildTicket") {
+            if($bookingInfo->childTickets != 0) {
+                $bookingInfo->childTickets--;
+            }
+        }
+
+        if($_POST['postID'] == "addSeniorTicket") {
+            $bookingInfo->seniorTickets++;
+        }
+
+        if($_POST['postID'] == "removeSeniorTicket") {
+            if($bookingInfo->seniorTickets != 0) {
+                $bookingInfo->seniorTickets--;
+            }
         }
 
     }
@@ -88,6 +142,11 @@
             $bookingInfo->buttonTypeArray[$i] = 2;
         }
         unset($bookingInfo->selectedSeatsArray);
+        $bookingInfo->selectedSeatsArray = array();
+        // set the ticket types
+        $bookingInfo->childTickets = 0;
+        $bookingInfo->adultTickets = 0;
+        $bookingInfo->seniorTickets = 0;
     }
 
     // print details of Singleton class
@@ -234,35 +293,70 @@
             </div>
             <?php } ?>
             <h3 style="text-align: center;">Seats</h3>
+            <?php 
+            if($bookingInfo->selectedSeatsArray != NULL) {
+                foreach($bookingInfo->selectedSeatsArray as $seat) {
+                    echo "Seat " . $seat; ?>
+                    <br>
+            <?php } 
+            }?>
         </div>
 
         <div class="ticketSelection">
-            <p>You have selected X seats. Please choose your ticket types below:</p>
+            <p>You have selected <?php echo count($bookingInfo->selectedSeatsArray) ?> seats. Please choose your ticket types below:</p>
             <div class="ticketType">
-                Adult Tickets: X Selected
+                Adult Tickets: <?php echo $bookingInfo->adultTickets; ?> Selected
                 <div class="btn-group" role="group" aria-label="test">
-                    <button type="button" class="btn btn-secondary">-</button>
-                    <button type="button" class="btn btn-secondary">+</button>
+                    <form name='removeAdultTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='removeAdultTicket'>
+                        <button type="submit" class="btn btn-secondary">-</button>
+                    </form>
+                    <form name='addAdultTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='addAdultTicket'>
+                        <button type="submit" class="btn btn-secondary">+</button>
+                    </form>
                 </div>
             </div>
 
             <div class="ticketType">
-                Child Tickets: X Selected
+                Child Tickets: <?php echo $bookingInfo->childTickets; ?> Selected
                 <div class="btn-group" role="group" aria-label="test">
-                    <button type="button" class="btn btn-secondary">-</button>
-                    <button type="button" class="btn btn-secondary">+</button>
+                    <form name='removeChildTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='removeChildTicket'>
+                        <button type="submit" class="btn btn-secondary">-</button>
+                    </form>
+                    <form name='addChildTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='addChildTicket'>
+                        <button type="submit" class="btn btn-secondary">+</button>
+                    </form>
                 </div>
             </div>
 
             <div class="ticketType">
-                Senior Tickets: X Selected
+                Senior Tickets: <?php echo $bookingInfo->seniorTickets; ?> Selected
                 <div class="btn-group" role="group" aria-label="test">
-                    <button type="button" class="btn btn-secondary">-</button>
-                    <button type="button" class="btn btn-secondary">+</button>
+                    <form name='removeSeniorTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='removeSeniorTicket'>
+                        <button type="submit" class="btn btn-secondary">-</button>
+                    </form>
+                    <form name='addSeniorTicket' method='POST'>
+                        <input type='hidden' id='postID' name='postID' value='addSeniorTicket'>
+                        <button type="submit" class="btn btn-secondary">+</button>
+                    </form>
                 </div>
             </div>
+            <?php 
+                $childPrice = $ticketPrices["CHILD"];
+                $adultPrice = $ticketPrices["ADULT"];
+                $seniorPrice = $ticketPrices["SENIOR"];
+                $totalPrice = $childPrice * $bookingInfo->childTickets + $adultPrice * $bookingInfo->adultTickets + $seniorPrice * $bookingInfo->seniorTickets;
+            ?>
+            Total Price: $ <?php echo $totalPrice; ?>
         </div>
         <button type="button" class="btn btn-secondary proceedToPayment">Add tickets to cart</button>
+        <?php // create as form, do post to this page, only process if ticket amount is correct then load payment page
+              // after payment page, process the booking and send to confirmation page
+        ?>
     </div>
 
 
