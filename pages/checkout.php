@@ -1,24 +1,109 @@
 <?php
-
+include("Singleton.php");
 session_start();
+$bookingInfo = $_SESSION['bookingInfo'];
 
-// testing to see if users are logged in/see their ID
-print_r($_SESSION);
+// setup connection to db
+$mysqli = require __DIR__ . "/database.php";
 
-// Example for grabing information from the database 
-if (isset($_SESSION["user_id"])) {
+// get user information
+$sql = "SELECT * FROM user
+          WHERE id = {$_SESSION["user_id"]}";
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
+$userID = $user["id"];
 
-    $mysqli = require __DIR__ . "/database.php";
-
-    $sql = "SELECT * FROM user
-            WHERE id = {$_SESSION["user_id"]}";
-    
+// get ticket types
+$sql = "SELECT * FROM `ticket_type`;";
     $result = $mysqli->query($sql);
+    $ticketTypes = $result->fetch_all(MYSQLI_ASSOC);
+    $ticketPrices = array_column($ticketTypes, "price", "type");
 
-    $user = $result->fetch_assoc();
+// get payment cards
+$sql = "SELECT * FROM `payment_card_table` WHERE `userID` = $userID;";
+$result = $mysqli->query($sql);
+$paymentCards = $result->fetch_all(MYSQLI_ASSOC);
 
-    print_r("Hello " . $user["first_name"]);
+// get total price
+$childPrice = $ticketPrices["CHILD"];
+$adultPrice = $ticketPrices["ADULT"];
+$seniorPrice = $ticketPrices["SENIOR"];
+$totalPrice = $childPrice * $bookingInfo->childTickets + $adultPrice * $bookingInfo->adultTickets + $seniorPrice * $bookingInfo->seniorTickets;
+
+
+$paymentID;
+$checkout = false;
+$promoID = -1;
+// check for POSTS
+if(isset($_POST['postID'])) {
+  // if the POST is for selecting a promoCode
+  if($_POST['postID'] == "submitPromo") {
+    $promo = $_POST['promo'];
+
+    // query for promoCodes
+    $sql = "SELECT * FROM `promotions_table` WHERE `code` = '$promo';";
+    $result = $mysqli->query($sql);
+    $promo = $result->fetch_assoc();
+
+    if($promo) {
+      $bookingInfo->promoCode = $promo["code"];
+      $bookingInfo->promoDiscount = $promo["discount"];
+      $promoID = $promo["idPromotions"];
+    } else {
+      echo '<script>alert("Incorrect promocode.")</script>';
+    }
+  }
+
+  if($_POST['postID'] == "submitPayment") {
+    $paymentID = $_POST['cardID'];
+    $checkout = true;
+  }
+
+  if($_POST['postID'] == "submitNewPayment") {
+    $cardNum = $_POST['cardNumber'];
+    $expiration = $_POST['expiration'];
+
+    // create new payment Card, set user ID to -1, meaning 1 time card
+    $stmt = $mysqli->stmt_init();
+    $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '-1');";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->execute();
+
+    // get ID of card
+    $sql = "SELECT * FROM `payment_card_table` WHERE `cardNum` = $cardNum;";
+    $result = $mysqli->query($sql);
+    $card = $result->fetch_assoc();
+    $idCard = $card["idPaymentCard"];
+
+    // set paymentID for booking info
+    $paymentID = $idCard;
+    $checkout = true;
+  }
 }
+
+if($checkout) {
+  // create booking
+  $stmt = $mysqli->stmt_init();
+  $sql = "INSERT INTO `booking_table` (`idBooking`, `totalPrice`, `showID`, `paymentID`, `promoID`, `customerID`) VALUES (NULL, '$totalPrice', 
+            '$bookingInfo->showID', '$paymentID', '$promoID', '$userID');";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->execute();
+
+  // get bookingID
+  $sql = "  SELECT * FROM `booking_table` WHERE `totalPrice` = $totalPrice AND `showID` = $bookingInfo->showID AND `paymentID` = $paymentID AND 
+            `customerID` = $userID AND `promoID` = $promoID";
+  $result = $mysqli->query($sql);
+  $booking = $result->fetch_assoc();
+  $bookingID = $booking["idBooking"];
+
+  // create tickets
+
+  // update the seats table to reserved for the show
+
+  // reset the bookingInfo session class
+
+}
+
 ?>
 
 <!doctype html>
@@ -141,67 +226,55 @@ if (isset($_SESSION["user_id"])) {
   <main>
     <div class="py-5 text-center">
       <h2>Checkout</h2>
-      <p class="lead">Enter details and click "Checkout". Or go back and edit your order</p>
     </div>
 
     <div class="row g-5">
       <div class="col-md-5 col-lg-4 order-md-last">
         <h4 class="d-flex justify-content-between align-items-center mb-3">
           <span class="text-primary">Your cart</span>
-          <span class="badge bg-primary rounded-pill">0</span>
+          <span class="badge bg-primary rounded-pill"> <?php echo count($bookingInfo->selectedSeatsArray); ?> </span>
         </h4>
-		
-		<form class="card p-2" action="booking.html" method="POST">
-          <div class="input-group">
-            <button type="submit" class="w-100 btn btn-secondary" style="background-color:green">Update Cart</button>
-          </div>
-        </form>
 		
         <ul class="list-group mb-3">
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">Ticket: Senior</h6>
-              <small class="text-muted">x0</small>
+              <small class="text-muted"> <?php echo "x" . $bookingInfo->seniorTickets; ?>  </small>
             </div>
-            <span class="text-muted">$8</span>
+            <span class="text-muted"> <?php echo "$" . $bookingInfo->seniorTickets * $ticketPrices["SENIOR"]; ?> </span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">Ticket: Adult</h6>
-              <small class="text-muted">x0</small>
+              <small class="text-muted"> <?php echo "x" . $bookingInfo->adultTickets; ?> </small>
             </div>
-            <span class="text-muted">$12</span>
+            <span class="text-muted"> <?php echo "$" . $bookingInfo->adultTickets * $ticketPrices["ADULT"]; ?> </span>
           </li>
           <li class="list-group-item d-flex justify-content-between lh-sm">
             <div>
               <h6 class="my-0">Ticket: Child</h6>
-              <small class="text-muted">x0</small>
+              <small class="text-muted"> <?php echo "x" . $bookingInfo->childTickets; ?> </small>
             </div>
-            <span class="text-muted">$5</span>
+            <span class="text-muted"> <?php echo "$" . $bookingInfo->childTickets * $ticketPrices["CHILD"]; ?> </span>
           </li>
           <li class="list-group-item d-flex justify-content-between bg-light">
             <div class="text-success">
               <h6 class="my-0">Promo code</h6>
-              <small>EXAMPLECODE</small>
+              <small> <?php echo $bookingInfo->promoCode; ?> </small>
             </div>
-            <span class="text-success">−$5</span>
+            <span class="text-success"> <?php echo "-$" . $bookingInfo->promoDiscount * $totalPrice; ?> </span>
           </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>Total (USD)</span>
-            <strong>-$5</strong>
+            <strong> <?php echo "$" . $totalPrice - ($bookingInfo->promoDiscount * $totalPrice);?> </strong>
           </li>
         </ul>
 
-        <form class="card p-2">
+        <form class="card p-2" method="POST">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Promo code">
+            <input type='hidden' id='postID' name='postID' value='submitPromo'>
+            <input type="text" class="form-control" placeholder="Promo code" name="promo" id ="promo" required>
             <button type="submit" class="btn btn-secondary">Redeem</button>
-          </div>
-        </form>
-		
-		<form class="card p-2" action="home.php" method="POST">
-          <div class="input-group">
-            <button type="submit" class="w-100 btn btn-secondary" style="background-color:red">Cancel Order</button>
           </div>
         </form>
 		
@@ -212,146 +285,47 @@ if (isset($_SESSION["user_id"])) {
 	  
 	  
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Billing Info</h4>
-        <form action="checkoutConfirmation.html" method="POST"> <!class="needs-validation" !novalidate>
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" !required>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
-            </div>
-
-            <div class="col-sm-6">
-              <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" !required>
-              <div class="invalid-feedback">
-                Valid last name is required.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" !required>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
-            </div>
-
-            <div class="col-12">
-              <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-            </div>
-
-            <div class="col-md-5">
-              <label for="country" class="form-label">Country</label>
-              <select class="form-select" id="country" !required>
-                <option value="">Choose...</option>
-                <option>United States</option>
-              </select>
-              <div class="invalid-feedback">
-                Please select a valid country.
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <label for="state" class="form-label">State</label>
-              <select class="form-select" id="state" !required>
-                <option value="">Choose...</option>
-                <option>California</option>
-              </select>
-              <div class="invalid-feedback">
-                Please provide a valid state.
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" !required>
-              <div class="invalid-feedback">
-                Zip code required.
-              </div>
-            </div>
-          </div>
-
           <hr class="my-4">
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
-
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
-
-          <hr class="my-4">
-
           <h4 class="mb-3">Payment</h4>
+          <hr class="my-4">
 
-          <div class="my-3">
-            <div class="form-check">
-              <input id="credit" name="paymentMethod" type="radio" class="form-check-input" !checked !required>
-              <label class="form-check-label" for="credit">Credit card</label>
-            </div>
-            <div class="form-check">
-              <input id="debit" name="paymentMethod" type="radio" class="form-check-input" !required>
-              <label class="form-check-label" for="debit">Debit card</label>
-            </div>
-            <div class="form-check">
-              <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" !required>
-              <label class="form-check-label" for="paypal">PayPal</label>
-            </div>
-          </div>
+          <?php foreach($paymentCards as $paymentCard) { ?>
+            <form method="POST">
+              <input type='hidden' id='postID' name='postID' value='submitPayment'>
+              <input type='hidden' id='cardID' name='cardID' value='<?php echo $paymentCard["idPaymentCard"];?>'>
+              <div class="row gy-3">
+                <div class="col-md-6">
+                  <label class="form-label">Card Number:</label>
+                  <label class="form-label"> <?php echo $paymentCard["cardNum"]; ?> </label>
+                </div>
 
+                <div class="col-md-6">
+                  <label for="cc-number" class="form-label">Expiration:</label>
+                  <label class="form-label"> <?php echo $paymentCard["experationDate"]; ?> </label>
+                </div>
+              </div>
+              <br>
+              <button class="w-20 btn btn-primary btn-lg" type="submit">Checkout</button>
+            </form>
+            <hr class="my-4">
+          <?php } ?>
+
+        <h4 class="mb-3">One Time Payment</h4>
+        <form method="POST">
+          <input type='hidden' id='postID' name='postID' value='submitNewPayment'>
           <div class="row gy-3">
             <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" !required>
-              <small class="text-muted">Full name as displayed on card</small>
-              <div class="invalid-feedback">
-                Name on card is required
-              </div>
+              <label for="cc-name" class="form-label">Card Number</label>
+              <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="" required>
             </div>
 
             <div class="col-md-6">
-              <label for="cc-number" class="form-label">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" !required>
-              <div class="invalid-feedback">
-                Credit card number is required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" !required>
-              <div class="invalid-feedback">
-                Expiration date required
-              </div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="cc-cvv" class="form-label">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" !required>
-              <div class="invalid-feedback">
-                Security code required
-              </div>
+              <label for="cc-number" class="form-label">Expiration</label>
+              <input type="text" class="form-control" id="expiration" name="expiration" placeholder="" required>
             </div>
           </div>
-
-          <hr class="my-4">
-
-          <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
+          <br>
+          <button class="w-20 btn btn-primary btn-lg" type="submit">Checkout</button>
         </form>
       </div>
     </div>

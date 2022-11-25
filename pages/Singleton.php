@@ -10,13 +10,15 @@
         public $showDate;              // store the date of the show
         public $showTime;              // store the time of the show
         public $buttonTypeArray;       // array to store the types of buttons displayed(depends on the seat availability)
+            // 1: reserved/unavailable seat
+            // 2: open seat
+            // 3: selected seat
         public $selectedSeatsArray;    // array to store the seat numbers selected by the user
         public $adultTickets;           
         public $childTickets;
         public $seniorTickets;
-            // 1: reserved/unavailable seat
-            // 2: open seat
-            // 3: selected seat
+        public $promoCode;
+        public $promoDiscount;
 
         // constructor
         private function __construct() {
@@ -26,6 +28,8 @@
             $this->childTickets = 0;
             $this->adultTickets = 0;
             $this->seniorTickets = 0;
+            $this->promoDiscount = 0;
+            $this->promoCode = "";
         }
 
         public static function getInstance() {
@@ -34,6 +38,7 @@
             }
             return self::$instance;
         }
+
     }
 
 

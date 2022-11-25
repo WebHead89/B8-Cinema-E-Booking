@@ -3,6 +3,10 @@
     include("Factory.php");
     session_start();
 
+    if (!isset($_SESSION["user_id"])) { 
+        header("Location: login.php");
+    }
+
     if (!isset($_SESSION['bookingInfo'])) {
         $_SESSION['bookingInfo'] = Singleton::getInstance();
     }
@@ -56,6 +60,10 @@
             $bookingInfo->adultTickets = 0;
             $bookingInfo->seniorTickets = 0;
 
+            // reset discount
+            $bookingInfo->promoCode = "";
+            $bookingInfo->promoDiscount = 0;
+
             // reset the seats array
             unset($bookingInfo->selectedSeatsArray);
             $bookingInfo->selectedSeatsArray = array();
@@ -69,7 +77,7 @@
                 echo '<script>alert("Incorrect number of tickets to seats.")</script>';
             } else {
                 // process to payment page
-                
+                header("Location: checkout.php");
             }
         }
 
@@ -370,10 +378,6 @@
             <button type="submit" class="btn btn-secondary proceedToPayment">Add tickets to cart</button>
         </form>
 
-
-        <?php // create as form, do post to this page, only process if ticket amount is correct then load payment page
-              // after payment page, process the booking and send to confirmation page
-        ?>
     </div>
 
 
