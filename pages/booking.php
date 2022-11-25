@@ -61,6 +61,18 @@
             $bookingInfo->selectedSeatsArray = array();
         }
 
+        // if POST is to submit booking
+        if($_POST['postID'] == "submitBooking") {
+            // check to make sure the ticket numbers match to seats selected
+            $totalTickets = $bookingInfo->childTickets + $bookingInfo->adultTickets + $bookingInfo->seniorTickets;
+            if($totalTickets != count($bookingInfo->selectedSeatsArray)) {
+                echo '<script>alert("Incorrect number of tickets to seats.")</script>';
+            } else {
+                // process to payment page
+                
+            }
+        }
+
         // if POST is to reset the showID
         if($_POST['postID'] == "resetShow") {
             $bookingInfo->showID = -1;
@@ -353,7 +365,12 @@
             ?>
             Total Price: $ <?php echo $totalPrice; ?>
         </div>
-        <button type="button" class="btn btn-secondary proceedToPayment">Add tickets to cart</button>
+        <form name='submitBooking' method='POST'>
+            <input type='hidden' id='postID' name='postID' value='submitBooking'>
+            <button type="submit" class="btn btn-secondary proceedToPayment">Add tickets to cart</button>
+        </form>
+
+
         <?php // create as form, do post to this page, only process if ticket amount is correct then load payment page
               // after payment page, process the booking and send to confirmation page
         ?>
