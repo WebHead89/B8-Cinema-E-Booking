@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Nov 20, 2022 at 05:57 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: Nov 26, 2022 at 07:02 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cinema_ebooking_system`
+-- Database: `cinemadatabase`
 --
 
 -- --------------------------------------------------------
@@ -69,11 +69,20 @@ INSERT INTO `account_type` (`idType`, `type`) VALUES
 CREATE TABLE `booking_table` (
   `idBooking` int(11) NOT NULL,
   `totalPrice` decimal(10,2) NOT NULL,
-  `customerID` int(10) UNSIGNED NOT NULL,
   `showID` int(11) NOT NULL,
   `paymentID` int(11) NOT NULL,
-  `promoID` int(11) DEFAULT NULL
+  `customerID` int(11) NOT NULL,
+  `promoID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store all of the bookings for the movie theater\n';
+
+--
+-- Dumping data for table `booking_table`
+--
+
+INSERT INTO `booking_table` (`idBooking`, `totalPrice`, `showID`, `paymentID`, `customerID`, `promoID`) VALUES
+(20, '20.00', 15, 6, 34, -1),
+(21, '20.00', 17, 7, 34, -1),
+(22, '8.00', 16, 6, 34, -1);
 
 -- --------------------------------------------------------
 
@@ -142,6 +151,15 @@ CREATE TABLE `payment_card_table` (
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='table to store payment cards of the users';
 
+--
+-- Dumping data for table `payment_card_table`
+--
+
+INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES
+(6, '1234', '5/20', 34),
+(7, '4321', '5/20', 34),
+(13, '56781', '5/20', -1);
+
 -- --------------------------------------------------------
 
 --
@@ -160,8 +178,7 @@ CREATE TABLE `promotions_table` (
 
 INSERT INTO `promotions_table` (`idPromotions`, `code`, `discount`) VALUES
 (1, 'freeMoney', '0.99'),
-(2, 'test', '0.99'),
-(3, 'test', '0.99');
+(2, 'test', '0.50');
 
 -- --------------------------------------------------------
 
@@ -201,7 +218,7 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (1, 0, 19),
 (1, 0, 20),
 (2, 0, 15),
-(2, 0, 16),
+(2, 1, 16),
 (2, 0, 17),
 (2, 0, 18),
 (2, 0, 19),
@@ -220,35 +237,35 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (4, 0, 20),
 (5, 0, 15),
 (5, 0, 16),
-(5, 0, 17),
+(5, 1, 17),
 (5, 0, 18),
 (5, 0, 19),
 (5, 0, 20),
-(6, 0, 15),
+(6, 1, 15),
 (6, 0, 16),
-(6, 0, 17),
+(6, 1, 17),
 (6, 0, 18),
 (6, 0, 19),
 (6, 0, 20),
 (7, 0, 15),
 (7, 0, 16),
-(7, 0, 17),
+(7, 1, 17),
 (7, 0, 18),
 (7, 0, 19),
 (7, 0, 20),
-(8, 0, 15),
+(8, 1, 15),
 (8, 0, 16),
 (8, 0, 17),
 (8, 0, 18),
 (8, 0, 19),
 (8, 0, 20),
-(9, 0, 15),
+(9, 1, 15),
 (9, 0, 16),
 (9, 0, 17),
 (9, 0, 18),
 (9, 0, 19),
 (9, 0, 20),
-(10, 0, 15),
+(10, 1, 15),
 (10, 0, 16),
 (10, 0, 17),
 (10, 0, 18),
@@ -302,7 +319,7 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (18, 0, 18),
 (18, 0, 19),
 (18, 0, 20),
-(19, 0, 15),
+(19, 1, 15),
 (19, 0, 16),
 (19, 0, 17),
 (19, 0, 18),
@@ -320,19 +337,19 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (21, 0, 18),
 (21, 0, 19),
 (21, 0, 20),
-(22, 0, 15),
+(22, 1, 15),
 (22, 0, 16),
 (22, 0, 17),
 (22, 0, 18),
 (22, 0, 19),
 (22, 0, 20),
-(23, 0, 15),
+(23, 1, 15),
 (23, 0, 16),
 (23, 0, 17),
 (23, 0, 18),
 (23, 0, 19),
 (23, 0, 20),
-(24, 0, 15),
+(24, 1, 15),
 (24, 0, 16),
 (24, 0, 17),
 (24, 0, 18),
@@ -355,7 +372,7 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (27, 0, 17),
 (27, 0, 18),
 (27, 0, 19),
-(27, 0, 20);
+(27, 1, 20);
 
 -- --------------------------------------------------------
 
@@ -437,9 +454,21 @@ INSERT INTO `show_table` (`idShow`, `date`, `movieID`, `showroomID`, `showtimeID
 CREATE TABLE `tickets_table` (
   `idTicket` int(11) NOT NULL,
   `bookingID` int(11) NOT NULL,
-  `typeID` int(11) NOT NULL,
   `seatNumber` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tables to store all of the tickets';
+
+--
+-- Dumping data for table `tickets_table`
+--
+
+INSERT INTO `tickets_table` (`idTicket`, `bookingID`, `seatNumber`) VALUES
+(11, 20, 22),
+(12, 20, 23),
+(13, 20, 24),
+(14, 21, 5),
+(15, 21, 6),
+(16, 21, 7),
+(17, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -452,6 +481,15 @@ CREATE TABLE `ticket_type` (
   `type` varchar(45) DEFAULT NULL,
   `price` decimal(4,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='stores the different types of tickets\n';
+
+--
+-- Dumping data for table `ticket_type`
+--
+
+INSERT INTO `ticket_type` (`idType`, `type`, `price`) VALUES
+(1, 'CHILD', '6.00'),
+(2, 'ADULT', '8.00'),
+(3, 'SENIOR', '6.00');
 
 -- --------------------------------------------------------
 
@@ -475,6 +513,13 @@ CREATE TABLE `user` (
   `emailHash` varchar(32) DEFAULT NULL,
   `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone`, `email`, `password`, `promo`, `city`, `state`, `zip`, `status`, `admin`, `emailHash`, `address`) VALUES
+(34, 'Ben', 'Prestel', '7703304466', 'benjamindprestel@gmail.com', '$2y$10$quLec63OqgiZAlYUhWNyGucY7afbDRdnTVwVy.2lWvxi1MCr7CTLG', 1, NULL, NULL, NULL, 1, 0, 'caf1a3dfb505ffed0d024130f58c5cfa', '');
 
 -- --------------------------------------------------------
 
@@ -518,10 +563,8 @@ ALTER TABLE `account_type`
 --
 ALTER TABLE `booking_table`
   ADD PRIMARY KEY (`idBooking`),
-  ADD KEY `customerID_idx` (`customerID`),
   ADD KEY `showID_idx` (`showID`),
-  ADD KEY `paymentID_idx` (`paymentID`),
-  ADD KEY `promoID_idx` (`promoID`);
+  ADD KEY `paymentID_idx` (`paymentID`);
 
 --
 -- Indexes for table `movies_table`
@@ -590,7 +633,6 @@ ALTER TABLE `show_table`
 ALTER TABLE `tickets_table`
   ADD PRIMARY KEY (`idTicket`),
   ADD KEY `bookingID_idx` (`bookingID`),
-  ADD KEY `typeID_idx` (`typeID`),
   ADD KEY `seatNumber_idx` (`seatNumber`);
 
 --
@@ -635,7 +677,7 @@ ALTER TABLE `account_type`
 -- AUTO_INCREMENT for table `booking_table`
 --
 ALTER TABLE `booking_table`
-  MODIFY `idBooking` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idBooking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `movies_table`
@@ -653,7 +695,7 @@ ALTER TABLE `movie_category`
 -- AUTO_INCREMENT for table `payment_card_table`
 --
 ALTER TABLE `payment_card_table`
-  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `promotions_table`
@@ -689,19 +731,19 @@ ALTER TABLE `show_table`
 -- AUTO_INCREMENT for table `tickets_table`
 --
 ALTER TABLE `tickets_table`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `ticket_type`
 --
 ALTER TABLE `ticket_type`
-  MODIFY `idType` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idType` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -717,9 +759,6 @@ ALTER TABLE `users`
 -- Constraints for table `booking_table`
 --
 ALTER TABLE `booking_table`
-  ADD CONSTRAINT `customerID` FOREIGN KEY (`customerID`) REFERENCES `users` (`idUser`),
-  ADD CONSTRAINT `paymentID` FOREIGN KEY (`paymentID`) REFERENCES `payment_card_table` (`idPaymentCard`),
-  ADD CONSTRAINT `promoID` FOREIGN KEY (`promoID`) REFERENCES `promotions_table` (`idPromotions`),
   ADD CONSTRAINT `showID` FOREIGN KEY (`showID`) REFERENCES `show_table` (`idShow`);
 
 --
@@ -754,8 +793,7 @@ ALTER TABLE `show_table`
 --
 ALTER TABLE `tickets_table`
   ADD CONSTRAINT `bookingID` FOREIGN KEY (`bookingID`) REFERENCES `booking_table` (`idBooking`),
-  ADD CONSTRAINT `seatNumber` FOREIGN KEY (`seatNumber`) REFERENCES `seats_table` (`seatNumber`),
-  ADD CONSTRAINT `typeID` FOREIGN KEY (`typeID`) REFERENCES `ticket_type` (`idType`);
+  ADD CONSTRAINT `seatNumber` FOREIGN KEY (`seatNumber`) REFERENCES `seats_table` (`seatNumber`);
 
 --
 -- Constraints for table `users`
