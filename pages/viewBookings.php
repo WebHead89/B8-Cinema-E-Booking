@@ -15,7 +15,18 @@ session_start();
     $result = $mysqli->query($sql);
     $bookings = $result->fetch_all(MYSQLI_ASSOC);
 
+    // get showrooms
+    $sql = "SELECT * FROM `showroom_table`";
+    $result = $mysqli->query($sql);
+    $showRooms = $result->fetch_all(MYSQLI_ASSOC);
+    $roomNamesArr = array_column($showRooms, "name", "idRoom"); // create an array with indices as idRoom and value of name
 
+    // get showtimes
+    $sql = "SELECT * FROM `showtime_table`";
+    $result = $mysqli->query($sql);
+    $showTimes = $result->fetch_all(MYSQLI_ASSOC);
+    $showTimeArr = array_column($showTimes, "showtime", "idShowtime");
+    
 
 ?>
 
@@ -79,7 +90,47 @@ session_start();
     <h1> Bookings </h1>
     <hr class="my-4">
 
-    
+    <?php   
+        if($bookings) {
+            foreach($bookings as $booking) {
+                // print booking
+                echo "BookingID: " . $booking["idBooking"] . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Total Price: $" . $booking["totalPrice"] . "<br>";
+                // print show, date, time, room
+                    // get the show
+                    $showID = $booking["showID"];
+                    $sql = "SELECT * FROM `show_table` WHERE `idShow` = $showID;";
+                    $result = $mysqli->query($sql);
+                    $show = $result->fetch_assoc();
+                    $showTime = $show["showtimeID"];
+                    $showRoom = $show["showroomID"];
+
+                    // get the movie
+                    $movieID = $show["movieID"];
+                    $sql = "SELECT * FROM `movies_table` WHERE `idMovie` = $movieID";
+                    $result = $mysqli->query($sql);
+                    $movie = $result->fetch_assoc();
+                echo "ShowID: " . $showID . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Movie: " . $movie["title"] 
+                    . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowDate: " . $show["date"] 
+                    . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowTime: " . $showTimeArr[$showTime]
+                    . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowRoom: " . $roomNamesArr[$showRoom] . "<br>";
+                // print tickets
+                echo "Tickets<br>";
+                    // get the tickets
+                    $bookingID = $booking["idBooking"];
+                    $sql = "SELECT * FROM `tickets_table` WHERE `bookingID` = $bookingID";
+                    $result = $mysqli->query($sql);
+                    $tickets = $result->fetch_all(MYSQLI_ASSOC);
+                    foreach($tickets as $ticket) {
+                        echo "Seat: " . $ticket["seatNumber"] . "<br>";
+                    }
+
+                echo "<hr class='my-4'>";
+
+            }
+        } else {
+            echo "No bookings.";
+        }
+    ?>
 
 </div>
 
