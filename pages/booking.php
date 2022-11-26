@@ -169,11 +169,6 @@
         $bookingInfo->seniorTickets = 0;
     }
 
-    // print details of Singleton class
-    echo "Booking Info: ";
-    var_dump($bookingInfo);
-   
-
 ?>
 
 

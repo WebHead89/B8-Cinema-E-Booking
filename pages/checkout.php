@@ -97,10 +97,39 @@ if($checkout) {
   $bookingID = $booking["idBooking"];
 
   // create tickets
+  foreach($bookingInfo->selectedSeatsArray as $seat) {
+    $stmt = $mysqli->stmt_init();
+    $sql = "INSERT INTO `tickets_table` (`idTicket`, `bookingID`, `seatNumber`) VALUES (NULL, '$bookingID', '$seat');";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->execute();
+  }
 
   // update the seats table to reserved for the show
+  foreach($bookingInfo->selectedSeatsArray as $seat) {
+    $stmt = $mysqli->stmt_init();
+    $sql = "UPDATE `seats_table` SET `isReserved` = '1' WHERE `seats_table`.`seatNumber` = $seat AND `seats_table`.`showID` = $bookingInfo->showID;";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->execute();
+  }
+
+  // send email
+
 
   // reset the bookingInfo session class
+  $bookingInfo->showID = -1;
+  unset($bookingInfo->selectedSeatsArray);
+  $bookingInfo->selectedSeatsArray = array();
+  // set the ticket types
+  $bookingInfo->childTickets = 0;
+  $bookingInfo->adultTickets = 0;
+  $bookingInfo->seniorTickets = 0;
+  // reset promo
+  $bookingInfo->promoDiscount = 0;
+  $bookingInfo->promoCode = "";
+
+
+  // send to confirmation page
+  header("Location: checkoutSuccess.html");
 
 }
 
