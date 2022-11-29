@@ -1,0 +1,24 @@
+<?php
+  class Database {
+    public function getConnection() {
+      // database sign-in credentials (default for now)
+      $host = "localhost:3307";
+      $dbname = "cinema_ebooking_system";
+      $username = "root";
+      $password = "";
+
+      // signing into the database using credentials
+      $mysqli = new mysqli(hostname: $host,
+      username: $username,
+      password: $password,
+      database: $dbname);
+
+      // if connection failed, die and print error message
+      if ($mysqli->connect_errno) {
+        die("Connection error: " . $mysqli->connect_error);
+      }
+
+      return $mysqli;
+    }
+  }
+?>
