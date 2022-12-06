@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION["user_id"] = $user["id"];
 
         
-        if($user["admin"] = 0) {
+        if($user["admin"] == 0) {
           header("Location: home.php");
         } else {
           header("Location: admin_home.php");
