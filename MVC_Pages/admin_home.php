@@ -56,6 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // display upcoming movies
             echo $view->getUpcomingMovies();
 
+            // display button to add a new movie
+            echo $view->addNewMovie();
+
             ?>
         </div>
     </div>

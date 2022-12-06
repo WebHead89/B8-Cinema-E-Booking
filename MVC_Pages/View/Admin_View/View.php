@@ -115,7 +115,10 @@
             
             // display current promotions
             foreach($promos as $promo) { 
-                $promoHTML = $promoHTML . "<pre> Promo Code: {$promo['code']}    Discount: {$promo['discount']} </pre>";
+                $promoHTML = $promoHTML . "<div class='row'>
+                                                <div class='col-md-4'> Promo Code: {$promo['code']} </div>   
+                                                <div class='col-md-6'>  Discount: {$promo['discount']} </div>
+                                            </div>";
             }
 
             // display new promo form
@@ -227,6 +230,10 @@
             return $html;
 
         } // getUpcomingMovies
+
+        public function addNewMovie() {
+            return "<a href='add_movie.php' class='col-md-12 btn btn-lg btn-primary'> Create New Movie </a>";
+        }
 
 
 
