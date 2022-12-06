@@ -11,7 +11,7 @@
         public function getAdminNavbar() {
             $navbar = "<nav class='navbar navbar-expand-lg navbar-light bg-light'>
                             <div class='container-fluid'>
-                                <a class='navbar-brand' href='home.php'>E-Booking Cinema</a>
+                                <a class='navbar-brand' href='admin_home.php'>E-Booking Cinema</a>
                                 <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavDropdown'
                                     aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle Navigation'>
                                 <span class='navbar-toggler-icon'></span>
@@ -37,6 +37,7 @@
                         </nav>";
             return $navbar;
         } // getAdminNavbar
+
 
         public function getAddMovieForm() {
             $formFront = "<div class='container form-control form-block'>
@@ -106,6 +107,126 @@
         } // getAddMovieForm
 
 
+        public function displayPromotions() {
+            $promos = $this->model->getPromotions();
+            $promoHTML = "  <div class='center text-center'>
+                                <h1>Current Promotions</h1>
+                            </div>";
+            
+            // display current promotions
+            foreach($promos as $promo) { 
+                $promoHTML = $promoHTML . "<pre> Promo Code: {$promo['code']}    Discount: {$promo['discount']} </pre>";
+            }
+
+            // display new promo form
+            $promoForm = "<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='POST'>
+                            <input type='hidden' id='postID' name='postID' value='addPromotion'>
+
+                            <div class='row my-3 gy-3'>
+                                <div class='col-md-4'>
+                                    <label for='promo'>Promo-Code</label>
+                                    <input type='text' class='form-control' id='promocode' name='promocode' required>
+                                </div>
+                                <div class='col-md-4'>
+                                    <label for='promo'>Discount</label>
+                                    <input type='text' class='form-control' id='discount' name='discount' required>
+                                </div>
+                            </div>
+                            <button class='w-20 btn btn-lg btn-primary' type='submit'>Add Promotion</button><br>
+                        </form>";
+
+            return $promoHTML . $promoForm;
+
+        } // displayPromotions
+
+
+        public function getCurrentMovies() {
+            $html = "<div class='center text-center'>
+                        <h1>Currently Playing Movies</h1><br>
+                    </div>";
+            $currentMovies = $this->model->getCurrentlyPlayingMovies();
+            $shows = $this->model->getShows();
+            $showRooms = $this->model->getShowRooms();
+            $roomNames = array_column($showRooms, "name", "idRoom"); // create an array with indices as idRoom and value of name
+            $showTimes = $this->model->getShowTimes();
+            $showTimeArr = array_column($showTimes, "showtime", "idShowtime"); // array refrenced by idShowtime with value of showtime
+
+            // display current movies
+            foreach($currentMovies as $rowMovie) {
+                $movieTitle = $rowMovie["title"];
+                $html = $html . "<h2> $movieTitle </h2>" . "<label for='cc_number' class='form-label'> Shows </label>";
+
+                // displaying all showtimes
+                foreach($shows as $rowShow) {
+                    if( $rowShow["movieID"] == $rowMovie["idMovie"] ) {
+                        $html = $html . "<pre> {$roomNames[$rowShow['showroomID']]}    {$rowShow['date']}    {$showTimeArr[$rowShow['showtimeID']]}  </pre>";
+                    } // if
+                } // foreach
+
+                // display new show form
+                $idMovie = $rowMovie['idMovie'];
+                $html = $html . "<form name='addShow' method='POST'>
+                                    <input type='hidden' id='movieID' name='movieID' value=$idMovie>
+                                    <div class='row my-3 gy-3'>
+                                        <div class='col-md-4'>
+                                            <label for='promo'>Showroom</label>
+                                                <select class='form-control' id='showRoom', name='showRoom'> ";
+                                                foreach($showRooms as $room) {
+                                                    $html = $html . "<option> {$room['name']} </option>";
+                                                }
+                $html = $html .                 "</select>
+                                        </div>
+                                        <div class='col-md-4 gy-5 center'>
+                                            <label for='promo'>Show Date</label>
+                                            <input type='date' id='showdate' name='showdate' required>
+                                        </div>
+                                        <div class='col-md-4'>
+                                            <label for='promo'>Showtime</label>
+                                                <select class='form-control' id='showtime', name='showtime'>";
+                                                foreach($showTimes as $time) {
+                                                    $html = $html . "<option> {$time['showtime']} </option>";
+                                                }
+                $html = $html .                 "</select>
+                                        </div>
+                                    </div>
+                                    <button class='w-20 btn btn-lg btn-primary' type='submit'>Add Showtime</button><br>
+                                </form>";
+
+                $html = $html . "<br>";
+
+            } // foreach
+            
+            return $html;
+
+        } // getCurrentMovies
+
+        public function getUpcomingMovies() {
+            $upcomingMovies = $this->model->getUpcomingMovies();
+            $html = "<div class='center text-center'>
+                        <br><h1>Upcoming Movies</h1>
+                    </div>
+                    <div class='row my-3 gy-3'>";
+            foreach($upcomingMovies as $rowMovie) {
+                // display title
+                $movieTitle = $rowMovie["title"];
+                $html = $html . "<div class='col-md-9'> $movieTitle </div>";
+
+                // form to add to current movies
+                $idMovie = $rowMovie['idMovie'];
+                $html = $html . " <div class='col-md-3'>
+                                        <form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='POST'>
+                                            <input type='hidden' id='postID' name='postID' value='updateToCurrentlyPlaying'>
+                                            <input type='hidden' id='movieID' name='movieID' value='$idMovie'>
+                                            <button class='w-20 btn btn-sm btn-primary' type='submit'>Add To Current Movies</button>
+                                        </form>
+                                    </div>
+                                    <br>";
+
+            } // foreach
+
+            return $html;
+
+        } // getUpcomingMovies
 
 
 

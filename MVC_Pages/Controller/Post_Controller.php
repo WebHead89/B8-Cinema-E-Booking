@@ -41,7 +41,46 @@
 
             // redirect to admin home
             header("Location: admin_home.php");
-        }
+        } // add movie
+
+
+        // POST to add a new promotion
+        if($_POST['postID'] == "addPromotion") {
+            // setting all variables from $_POST
+            $promo = $_POST["promocode"];
+            $discount = $_POST["discount"];
+
+            // get all the emails
+            $emailAccounts = $model->getEmails();
+
+            // sql insert statement to update the database 
+            $model->addNewPromo($promo, $discount);
+
+            // add code here to send emails to all users in $emailaccouts
+            foreach($emailAccounts as $account) {
+                // send email to each account
+                echo $account["email"];
+                $email = $account['email'];
+                $subject = "Promo Code";
+                $message = "Your promo code is: $promo and your discount is: $discount";
+                $headers = "From:ebookingcinema2022@gmail.com" . "\r\n";
+                if (mail($email, $subject, $message, $headers)) {
+                    echo "Email successfully sent to $email...";
+                } else {
+                    echo "Email sending failed...";
+                }
+            }
+
+            header("Location: ../admin_home.php");
+
+        } // addPromotion
+
+        if($_POST['postID'] == "updateToCurrentlyPlaying") {
+            // setting all variables from $_POST
+            $movieID = $_POST["movieID"];
+            $model->addCurrentMovie($movieID);
+            header("Location: ../admin_home.php");
+        } // updateToCurrentlyPlaying
 
 
 
