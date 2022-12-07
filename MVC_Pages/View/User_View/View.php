@@ -394,7 +394,7 @@
 						</form>
 
 					</div>";
-			return resetpassword;
+			return $resetpassword;
 		} // getResetPassword
 
 		public function getVerifyPassword() {
@@ -410,7 +410,7 @@
 							</main>
 	    					</div>";
 
-			return verifypassword;
+			return $verifypassword;
 		} // getVerifyPassword
 
 

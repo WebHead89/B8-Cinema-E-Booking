@@ -86,7 +86,9 @@
         } // getLogin
 
 	  public function getSignUp() {
-		$signup = "	<form action='process-signup.php' method='POST'>
+		$signup = "	<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='POST'>
+				<input type='hidden' id='postID' name='postID' value='signup'>
+				
 				<div class='centerBlock form-control'>
 					<main class='form-signin w-100 m-auto'>
 
@@ -139,6 +141,23 @@
 				</form>";
 		return $signup;
 	  } //getSignUp
+
+	  public function getSignupSuccess() {
+		$signupsuccess = "<div class='centerText'>
+						<h1 style='color:white;'>Sign up Success!</h1>
+
+						<form action='home.php' method='POST'>
+							<button class='btn btn-lg btn-primary' type='submit'>Back to Home</button>
+						</form>
+
+						<br>
+
+						<form action='login.php' method='POST'>
+							<button class='btn btn-lg btn-primary' type='submit'>Log in</button>
+						</form>
+					</div>";
+		return $signupsuccess;
+	  }
 
 		public function getResetPassword() {
 			$resetpassword = "<div class='centerBlock form-control'>

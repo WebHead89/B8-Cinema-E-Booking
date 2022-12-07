@@ -120,6 +120,45 @@
             $stmt = $this->mysqli->prepare("UPDATE `movies_table` SET `isCurrentlyPlaying` = '1' WHERE `movies_table`.`idMovie` = $id;");
             $stmt->execute();
         }
+
+	  public function signup($first_name, $last_name, $phone, $email, $password_hash, $promo, $hash) {
+		$sql = "INSERT INTO user(first_name, last_name, phone, email, password, promo, emailHash, status)
+        		VALUES(?, ?, ?, ?, ?, ?, ?, 2)";
+
+		// init for sql execution
+		$stmt = $this->mysqli->stmt_init();
+
+		// print error statement and die if problems preparing
+		if ( ! $stmt->prepare($sql)) {
+   		 die("SQL error: " . $this->mysqli->error);
+		}
+
+		$stmt->bind_param("sssssis",
+                  $_POST['first_name'],
+                  $_POST['last_name'],
+                  $_POST['phone'],
+                  $_POST['email'],
+                  $password_hash,
+                  $promo,
+                  $hash);
+
+
+		// execute statement and catch exception for duplicate emails                   
+		try {
+    			if ($stmt->execute()) {
+    
+        			header("Location: ../signup-success.php");
+        			exit;
+
+   			 }
+		} catch (Exception $e) {
+
+    			echo "Duplicate Email. \n";
+    			die($mysqli->error . " " . $mysqli->errno);
+
+		}
+
+	  }
        
         public function resetPassword() {	
 		$sql = "UPDATE user SET emailHash = ? WHERE email = ?";
