@@ -389,7 +389,7 @@
        					 <label for='email'>Current Email:  </label>  
 						</div>
 
-     						 <button type='submit' class="'-100 btn btn-lg btn-primary'>Send Password Reset Link</button>
+     						 <button type='submit' class='-100 btn btn-lg btn-primary'>Send Password Reset Link</button>
 
 						</form>
 
@@ -398,14 +398,14 @@
 		} // getResetPassword
 
 		public function getVerifyPassword() {
-			$verifypassword = "<div class="centerBlock form-control">
-							<main class="form-signin w-100 m-auto">
+			$verifypassword = "<div class='centerBlock form-control'>
+							<main class='form-signin w-100 m-auto'>
  								<form method='POST'>
 
-				   			 		<h1 class="h3 mb-3 fw-normal">Change Password</h1>
+				   			 		<h1 class='h3 mb-3 fw-normal'>Change Password</h1>
       	       		 				<label for='password' style='color: black'>New Password: </label>
             				 			<input type='text' value='' name='password'><br><br>
-            			 				<button  class="w-100 btn btn-lg btn-primary" type='submit' name='submit'>Submit</button>
+            			 				<button  class='w-100 btn btn-lg btn-primary' type='submit' name='submit'>Submit</button>
         							</form>
 							</main>
 	    					</div>";
