@@ -39,15 +39,11 @@
 												Account
 											</a>
 											<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdownMenuLink'>
-											<?php
-												if (isset($_SESSION['user_id'])) {
-													echo '<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>';
-													echo '<li><a class='dropdown-item' href='logout.php'>Logout</a></li>';
-												} else {
-													echo '<li><a class='dropdown-item' href='login.php'>Login</a></li>';
-													echo '<li><a class='dropdown-item' href='signup.html'>Register</a></li>';
-												}
-												?>
+
+													<li><a class='dropdown-item' href='login.php'>Login</a></li>
+													<li><a class='dropdown-item' href='signup.php'>Register</a></li>
+												
+												
 											</ul>
 										</div>
 									</div>
@@ -89,6 +85,61 @@
             return $login;
         } // getLogin
 
+	  public function getSignUp() {
+		$signup = "	<form action='process-signup.php' method='POST'>
+				<div class='centerBlock form-control'>
+					<main class='form-signin w-100 m-auto'>
+
+						<h1 class='h3 mb-3 fw-normal'>Sign Up</h1>
+
+						<div class='form-floating'>
+							<input type='text' class='form-control' id='first_name', name='first_name'>
+							<label for='first_name'>First Name</label>
+						</div>
+
+						<div class='form-floating'>
+							<input type='text' class='form-control' id='last_name', name='last_name'>
+							<label for='last_name'>Last Name</label>
+						</div>
+
+						<div class='form-floating'>
+							<input type='text' class='form-control' id='phone', name='phone'>
+							<label for='floatingInput'>Phone Number</label>
+						</div>
+		
+						<div class='form-floating'>
+							<input type='email' class='form-control' id='email', name='email'>
+							<label for='floatingInput'>Email</label>
+						</div>
+
+	
+						<div class='form-floating'>
+							<input type='password' class='form-control' id='password', name='password'>
+							<label for='floatingPassword'>Password</label>
+						</div>
+
+						<input type='checkbox' onclick='myFunction()'>Show Password
+
+
+						<div class='form-floating'>
+							<input type='password' class='form-control' id='password_confirmation', name='password_confirmation'>
+							<label for='floatingPassword'>Confirm Password</label>
+						</div>
+
+						<label for='promo'>Sign up for promotion?</label>
+						<select class='form-control' id='promo', name='promo'>
+							<option>Yes</option>
+							<option>No</option>
+						</select>
+						<br>
+						<button class='w-100 btn btn-lg btn-primary'>Sign up</button>
+
+					</main>
+				</div>
+				</form>";
+		return $signup;
+	  } //getSignUp
+
 		public function getResetPassword() {
 			$resetpassword = "<div class='centerBlock form-control'>
 						<main class='form-signin w-100 m-auto'>
@@ -108,7 +159,7 @@
 						</form>
 
 					</div>";
-			return resetpassword;
+			return $resetpassword;
 		} // getResetPassword
 
 		public function getVerifyPassword() {
@@ -124,7 +175,7 @@
 							</main>
 	    					</div>";
 
-			return verifypassword;
+			return $verifypassword;
 		} // getVerifyPassword
 
 
