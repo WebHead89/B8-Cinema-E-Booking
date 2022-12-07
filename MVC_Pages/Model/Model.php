@@ -159,10 +159,19 @@
 		}
 
 	  }
+
+	  public function getLoginInfo($email) {
+   		 $sql = sprintf("SELECT * FROM user WHERE email = '%s'", $this->mysqli->real_escape_string($email));
+		$result = $this->mysqli->query($sql);
+	   	$user = $result->fetch_assoc();		
+		return $user;	 
+	  } //getLoginInfo
        
+
+   
         public function resetPassword() {	
 		$sql = "UPDATE user SET emailHash = ? WHERE email = ?";
-    		$stmt = $mysqli->prepare($sql);
+    		$stmt = $this->mysqli->prepare($sql);
     		$stmt->bind_param("ss", $hash, $email);
    		$stmt->execute();
 	  }

@@ -152,6 +152,35 @@
 
 	  } // signup	
 
+	   if($_POST['postID'] == "login") {
+		// setting all variables from $_POST
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$user = $model->getLoginInfo($email);
+		if ($user) {
+
+      		if (password_verify($_POST["password"], $user["password"]) && $user['status'] == 1) {
+
+		      	session_start();
+  	      		$_SESSION["user_id"] = $user["id"];
+        
+        			if($user["admin"] == 0) {
+          				header("Location: home.php");
+        			} else {
+          				header("Location: admin_home.php");
+        			}
+ 
+      		} elseif ($user["status"] == 2) {
+	
+ 				echo '
+        			<script type="text/JavaScript">
+          				alert("You must confirm your email before logging in.");
+        			</script>';
+      		}
+		}
+    		$is_invalid = true;
+	   } // login 
+
 
 	  if($_POST['postID'] == "sendResetPassword") {
             // setting all variables from $_POST

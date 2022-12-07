@@ -55,8 +55,9 @@
 
         public function getLogin() {
             $login = "<div class='centerBlock form-control'>
-								<main class='form-signin w-100 m-auto'>
-								  <form method='post'>
+						<main class='form-signin w-100 m-auto'>
+								<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='post'>
+								<input type='hidden' id='postID' name='postID' value='login'>
 									<h1 class='h3 mb-3 fw-normal'>Login</h1>
 
 							  <?php if ($is_invalid): ?>
