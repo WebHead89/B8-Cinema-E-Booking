@@ -1,5 +1,5 @@
 <?php
-include("View/User_View/View.php");
+include("View/Guest_View/View.php");
 session_start();
 
 $view = new View();
