@@ -120,6 +120,13 @@
             $stmt = $this->mysqli->prepare("UPDATE `movies_table` SET `isCurrentlyPlaying` = '1' WHERE `movies_table`.`idMovie` = $id;");
             $stmt->execute();
         }
+       
+        public function resetPassword() {	
+		$sql = "UPDATE user SET emailHash = ? WHERE email = ?";
+    		$stmt = $mysqli->prepare($sql);
+    		$stmt->bind_param("ss", $hash, $email);
+   		$stmt->execute();
+	  }
     }
 
 

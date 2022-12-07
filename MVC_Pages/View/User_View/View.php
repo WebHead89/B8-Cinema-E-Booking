@@ -375,7 +375,43 @@
 		} // getCheckoutConfirmation
 
 
+		public function getResetPassword() {
+			$resetpassword = "<div class='centerBlock form-control'>
+						<main class='form-signin w-100 m-auto'>
+						<h1 style='color:white;font-size:20px;'>Fill in the following field(s) to get a link to reset your password</h1>
+	
+						<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='POST'>
+							<input type='hidden' id='postID' name='postID' value='sendResetPassword'>
 
+						<div class='form-floating'>
+	
+	 					 <input type='text' class='form-control' id='email' name='email'><br>
+       					 <label for='email'>Current Email:  </label>  
+						</div>
+
+     						 <button type='submit' class="'-100 btn btn-lg btn-primary'>Send Password Reset Link</button>
+
+						</form>
+
+					</div>";
+			return resetpassword;
+		} // getResetPassword
+
+		public function getVerifyPassword() {
+			$verifypassword = "<div class="centerBlock form-control">
+							<main class="form-signin w-100 m-auto">
+ 								<form method='POST'>
+
+				   			 		<h1 class="h3 mb-3 fw-normal">Change Password</h1>
+      	       		 				<label for='password' style='color: black'>New Password: </label>
+            				 			<input type='text' value='' name='password'><br><br>
+            			 				<button  class="w-100 btn btn-lg btn-primary" type='submit' name='submit'>Submit</button>
+        							</form>
+							</main>
+	    					</div>";
+
+			return verifypassword;
+		} // getVerifyPassword
 
 
     } // View
