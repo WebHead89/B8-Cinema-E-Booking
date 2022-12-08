@@ -23,7 +23,7 @@ $view = new View();
 <?php
 
 // display the navbar
-echo $view->getNavbar();
+echo $view->getUserNavBar_NotHome();
 
 // display the form
 echo $view->getEditProfile();

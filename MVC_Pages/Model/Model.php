@@ -307,6 +307,19 @@
             $tickets = $result->fetch_all(MYSQLI_ASSOC);
             return $tickets;
         }
+
+        public function updateUserInfo($first_name, $last_name, $phone, $password_hash, $promo, $address, $city, $state, $zip, $id) {
+            $stmt = $this->mysqli->stmt_init();
+            $stmt = $this->mysqli->prepare("UPDATE user SET first_name='$first_name', last_name='$last_name', phone='$phone', password='$password_hash', promo='$promo', address='$address', city='$city', state='$state', zip='$zip' WHERE id='$id'");
+            $stmt->execute();
+        }
+
+        public function createNewPaymentCard($cardNum, $expiration, $userID) {
+            $stmt = $this->mysqli->stmt_init();
+            $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '$userID');";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+        }
     }
 
 
