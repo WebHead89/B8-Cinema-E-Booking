@@ -304,7 +304,54 @@
 
         }
 
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //Edit Profile POSTS                                                                                              
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        if($_POST['postID'] == "editProfile") {
+            // setting all variables from $_POST
+            $first_name=$_POST["first_name"];
+            $last_name=$_POST["last_name"];
+            $phone=$_POST["phone"];
+            $address=$_POST["address"];
+            $city=$_POST["city"];
+            $state=$_POST["state"];
+            $zip=$_POST["zip"];
+            $id=$_SESSION["user_id"];
+            $password= $_POST["password"];
 
+            // Password hash to store credit card # securely
+            // $cc_hash = password_hash($_POST["cc_number"], PASSWORD_DEFAULT);
+
+            // if there is a new credit cardnum and epiration date, then create the new credit card
+            $newCardNum = $_POST["cc_number"];
+            $newCardExpire = $_POST["cc_expiration"];
+
+            if($newCardExpire != "" AND $newCardNum != "") {
+                $model->createNewPaymentCard($newCardNum, $newCardExpire, $id);
+            }
+
+            // get password from DB, check if equal, if not then update the password
+            $user = $model->getUserInfo($id);
+            $current_password_hash = $user["password"];
+
+            $password_hash;
+            if($password == $current_password_hash) {
+                $password_hash = $password;
+            } else {
+                $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            }
+
+            // Set promo value to a variable
+            if ($_POST["promo"] == "Yes") {
+                $promo = 1;
+            } else {
+                $promo = 0;
+            }
+            
+            $model->updateUserInfo($first_name, $last_name, $phone, $password_hash, $promo, $address, $city, $state, $zip, $id);
+            header("Location: ../editprofile.php");
+        }
+  
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //Other POSTS                                                                                              
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

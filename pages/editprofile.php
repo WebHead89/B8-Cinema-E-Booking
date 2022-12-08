@@ -163,12 +163,12 @@ $sql = "SELECT * FROM payment_card_table
 
               <div class="col-md-6">
                 <label for="cc_number" class="form-label">Credit card number</label>
-                <input type="text" class="form-control" id="cc_number" name="cc_number" value="<?php echo $cardNum ?>">
+                <input type="text" class="form-control" value="<?php echo $cardNum ?>">
               </div>
 
               <div class="col-md-3">
                 <label for="cc_expiration" class="form-label">Expiration</label>
-                <input type="text" class="form-control" id="cc_expiration" name="cc_expiration" value="<?php echo $expireDate ?>">
+                <input type="text" class="form-control"  value="<?php echo $expireDate ?>">
               </div>
 
             <?php } ?>

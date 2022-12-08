@@ -13,17 +13,26 @@ $city=$_POST["city"];
 $state=$_POST["state"];
 $zip=$_POST["zip"];
 $id=$_SESSION["user_id"];
+$password= $_POST["password"];
 
 // Password hash to store credit card # securely
-$cc_hash = password_hash($_POST["cc_number"], PASSWORD_DEFAULT);
+// $cc_hash = password_hash($_POST["cc_number"], PASSWORD_DEFAULT);
 
-// Password hash to store password securely
-$password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+// if there is a new credit cardnum and epiration date, then create the new credit card
+
 
 // get password from DB, check if equal, if not then update the password
-$sql = "SELECT * FROM `tickets_table` WHERE `bookingID` = $bookingID";
-$result = $this->mysqli->query($sql);
-$tickets = $result->fetch_all(MYSQLI_ASSOC);
+$sql = "SELECT * FROM `user` WHERE `id` = $id";
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
+$current_password_hash = $user["password"];
+
+$password_hash;
+if($password == $current_password_hash) {
+    $password_hash = $password;
+} else {
+    $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
+}
 
 // temp+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /*

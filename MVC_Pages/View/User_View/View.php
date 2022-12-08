@@ -532,6 +532,137 @@
 		} // getCheckout
 
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// EditProfile View
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		public function getEditProfile() {
+			// get USER info
+			$user = $this->model->getUserInfo($_SESSION["user_id"]);
+
+			// set USER variables
+			$userID = $_SESSION["user_id"];
+			$first_name = $user["first_name"];
+			$last_name = $user["last_name"];
+			$phone = $user["phone"];
+			$password = $user["password"];
+			$address = $user["address"];
+			$city = $user["city"];
+			$state = $user["state"];
+			$zip = $user["zip"];
+
+			$html = "<div class='container form-control form-block'>
+							<div class='center'>
+							<h1>Hello $first_name</h1>
+						<form action='Controller/Post_Controller.php' method='POST'>
+							<input type='hidden' id='postID' name='postID' value='editProfile'>
+									<div class='col-sm-6'>
+									  <label for='first_name' class='form-label'>Edit First name</label>
+									  <input type='text' class='form-control' id='first_name' name='first_name' value='$first_name '>
+									</div>
+
+									<div class='col-sm-6'>
+									  <label for='last_name' class='form-label'>Edit Last name</label>
+									  <input type='text' class='form-control' id='last_name' name='last_name' value='$last_name'>
+							  </div>
+								
+								<label for='phone'>Edit phone number:<br></label>
+								<input type='text' class='form-control' id='phone' name='phone' value='$phone'>
+								
+								<label for='floatingPassword'>Edit password:</label>
+								<input type='password' class='form-control' id='password' name='password' value='$password'>
+								
+								<label for='floatingPassword'>Confirm password:</label>
+								<input type='password' class='form-control' id='password_confirmation' name='password_confirmation' value='$password'>
+								<br>
+
+							<label for='promo'>Sign up for promotion?</label>
+										<select class='form-control' id='promo', name='promo'>
+											<option>Yes</option>
+											<option>No</option>
+										</select>
+							<br>
+							<h2>Edit Billing Address</h2>
+
+							<div class='my-3'>
+
+							  <div class='row gy-3'>
+
+								<div class='col-md-6'>
+								  <label for='address' class='form-label'>Address Line:</label>
+								  <input type='text' class='form-control' id='address' name='address' value='$address'>
+								</div>
+
+								<div class='col-md-6'>
+								  <label for='city' class='form-label'>City:</label>
+								  <input type='text' class='form-control' id='city' name='city' value='$city'>
+								</div>
+
+								<div class='col-md-6'>
+								  <label for='state' class='form-label'>State:</label>
+								  <input type='text' class='form-control' id='state' name='state' value='$state'>
+								</div>
+
+								<div class='col-md-3'>
+								  <label for='zip' class='form-label'>Zip Code:</label>
+								  <input type='text' class='form-control' id='zip' name='zip' value='$zip'>
+								</div>
+
+							  </div>
+						</div>
+
+								<h2>Save Payment Information</h2>
+
+								<div class='my-3'>
+
+								  <div class='row gy-3'>";
+								  	$counter = 0;
+									$paymentCards = $this->model->getPaymentCards($userID);
+									foreach($paymentCards as $paymentCard) { 
+										$counter++;
+										$idPaymentCard = $paymentCard['idPaymentCard']; // use this to update the database
+										$cardNum = $paymentCard['cardNum'];
+										$expireDate = $paymentCard['experationDate'];
+									  
+
+			$html = $html . 		  "<div class='col-md-6'>
+										<label for='cc_number' class='form-label'>Credit card number</label>
+										<input type='text' class='form-control' id='cc_number' name='cc_number' value='$cardNum'>
+									  </div>
+
+									  <div class='col-md-3'>
+										<label for='cc_expiration' class='form-label'>Expiration</label>
+										<input type='text' class='form-control' id='cc_expiration' name='cc_expiration' value='$expireDate'>
+									  </div>";
+
+									}
+			$html = $html . 		"</div>";
+
+									if($counter != 3) { 
+										// if the textboxes are not null then create a new row in the table for credit cards
+			$html = $html .				"<div class='row gy-3'>
+
+											<div class='col-md-6'>
+												<label for='cc_number' class='form-label'>Credit card number</label>
+												<input type='text' class='form-control' id='cc_number' name='cc_number' >
+											</div>
+
+											<div class='col-md-3'>
+												<label for='cc_expiration' class='form-label'>Expiration</label>
+												<input type='text' class='form-control' id='cc_expiration' name='cc_expiration' >
+											</div>
+
+										</div>";
+								  	}
+			$html = $html .		"</div>";
+								
+			$html = $html . "<button class='w-100 btn btn-lg btn-primary' type='submit'>Confirm</button>
+								</form>
+							</div>
+						</div>";
+			return $html;
+		} // getEditProfile
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// HomePage View
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -606,128 +737,6 @@
             return $login;
         } // getLogin
 		
-		public function getEditProfile() {
-			$editProf = "<div class='container form-control form-block'>
-							<div class='center'>
-							<h1>Hello <?php echo $first_name ?></h1>
-								<form action='process-profile.php' method='POST'>
-								
-									<div class='col-sm-6'>
-									  <label for='first_name' class='form-label'>Edit First name</label>
-									  <input type='text' class='form-control' id='first_name' name='first_name' value='<?php echo $first_name ?>'>
-									</div>
-
-									<div class='col-sm-6'>
-									  <label for='last_name' class='form-label'>Edit Last name</label>
-									  <input type='text' class='form-control' id='last_name' name='last_name' value='<?php echo $last_name ?>'>
-							  </div>
-								
-								<label for='phone'>Edit phone number:<br></label>
-								<input type='text' class='form-control' id='phone' name='phone' value='<?php echo $phone ?>'>
-								
-								<label for='floatingPassword'>Edit password:</label>
-								<input type='password' class='form-control' id='password' name='password' value='<?php echo $password ?>'>
-								
-								<label for='floatingPassword'>Confirm password:</label>
-								<input type='password' class='form-control' id='password_confirmation' name='password_confirmation' value='<?php echo $password ?>'>
-								<br>
-
-							<label for='promo'>Sign up for promotion?</label>
-										<select class='form-control' id='promo', name='promo'>
-											<option>Yes</option>
-											<option>No</option>
-										</select>
-								
-							<h2>Edit Billing Address</h2>
-
-							<div class='my-3'>
-
-							  <div class='row gy-3'>
-
-								<div class='col-md-6'>
-								  <label for='address' class='form-label'>Address Line:</label>
-								  <input type='text' class='form-control' id='address' name='address' value='<?php echo $address ?>'>
-								</div>
-
-								<div class='col-md-6'>
-								  <label for='city' class='form-label'>City:</label>
-								  <input type='text' class='form-control' id='city' name='city' value='<?php echo $city ?>'>
-								</div>
-
-								<div class='col-md-6'>
-								  <label for='state' class='form-label'>State:</label>
-								  <input type='text' class='form-control' id='state' name='state' value='<?php echo $state ?>'>
-								</div>
-
-								<div class='col-md-3'>
-								  <label for='zip' class='form-label'>Zip Code:</label>
-								  <input type='text' class='form-control' id='zip' name='zip' value='<?php echo $zip ?>'>
-								</div>
-
-							  </div>
-
-
-
-						</div>
-
-
-								
-								<h2>Save Payment Information</h2>
-
-								<div class='my-3'>
-
-								  <div class='row gy-3'>
-									<?php while($row = $result->fetch_assoc()) { ?>
-									  <?php
-										$counter++;
-										$idPaymentCard = $row['idPaymentCard']; // use this to update the database
-										$cardNum = $row['cardNum'];
-										$expireDate = $row['experationDate'];
-									  ?>
-
-									  <div class='col-md-6'>
-										<label for='cc_number' class='form-label'>Credit card number</label>
-										<input type='text' class='form-control' id='cc_number' name='cc_number' value='<?php echo $cardNum ?>'>
-									  </div>
-
-									  <div class='col-md-3'>
-										<label for='cc_expiration' class='form-label'>Expiration</label>
-										<input type='text' class='form-control' id='cc_expiration' name='cc_expiration' value='<?php echo $expireDate ?>'>
-									  </div>
-
-									<?php } ?>
-								  </div>
-
-								  <?php if($counter != 3) { ?>
-									<?php // if the textboxes are not null then create a new row in the table for credit cards ?>
-									<div class='row gy-3'>
-
-									  <div class='col-md-6'>
-										<label for='cc_number' class='form-label'>Credit card number</label>
-										<input type='text' class='form-control' id='cc_number' name='cc_number' >
-									  </div>
-
-									  <div class='col-md-3'>
-										<label for='cc_expiration' class='form-label'>Expiration</label>
-										<input type='text' class='form-control' id='cc_expiration' name='cc_expiration' >
-									  </div>
-
-									</div>
-								  
-								  <?php } ?>
-							</div>
-								
-								<button class='w-100 btn btn-lg btn-primary' type='submit'>Confirm</button>
-
-								</form>
-								
-							
-							
-							
-							</div>
-						</div>"
-			return editProf;
-		} // getEditProfile
 		*/
 		
 		public function getCheckoutConfirmation() {
