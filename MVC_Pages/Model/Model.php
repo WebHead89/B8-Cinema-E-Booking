@@ -279,6 +279,34 @@
             $result = $this->mysqli->query($sql);
             return $result;
         }
+
+        public function getBookings($userID) {
+            $sql = "SELECT * FROM `booking_table` WHERE `customerID` = $userID;";
+            $result = $this->mysqli->query($sql);
+            $bookings = $result->fetch_all(MYSQLI_ASSOC);
+            return $bookings;
+        }
+
+        public function getShow($showID) {
+            $sql = "SELECT * FROM `show_table` WHERE `idShow` = $showID;";
+            $result = $this->mysqli->query($sql);
+            $show = $result->fetch_assoc();
+            return $show;
+        }
+
+        public function getMovie($id) {
+            $sql = "SELECT * FROM `movies_table` WHERE `idMovie` = $id";
+            $result = $this->mysqli->query($sql);
+            $movie = $result->fetch_assoc();
+            return $movie;
+        }
+
+        public function getTickets($bookingID) {
+            $sql = "SELECT * FROM `tickets_table` WHERE `bookingID` = $bookingID";
+            $result = $this->mysqli->query($sql);
+            $tickets = $result->fetch_all(MYSQLI_ASSOC);
+            return $tickets;
+        }
     }
 
 

@@ -1,6 +1,9 @@
 <?php 
 session_start();
 
+// require database.php for database connection
+$mysqli = require __DIR__ . "/database.php";
+
 // setting all variables from $_POST
 $first_name=$_POST["first_name"];
 $last_name=$_POST["last_name"];
@@ -17,16 +20,31 @@ $cc_hash = password_hash($_POST["cc_number"], PASSWORD_DEFAULT);
 // Password hash to store password securely
 $password_hash = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
+// get password from DB, check if equal, if not then update the password
+$sql = "SELECT * FROM `tickets_table` WHERE `bookingID` = $bookingID";
+$result = $this->mysqli->query($sql);
+$tickets = $result->fetch_all(MYSQLI_ASSOC);
+
+// temp+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
+$password_hash = password_hash("password", PASSWORD_DEFAULT);
+$first_name="Ben";
+$last_name="Prestel";
+$phone="";
+$address="";
+$city="";
+$state="";
+$zip="";
+$id=34;
+*/
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 // Set promo value to a variable
 if ($_POST["promo"] == "Yes") {
     $promo = 1;
 } else {
     $promo = 0;
 }
-
-
-// require database.php for database connection
-$mysqli = require __DIR__ . "/database.php";
 
 // sql insert statement to update the database 
 $stmt = $mysqli->stmt_init();

@@ -333,6 +333,72 @@
 		}
 
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// ViewBooking Views
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		public function getBookings($userID) {
+			// get user info
+			$user = $this->model->getUserInfo($userID);
+			$userID = $user["id"];
+
+			// get bookings for user
+			$bookings = $this->model->getBookings($userID);
+
+			// get showrooms
+			$showRooms = $this->model->getShowRooms();
+			$roomNames = array_column($showRooms, "name", "idRoom");
+
+			// get showtimes
+			$showTimes = $this->model->getShowTimes();
+			$showTimeArr = array_column($showTimes, "showtime", "idShowtime");
+
+			// create HTML
+			$html = "<div class='container form-control form-block'>
+						<h1> Bookings </h1>
+						<hr class='my-4'>";
+
+			if($bookings) {
+				foreach($bookings as $booking) {
+					// print booking
+					$html = $html . "BookingID: " . $booking["idBooking"] . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Total Price: $" . $booking["totalPrice"] . "<br>";
+					// print show, date, time, room
+					// get the show
+					$showID = $booking["showID"];
+					$show = $this->model->getShow($showID);
+					$showTime = $show["showtimeID"];
+                    $showRoom = $show["showroomID"];
+
+					// get the movie
+					$movie = $this->model->getMovie($show["movieID"]);
+
+					// print show info
+					$html = $html . "ShowID: " . $showID . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Movie: " . $movie["title"] 
+						. "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowDate: " . $show["date"]
+						. "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowTime: " . $showTimeArr[$showTime]
+						. "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp ShowRoom: " . $roomNames[$showRoom] . "<br>";
+
+					// print tickets
+					$html = $html. "Tickets<br>";
+						// get the tickets
+						$bookingID = $booking["idBooking"];
+						$tickets = $this->model->getTickets($bookingID);
+						foreach($tickets as $ticket) {
+							$html = $html . "Seat: " . $ticket["seatNumber"] . "<br>";
+						}
+	
+					$html = $html . "<hr class='my-4'>";
+						
+				}
+			} else {
+				return "No bookings.";
+			}
+					
+			$html = $html . "</div>";
+
+			return $html;
+
+		}
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Checkout View
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		public function getCheckout() {
