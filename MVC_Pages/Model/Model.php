@@ -191,46 +191,81 @@
         return $seats;
     }
 
-    public function getTicketPrices() {
-        $sql = "SELECT * FROM `ticket_type`;";
-        $result = $this->mysqli->query($sql);
-        $ticketTypes = $result->fetch_all(MYSQLI_ASSOC);
-        $ticketPrices = array_column($ticketTypes, "price", "type");
-        return $ticketPrices;
-    }
+        public function getTicketPrices() {
+            $sql = "SELECT * FROM `ticket_type`;";
+            $result = $this->mysqli->query($sql);
+            $ticketTypes = $result->fetch_all(MYSQLI_ASSOC);
+            $ticketPrices = array_column($ticketTypes, "price", "type");
+            return $ticketPrices;
+        }
 
-    public function searchPromoCode($code) {
-        $sql = "SELECT * FROM `promotions_table` WHERE `code` = '$code';";
-        $result = $this->mysqli->query($sql);
-        $promo = $result->fetch_assoc();
-        return $promo;
-    }
+        public function searchPromoCode($code) {
+            $sql = "SELECT * FROM `promotions_table` WHERE `code` = '$code';";
+            $result = $this->mysqli->query($sql);
+            $promo = $result->fetch_assoc();
+            return $promo;
+        }
 
-    public function getUserInfo($id) {
-        $sql = "SELECT * FROM user WHERE id = $id";
-        $result = $this->mysqli->query($sql);
-        $user = $result->fetch_assoc();
-        return $user;
-    }
+        public function getUserInfo($id) {
+            $sql = "SELECT * FROM user WHERE id = $id";
+            $result = $this->mysqli->query($sql);
+            $user = $result->fetch_assoc();
+            return $user;
+        }
 
-    public function getPaymentCards($id) {
-        $sql = "SELECT * FROM `payment_card_table` WHERE `userID` = $id;";
-        $result = $this->mysqli->query($sql);
-        $paymentCards = $result->fetch_all(MYSQLI_ASSOC);
-        return $paymentCards;
-    } 
+        public function getPaymentCards($id) {
+            $sql = "SELECT * FROM `payment_card_table` WHERE `userID` = $id;";
+            $result = $this->mysqli->query($sql);
+            $paymentCards = $result->fetch_all(MYSQLI_ASSOC);
+            return $paymentCards;
+        } 
 
-    public function createOneTimePaymentCard() {
-        // create new payment Card, set user ID to -1, meaning 1 time card
-        $stmt = $this->mysqli->stmt_init();
-        $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '-1');";
-        $stmt = $mysqli->prepare($sql);
-        $stmt->execute();
-    }
+        public function createOneTimePaymentCard($cardNum, $expiration) {
+            // create new payment Card, set user ID to -1, meaning 1 time card
+            $stmt = $this->mysqli->stmt_init();
+            $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '-1');";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+        }
 
-    public function getIdPaymentCard() {
+        public function getIdPaymentCard($cardNum) {
+            $sql = "SELECT * FROM `payment_card_table` WHERE `cardNum` = $cardNum;";
+            $result = $this->mysqli->query($sql);
+            $card = $result->fetch_assoc();
+            $idCard = $card["idPaymentCard"];
+            return $idCard;
+        }
 
-    }
+        public function createBooking($totalPrice, $showID, $paymentID, $promoID, $userID) {
+            $stmt = $this->mysqli->stmt_init();
+            $sql = "INSERT INTO `booking_table` (`idBooking`, `totalPrice`, `showID`, `paymentID`, `promoID`, `customerID`) VALUES (NULL, '$totalPrice', 
+                      '$showID', '$paymentID', '$promoID', '$userID');";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+        }
+
+        public function getBookingID($totalPrice, $showID, $paymentID, $promoID, $userID) {
+            $sql = "  SELECT * FROM `booking_table` WHERE `totalPrice` = $totalPrice AND `showID` = $showID AND `paymentID` = $paymentID AND 
+                      `customerID` = $userID AND `promoID` = $promoID";
+            $result = $this->mysqli->query($sql);
+            $booking = $result->fetch_assoc();
+            $bookingID = $booking["idBooking"];
+            return $bookingID;
+        }
+
+        public function createTicket($bookingID, $seat) {
+            $stmt = $this->mysqli->stmt_init();
+              $sql = "INSERT INTO `tickets_table` (`idTicket`, `bookingID`, `seatNumber`) VALUES (NULL, '$bookingID', '$seat');";
+              $stmt = $this->mysqli->prepare($sql);
+              $stmt->execute();
+        }
+
+        public function updateSeat($seat, $showID) {
+            $stmt = $this->mysqli->stmt_init();
+            $sql = "UPDATE `seats_table` SET `isReserved` = '1' WHERE `seats_table`.`seatNumber` = $seat AND `seats_table`.`showID` = $showID;";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->execute();
+        }
     }
 
 

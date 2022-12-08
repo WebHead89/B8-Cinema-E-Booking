@@ -240,17 +240,69 @@
             $expiration = $_POST['expiration'];
             
             // create new card
-            $model->createOneTimePaymentCard();
-            // get ID of card
-            $sql = "SELECT * FROM `payment_card_table` WHERE `cardNum` = $cardNum;";
-            $result = $mysqli->query($sql);
-            $card = $result->fetch_assoc();
-            $idCard = $card["idPaymentCard"];
+            $model->createOneTimePaymentCard($cardNum, $expiration);
         
             // set paymentID for booking info
-            $paymentID = $idCard;
+            $paymentID = $model->getIdPaymentCard($cardNum);
             $checkout = true;
-          }
+        }
+
+          if($checkout) {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            // get total price
+            $ticketPrices = $model->getTicketPrices();
+
+			// get total price
+			$childPrice = $ticketPrices["CHILD"];
+			$adultPrice = $ticketPrices["ADULT"];
+			$seniorPrice = $ticketPrices["SENIOR"];
+			$totalPrice = $childPrice * $bookingInfo->childTickets + $adultPrice * $bookingInfo->adultTickets + $seniorPrice * $bookingInfo->seniorTickets;
+
+            // get promoID
+            $promo = $model->searchPromoCode($bookingInfo->promoCode);
+            if($promo) {
+                $promoID = $promo["idPromotions"];
+            }
+
+            // get userID
+            $userInfo = $model->getUserInfo($_SESSION["user_id"]);
+			$userID = $userInfo["id"];
+
+            // create booking
+            $model->createBooking($totalPrice, $bookingInfo->showID, $paymentID, $promoID, $userID);
+          
+            // get bookingID
+            $bookingID = $model->getBookingID($totalPrice, $bookingInfo->showID, $paymentID, $promoID, $userID);
+     
+            // create tickets
+            foreach($bookingInfo->selectedSeatsArray as $seat) {
+                $model->createTicket($bookingID, $seat);
+            }
+          
+            // update the seats table to reserved for the show
+            foreach($bookingInfo->selectedSeatsArray as $seat) {
+                $model->updateSeat($seat, $bookingInfo->showID);
+            }
+
+            // SEND EMAIL OF BOOKING CONFIRMATION
+
+            // reset the bookingInfo session class
+            $bookingInfo->showID = -1;
+            unset($bookingInfo->selectedSeatsArray);
+            $bookingInfo->selectedSeatsArray = array();
+            // set the ticket types
+            $bookingInfo->childTickets = 0;
+            $bookingInfo->adultTickets = 0;
+            $bookingInfo->seniorTickets = 0;
+            // reset promo
+            $bookingInfo->promoDiscount = 0;
+            $bookingInfo->promoCode = "";
+
+
+            // send to confirmation page
+            header("Location: checkoutSuccess.php");
+
+        }
 
 
         //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
