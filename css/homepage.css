@@ -5,7 +5,7 @@
 
 #bg { 
     /* The image used */
-    background-image: url("../assets/wallpaper.jpg");
+    background-image: url("../MVC_Pages/Controller/Assets/wallpaper.jpg");
   
     /* Full height */
     height: 100%; 
