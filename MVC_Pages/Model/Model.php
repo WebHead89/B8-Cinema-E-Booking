@@ -266,6 +266,19 @@
             $stmt = $this->mysqli->prepare($sql);
             $stmt->execute();
         }
+        
+        public function getNumMovies() {
+            $sql = "SELECT * FROM `movie_table`;";
+            $result = $this->mysqli->query($sql);
+            $numMovies = $result->num_rows;
+            return $numMovies;
+        }
+
+        public function getMovies() {
+            $sql = "SELECT * FROM `movie_table`;";
+            $result = $this->mysqli->query($sql);
+            return $result;
+        }
     }
 
 

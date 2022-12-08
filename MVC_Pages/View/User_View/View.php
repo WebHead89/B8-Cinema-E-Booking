@@ -6,6 +6,7 @@
     class View {
         private $model;
 		private $bookingInfo;
+		private $categories;
 
         public function __construct() {
             $this->model = new Model();
@@ -13,6 +14,7 @@
 				$_SESSION['bookingInfo'] = Singleton::getInstance();
 			}
 			$this->bookingInfo = $_SESSION['bookingInfo'];
+			$this->categories = $_SESSION['categories'];
         }
 
 
@@ -60,6 +62,69 @@
 					</nav>";
 			return $html;
 		}
+
+		public function getUserNavBar_Home() {
+			$html = "
+			<nav class='navbar navbar-expand-lg navbar-light bg-light'>
+        <div class='container-fluid'>
+            <a class='navbar-brand' href='home.php'>E-Booking Cinema</a>
+            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle Navigation'>
+                <span class='navbar-toggler-icon'></span>
+            </button>
+            <div class='collapse navbar-collapse' id='navbarNavDropdown'>
+                <ul class='navbar-nav me-auto order-0'>
+                    <li class='nav-item'>
+                        <a class='nav-link active' href='home.php' aria-current='page'>Home</a>
+                    </li>
+                    <li>
+                        <a class='nav-link active' href='viewBookings.php' aria-current='page'>View Bookings</a>
+                    </li>
+                </ul>
+                Sort Movies:
+                <div class='col-md-4'>
+                    <form name='movieSorting'>
+                        <select class='form-control' id='movieCategories' , name='movieCategories' id='movieCategories' onchange='sortMovies()'>
+                            <option disabled='true'>Sort By Category</option>
+                            <option value='0'>All Movies</option>";
+
+							foreach ($this->categories as $cat) {  // pasting all categories in list 
+                                echo "<option value='" . $cat["idCategory"] . "'>" . $cat["category"] . "</option>";
+                            }
+
+			$html = $html . "
+                            <option disabled='true'>Sort by available movies</option>
+                            <option value='-1'>Currently Playing</option>
+                            <option value='-2'>Coming Soon</option>
+                        </select>
+                    </form>
+                </div>
+                <!-- <button class='btn btn-outline-success' type='submit'>Search</button> -->
+
+                <!-- </div> -->
+                <div class='d-flex ms-auto order-5'>
+                    <div class='nav-item dropdown justify-content-end'>
+                        <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                            Account
+                        </a>
+                        <ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdownMenuLink'>";
+                            if (isset($_SESSION["user_id"])) {
+                                $html = $html . "<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>";
+                                $html = $html . "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
+                            } else {
+                                $html = $html . "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
+                                $html = $html . "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
+                            }
+			$html = $html . "
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>";
+		
+	return $html;	
+		
+	}
 
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Booking Views
@@ -399,6 +464,45 @@
 
 			return $checkout;
 		} // getCheckout
+
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// HomePage View
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		public function getMovies() {
+			$num_movies = $this->model->getNumMovies();
+			$result = $this->model->getMovies();
+
+			$html = "
+			<div class='container'>
+			<div class='row'>
+			";
+
+			for ($i = 0; $i < $num_movies; $i++) {
+				$movie = $result->fetch_assoc();
+				$disabled = '0';
+
+				$html = $html . "<div class='col-sm-4' name='movieCardCol'>";
+				$html = $html . "<movie-card imgSrc='{$movie['trailerPicture']}' title='{$movie['title']}' rating='{$movie['filmRating']}' id='{$movie['idMovie']}' genre='{$movie['categoryID']}' playing='{$movie['isCurrentlyPlaying']}' disabled='{$disabled}' />";
+				$html = $html . "</div>";
+			}
+
+			$html = $html . "</div>";
+			$html = $html . "</div>";
+
+			return $html;
+
+		}
+
+		public function getTrailer($url) {
+			$html = "    <div class='trailer'>
+			<iframe width='840' height='472.5' src='";
+			$html = $html . $url;
+			
+			$html = $html . "' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+			</div>";
+		}
+
 
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Other
