@@ -1,8 +1,13 @@
 <?php
     include __DIR__ . "/../Model/Model.php";
+    include __DIR__ . "/../Singleton.php";
     $model = new Model();
+    session_start();
 
     if(isset($_POST['postID'])) {
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //ADMIN POSTS                                                                                                
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
         // POST to add a new movie
         if($_POST['postID'] == "addMovie") {
@@ -81,6 +86,176 @@
             $model->addCurrentMovie($movieID);
             header("Location: ../admin_home.php");
         } // updateToCurrentlyPlaying
+
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //BOOKING POSTS                                                                                              
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // if the POST is for selecting the showtime
+        if($_POST['postID'] == "showtimeBookingPage") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            // set the showID, date, and time
+            $bookingInfo->showID = $_POST['showID'];
+            $bookingInfo->showDate = $_POST['showDate'];
+            $bookingInfo->showTime = $_POST['showTime'];
+
+            // set the ticket types
+            $bookingInfo->childTickets = 0;
+            $bookingInfo->adultTickets = 0;
+            $bookingInfo->seniorTickets = 0;
+
+            // reset discount
+            $bookingInfo->promoCode = "";
+            $bookingInfo->promoDiscount = 0;
+
+            // reset the seats array
+            unset($bookingInfo->selectedSeatsArray);
+            $bookingInfo->selectedSeatsArray = array();
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        // if POST is to submit booking
+        if($_POST['postID'] == "submitBooking") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            // check to make sure the ticket numbers match to seats selected
+            $totalTickets = $bookingInfo->childTickets + $bookingInfo->adultTickets + $bookingInfo->seniorTickets;
+            if($totalTickets != count($bookingInfo->selectedSeatsArray)) {
+                // incorrect tickets, send post to booking, or create session var
+                header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+            } else {
+                // process to payment page
+                header("Location: checkout.php");
+            }
+        }
+
+        // if POST is to reset the showID
+        if($_POST['postID'] == "resetShow") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $bookingInfo->showID = -1;
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        // if POST is to add a seat selected by user
+        if($_POST['postID'] == "userAddSeat") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $seatLoc = $_POST['seatIndex'];
+            // set the seat to selected
+            $bookingInfo->buttonTypeArray[$seatLoc] = 3;
+
+            // add to selectedSeatsArray
+            if($bookingInfo->selectedSeatsArray == NULL) {
+                $bookingInfo->selectedSeatsArray = array();
+            }
+            array_push($bookingInfo->selectedSeatsArray, (int)$seatLoc + 1);
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        // if POST is to remove a seat selected by user
+        if($_POST['postID'] == "userRemoveSeat") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $seatLoc = $_POST['seatIndex'];
+            $value = (int)$seatLoc + 1;
+            $index = array_search($value, $bookingInfo->selectedSeatsArray, FALSE);
+            unset($bookingInfo->selectedSeatsArray[$index]);
+            $bookingInfo->buttonTypeArray[$seatLoc] = 2;
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        // following POSTS are to update ticket prices
+        if($_POST['postID'] == "addAdultTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $bookingInfo->adultTickets++;
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        if($_POST['postID'] == "removeAdultTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            if($bookingInfo->adultTickets != 0) {
+                $bookingInfo->adultTickets--;
+            }
+            $location = "Location: ../booking.php?movieID=$bookingInfo->movieID";
+            echo "ID: " . $bookingInfo->movieID;
+            header($location);
+        }
+
+        if($_POST['postID'] == "addChildTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $bookingInfo->childTickets++;
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        if($_POST['postID'] == "removeChildTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            if($bookingInfo->childTickets != 0) {
+                $bookingInfo->childTickets--;
+            }
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        if($_POST['postID'] == "addSeniorTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $bookingInfo->seniorTickets++;
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        if($_POST['postID'] == "removeSeniorTicket") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            if($bookingInfo->seniorTickets != 0) {
+                $bookingInfo->seniorTickets--;
+            }
+            header("Location: ../booking.php?movieID=$bookingInfo->movieID");
+        }
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //Checkout POSTS                                                                                              
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        $paymentID;
+        $checkout = false;
+        $promoID = -1;
+        // if the POST is for selecting a promoCode
+        if($_POST['postID'] == "submitPromo") {
+            $bookingInfo = $_SESSION['bookingInfo'];
+            $promo = $_POST['promo'];
+            // query for promoCodes
+            $promo = $model->searchPromoCode($promo);
+            if($promo) {
+                $bookingInfo->promoCode = $promo["code"];
+                $bookingInfo->promoDiscount = $promo["discount"];
+                $promoID = $promo["idPromotions"];
+            } else {
+                echo '<script>alert("Incorrect promocode.")</script>';
+            }
+            header("Location: ../checkout.php");
+        }
+
+        if($_POST['postID'] == "submitPayment") {
+            $paymentID = $_POST['cardID'];
+            $checkout = true;
+        }
+
+        if($_POST['postID'] == "submitNewPayment") {
+            $cardNum = $_POST['cardNumber'];
+            $expiration = $_POST['expiration'];
+            
+            // create new card
+            $model->createOneTimePaymentCard();
+            // get ID of card
+            $sql = "SELECT * FROM `payment_card_table` WHERE `cardNum` = $cardNum;";
+            $result = $mysqli->query($sql);
+            $card = $result->fetch_assoc();
+            $idCard = $card["idPaymentCard"];
+        
+            // set paymentID for booking info
+            $paymentID = $idCard;
+            $checkout = true;
+          }
+
+
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        //Other POSTS                                                                                              
+        //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 	  if($_POST['postID'] == "signup") {

@@ -74,15 +74,20 @@ $view = new View();
 
   </head>
   <body class="bg-light" id="bg">
-<?php
+    <?php           
+        // display the navbar
+        echo $view->getUserNavBar_NotHome();
+    ?>
 
-// display the navbar
-echo $view->getNavbar();
+    <div class='container form-block'>
+      <main>
+        <?php
 
-// display the form
-echo $view->getCheckout();
-
-?>
+          // display the form
+          echo $view->getCheckout();
+        ?>
+        </main>
+    </div>
 
     <script src="../node_modules/bootstrap/dist/css/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

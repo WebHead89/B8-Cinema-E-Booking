@@ -74,6 +74,13 @@
             return $showRooms;
         }
 
+        public function getShowsOfMovie($movieID) {
+            $sql = "SELECT * FROM `show_table` WHERE movieID = $movieID;";
+            $result = $this->mysqli->query($sql);
+            $shows = $result->fetch_all(MYSQLI_ASSOC);
+            return $shows;
+        }
+
         public function getShowTimes() {
             $sql = "SELECT * FROM `showtime_table`";
             $result = $this->mysqli->query($sql);
@@ -175,6 +182,55 @@
     		$stmt->bind_param("ss", $hash, $email);
    		$stmt->execute();
 	  }
+
+      public function getShowSeats($showID) {
+        // get seats from the database
+        $sql = "SELECT * FROM `seats_table` WHERE `showID` = $showID";
+        $result = $this->mysqli->query($sql);
+        $seats = $result->fetch_all(MYSQLI_ASSOC);
+        return $seats;
+    }
+
+    public function getTicketPrices() {
+        $sql = "SELECT * FROM `ticket_type`;";
+        $result = $this->mysqli->query($sql);
+        $ticketTypes = $result->fetch_all(MYSQLI_ASSOC);
+        $ticketPrices = array_column($ticketTypes, "price", "type");
+        return $ticketPrices;
+    }
+
+    public function searchPromoCode($code) {
+        $sql = "SELECT * FROM `promotions_table` WHERE `code` = '$code';";
+        $result = $this->mysqli->query($sql);
+        $promo = $result->fetch_assoc();
+        return $promo;
+    }
+
+    public function getUserInfo($id) {
+        $sql = "SELECT * FROM user WHERE id = $id";
+        $result = $this->mysqli->query($sql);
+        $user = $result->fetch_assoc();
+        return $user;
+    }
+
+    public function getPaymentCards($id) {
+        $sql = "SELECT * FROM `payment_card_table` WHERE `userID` = $id;";
+        $result = $this->mysqli->query($sql);
+        $paymentCards = $result->fetch_all(MYSQLI_ASSOC);
+        return $paymentCards;
+    } 
+
+    public function createOneTimePaymentCard() {
+        // create new payment Card, set user ID to -1, meaning 1 time card
+        $stmt = $this->mysqli->stmt_init();
+        $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '-1');";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->execute();
+    }
+
+    public function getIdPaymentCard() {
+
+    }
     }
 
 
