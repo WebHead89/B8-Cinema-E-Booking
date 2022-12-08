@@ -258,7 +258,7 @@
 			
 			$html = $html . "Total Price: $$totalPrice
 						</div>
-						<form action='/B8-Cinema-E-Booking/MVC_Pages/checkout.php' name='submitBooking' method='POST'>
+						<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' name='submitBooking' method='POST'>
 							<input type='hidden' id='postID' name='postID' value='submitBooking'>
 							<button type='submit' class='btn btn-secondary proceedToPayment'>Add tickets to cart</button>
 						</form>

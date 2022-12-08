@@ -125,7 +125,7 @@
                 header("Location: ../booking.php?movieID=$bookingInfo->movieID");
             } else {
                 // process to payment page
-                header("Location: checkout.php");
+                header("Location: ../checkout.php");
             }
         }
 
