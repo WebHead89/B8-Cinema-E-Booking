@@ -21,6 +21,15 @@ $view = new View();
 
 
     <style>
+
+        .titleSearch {
+            margin-left: 20px;
+            padding: 5px;
+        }
+
+        #movieCategories {
+            margin-left: 5px;
+        }
         
     </style>
 
@@ -116,6 +125,34 @@ echo $view->getMovies();
             }
         }
 </script>
+
+<script>
+    function searchByTitle() {
+
+    var searchInput = document.getElementById("searchbox").value;
+    var movie_cards = document.getElementsByTagName("movie-card")
+    var col_cards = document.getElementsByName("movieCardCol")
+        // console.log(searchInput)
+    for (let i = 0; i < movie_cards.length; i++) {
+
+        let classListChange = col_cards[i]
+        let movie = movie_cards[i]
+
+        if (movie.getAttribute("title").toLowerCase().includes(searchInput.toLowerCase())) {
+            classListChange.classList.remove("d-none");
+        } else {
+            classListChange.classList.add("d-none");
+        }
+
+    }
+    
+    // console.log(movie_cards)
+    console.log("TEXT INPUT")
+    }
+
+</script>
+
+
 <script type="text/javascript" src="Scripts/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="Scripts/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

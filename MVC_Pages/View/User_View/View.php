@@ -96,9 +96,11 @@
                         </select>
                     </form>
                 </div>
-                <!-- <button class='btn btn-outline-success' type='submit'>Search</button> -->
-
-                <!-- </div> -->
+				<div class='col-md-4'>
+				<form name='titleSorting'>
+				<input type='text' name='searchbox' id='searchbox' class='titleSearch' placeholder='Search by title here' onkeyup='searchByTitle()'> 
+				</form>
+				</div>
                 <div class='d-flex ms-auto order-5'>
                     <div class='nav-item dropdown justify-content-end'>
                         <a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
