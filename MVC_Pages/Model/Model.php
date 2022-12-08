@@ -268,14 +268,14 @@
         }
         
         public function getNumMovies() {
-            $sql = "SELECT * FROM `movie_table`;";
+            $sql = "SELECT * FROM `movies_table`;";
             $result = $this->mysqli->query($sql);
             $numMovies = $result->num_rows;
             return $numMovies;
         }
 
         public function getMovies() {
-            $sql = "SELECT * FROM `movie_table`;";
+            $sql = "SELECT * FROM `movies_table`;";
             $result = $this->mysqli->query($sql);
             return $result;
         }

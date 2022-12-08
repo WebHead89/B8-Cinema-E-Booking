@@ -6,7 +6,6 @@
     class View {
         private $model;
 		private $bookingInfo;
-		private $categories;
 
         public function __construct() {
             $this->model = new Model();
@@ -14,7 +13,6 @@
 				$_SESSION['bookingInfo'] = Singleton::getInstance();
 			}
 			$this->bookingInfo = $_SESSION['bookingInfo'];
-			$this->categories = $_SESSION['categories'];
         }
 
 
@@ -87,8 +85,8 @@
                             <option disabled='true'>Sort By Category</option>
                             <option value='0'>All Movies</option>";
 
-							foreach ($this->categories as $cat) {  // pasting all categories in list 
-                                echo "<option value='" . $cat["idCategory"] . "'>" . $cat["category"] . "</option>";
+							foreach ($this->model->getMovieCategories() as $cat) {  // pasting all categories in list 
+                                $html = $html . "<option value='" . $cat["idCategory"] . "'>" . $cat["category"] . "</option>";
                             }
 
 			$html = $html . "
