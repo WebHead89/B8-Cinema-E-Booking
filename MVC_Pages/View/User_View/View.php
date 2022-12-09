@@ -20,6 +20,28 @@
 		// Navbar Views
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		public function getUserNavBar_NotHome() {
+		if (!isset($_SESSION["user_id"])) {
+			$html = "<nav class='navbar navbar-expand-lg navbar-light bg-light'>
+						<div class='container-fluid'>
+							<a class='navbar-brand' href='home.php'>E-Booking Cinema</a>
+							<button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle Navigation'>
+								<span class='navbar-toggler-icon'></span>
+							</button>
+							<div class='collapse navbar-collapse' id='navbarNavDropdown'>
+								<ul class='navbar-nav me-auto order-0'>
+									<li class='nav-item'>
+										<a class='nav-link active' href='home.php' aria-current='page'>Home</a>
+									</li>
+								</ul>
+								
+								<!-- </div> -->
+								<div class='d-flex ms-auto order-5'>
+									<div class='nav-item dropdown justify-content-end'>
+										<a class='nav-link dropdown-toggle' href='#' id='navbarDropdownMenuLink' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+											Account
+										</a>
+										<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdownMenuLink'>";
+		} else {
 			$html = "<nav class='navbar navbar-expand-lg navbar-light bg-light'>
 						<div class='container-fluid'>
 							<a class='navbar-brand' href='home.php'>E-Booking Cinema</a>
@@ -43,6 +65,7 @@
 											Account
 										</a>
 										<ul class='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdownMenuLink'>";
+		}
 
 											if (isset($_SESSION['user_id'])) {
 												$html = $html . "<li><a class='dropdown-item' href='editprofile.php'>Edit Profile</a></li>";
