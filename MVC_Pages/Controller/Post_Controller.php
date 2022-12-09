@@ -286,6 +286,30 @@
 
             // SEND EMAIL OF BOOKING CONFIRMATION
 
+            // Booking array get showID -> query show table for show id -> query movie id and showtime id given show id
+            $showID = $bookingInfo->showID;
+            $show = $model->getShow($showID);
+            $movieID = $show["movieID"];
+            $movie = $model->getMovie($movieID);
+            $movieDisplay = $movie["title"];
+            $showDate = $show['date'];
+            
+            $email = $userInfo["email"];
+            $subject = "Booking Confirmation";
+            $message = "Thank you for booking with us! Your booking ID is: " . $bookingID . "\r\n";
+            $message .= "Your booking details are as follows: \r\n";
+            $message .= "Movie: " . $movieDisplay . "\r\n";
+            $message .= "Date: " . $showDate . "\r\n";
+            $message .= "Total Price: $" . $totalPrice * $bookingInfo->promoDiscount . "\r\n";
+            $message .= "Thank you for choosing E-Booking Cinema!";
+            $headers = 'From:ebookingcinema2022@gmail.com' . "\r\n";
+            if (mail($email, $subject, $message, $headers)) {
+                echo "Email sent";
+            } else {
+                echo "Email sending failed";
+            } // Send our email
+
+
             // reset the bookingInfo session class
             $bookingInfo->showID = -1;
             unset($bookingInfo->selectedSeatsArray);
