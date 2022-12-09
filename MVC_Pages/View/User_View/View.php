@@ -402,8 +402,13 @@
 
 			if($bookings) {
 				foreach($bookings as $booking) {
+					// get payment card
+					$paymentCard = $this->model->getPaymentCard($booking["paymentID"]);
+					$cardNum = $paymentCard["cardNum"];
+
 					// print booking
-					$html = $html . "BookingID: " . $booking["idBooking"] . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Total Price: $" . $booking["totalPrice"] . "<br>";
+					$html = $html . "BookingID: " . $booking["idBooking"] . "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Total Price: $" . $booking["totalPrice"] . 
+					"&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" . "Payment Card: " . $cardNum . "<br>";
 					// print show, date, time, room
 					// get the show
 					$showID = $booking["showID"];

@@ -220,6 +220,13 @@
             return $paymentCards;
         } 
 
+        public function getPaymentCard($id) {
+            $sql = "SELECT * FROM `payment_card_table` WHERE `idPaymentCard` = $id;";
+            $result = $this->mysqli->query($sql);
+            $paymentCard = $result->fetch_assoc();
+            return $paymentCard;
+        }
+
         public function createOneTimePaymentCard($cardNum, $expiration) {
             // create new payment Card, set user ID to -1, meaning 1 time card
             $stmt = $this->mysqli->stmt_init();
