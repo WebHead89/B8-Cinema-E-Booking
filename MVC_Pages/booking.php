@@ -4,6 +4,7 @@
 
     // user cannot book seats if they are not logged into an account
     if (!isset($_SESSION["user_id"])) { 
+        echo "invalid";
         header("Location: login.php");
     }
 
