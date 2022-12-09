@@ -19,6 +19,7 @@
     $bookingInfo->movieID = $movieID;
 
     if($bookingInfo->movieID != $movieID) {
+        echo "DIfferent movie";
         $bookingInfo->showID = -1;
     }
 
