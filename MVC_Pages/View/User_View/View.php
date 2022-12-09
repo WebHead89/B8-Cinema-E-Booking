@@ -62,6 +62,27 @@
 		}
 
 		public function getUserNavBar_Home() {
+		if (!isset($_SESSION["user_id"])) {
+			$html = "
+			<nav class='navbar navbar-expand-lg navbar-light bg-light'>
+        <div class='container-fluid'>
+            <a class='navbar-brand' href='home.php'>E-Booking Cinema</a>
+            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNavDropdown' aria-controls='navbarNavDropdown' aria-expanded='false' aria-label='Toggle Navigation'>
+                <span class='navbar-toggler-icon'></span>
+            </button>
+            <div class='collapse navbar-collapse' id='navbarNavDropdown'>
+                <ul class='navbar-nav me-auto order-0'>
+                    <li class='nav-item'>
+                        <a class='nav-link active' href='home.php' aria-current='page'>Home</a>
+                    </li>
+                </ul>
+                Sort Movies:
+                <div class='col-md-4'>
+                    <form name='movieSorting'>
+                        <select class='form-control' id='movieCategories' , name='movieCategories' id='movieCategories' onchange='sortMovies()'>
+                            <option disabled='true'>Sort By Category</option>
+                            <option value='0'>All Movies</option>";
+		} else {
 			$html = "
 			<nav class='navbar navbar-expand-lg navbar-light bg-light'>
         <div class='container-fluid'>
@@ -84,7 +105,7 @@
                         <select class='form-control' id='movieCategories' , name='movieCategories' id='movieCategories' onchange='sortMovies()'>
                             <option disabled='true'>Sort By Category</option>
                             <option value='0'>All Movies</option>";
-
+		}
 							foreach ($this->model->getMovieCategories() as $cat) {  // pasting all categories in list 
                                 $html = $html . "<option value='" . $cat["idCategory"] . "'>" . $cat["category"] . "</option>";
                             }
