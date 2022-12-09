@@ -257,7 +257,9 @@
 			$adultPrice = $ticketPrices["ADULT"];
 			$seniorPrice = $ticketPrices["SENIOR"];
 			$totalPrice = $childPrice * $bookingInfo->childTickets + $adultPrice * $bookingInfo->adultTickets + $seniorPrice * $bookingInfo->seniorTickets;
-
+            $discountPrice = $bookingInfo->promoDiscount * $totalPrice;
+            $totalPrice =  $totalPrice - $discountPrice;
+            
             // get promoID
             $promo = $model->searchPromoCode($bookingInfo->promoCode);
             if($promo) {
