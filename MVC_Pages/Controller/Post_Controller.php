@@ -27,7 +27,7 @@
             $filename = basename($posterImage);
             $filepath = "Assets/" . $filename;
             copy($posterImage, $filepath);
-            $filepath = "MVC_Pages/Controller/" . $filepath;
+            $filepath = "../MVC_Pages/Controller/" . $filepath;
 
             // get isCurrentlyPlaying and genere
             if($isCurrentlyPlaying == "Upcoming") {
@@ -259,7 +259,7 @@
 			$totalPrice = $childPrice * $bookingInfo->childTickets + $adultPrice * $bookingInfo->adultTickets + $seniorPrice * $bookingInfo->seniorTickets;
             $discountPrice = $bookingInfo->promoDiscount * $totalPrice;
             $totalPrice =  $totalPrice - $discountPrice;
-            
+
             // get promoID
             $promo = $model->searchPromoCode($bookingInfo->promoCode);
             if($promo) {
