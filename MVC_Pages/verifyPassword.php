@@ -35,7 +35,10 @@
             // $resulting = $stmt->get_result();
             // $user = $resulting->fetch_assoc();
 
-            $match = $model->findUserWithEmail($email, $emailHash, $status);
+            $user = $model->findUserWithEmailPassword($email, $emailHash);
+            print_r($email);
+            print_r($emailHash);
+            // print_r($user['first_name']);
 
             // Once the new password is submitted, update the password in the database
             if (array_key_exists('submit', $_POST)) {
@@ -43,10 +46,12 @@
                 $password = $_POST['password'];
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
                 // echo $password;
-                $update = "UPDATE user SET password=? WHERE email=? AND emailHash=?";
-                $stmt = $mysqli->prepare($update);
-                $stmt->bind_param("sss", $password_hash, $email, $emailHash);
-                $stmt->execute();
+                // Update password from model here
+                // $update = "UPDATE user SET password=? WHERE email=? AND emailHash=?";
+                // $stmt = $mysqli->prepare($update);
+                // $stmt->bind_param("sss", $password_hash, $email, $emailHash);
+                // $stmt->execute();
+                $model->updatePassword($email, $emailHash, $password_hash);
                 header("Location: login.php");
             }
         ?>
