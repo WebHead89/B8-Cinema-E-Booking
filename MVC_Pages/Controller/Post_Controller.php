@@ -45,7 +45,7 @@
             $model->addNewMovie($title, $cast, $director, $producer, $synopsis, $filepath, $trailerURL, $rating, $genereID, $x);
 
             // redirect to admin home
-            header("Location: admin_home.php");
+            header("Location: ../admin_home.php");
         } // add movie
 
 
@@ -300,7 +300,7 @@
 
 
             // send to confirmation page
-            header("Location: checkoutSuccess.php");
+            header("Location: ../confirmation.html");
 
         }
 
