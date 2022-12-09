@@ -701,6 +701,113 @@
 			return $html;
 		}
 
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Movie Info Views
+		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		public function getMovieInfo($id) {
+			// get movie categories
+			$categories = $this->model->getMovieCategories();
+			$genere = array_column($categories, "category", "idCategory");
+
+			// get showtimes
+			$showTimes = $this->model->getShowTimes();
+			$showTimeArr = array_column($showTimes, "showtime", "idShowtime");
+
+			// get movie info 
+			$movie = $this->model->getMovie($id);
+
+			// get shows for movie
+			$shows = $this->model->getShowsOfMovie($id);
+
+			// create HTML
+			$html = "<div class='row'>
+						<div class='col-md-1'>
+							<!Buffer spacing using bootstrap format>
+						</div>
+						<div class='col-md-12'>
+							<iframe width='840' height='472.5' src='{$movie['trailerVideo']}' title='YouTube video player'
+								frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+								allowfullscreen>
+							</iframe>
+						</div>
+							
+					</div>
+				
+					<div class='container form-control form-block'>
+						<div class='row'>
+							<div class='center text-center'>
+								<p style='font-size:45px;'> {$movie['title']} </p>
+							</div><br>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-10'>
+								<h5>Description:</h5> 
+								<p> {$movie['synopsis']} </p>
+							</div>
+							<div class='col-md-1'></div>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-2'>
+								<h5>Movie Genre:</h5>
+							</div>
+							<div class='col-md-9'>
+								<p> {$genere[$movie['categoryID']]} </p>
+							</div>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-2'>
+								<h5>Director:</h5>
+							</div>
+							<div class='col-md-9'>
+								<p> {$movie['director']} </p>
+							</div>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-2'>
+								<h5>Movie Cast:</h5>
+							</div>
+							<div class='col-md-9'>
+								<p> {$movie['cast']} </p>
+							</div>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-2'>
+								<h5>Movie Status: </h5>
+							</div>
+							<div class='col-md-9'>";
+							if($movie['isCurrentlyPlaying']) {
+								$html = $html . "<p> Currently Playing </p>";
+							} else { 
+								$html = $html . "<p> Upcoming </p>";
+							}
+							$html = $html . "</div>
+				
+							<div class='col-md-1'></div>
+							<div class='col-md-2'>
+								<h5>Showtimes:</h5>
+							</div>
+				
+							<div class='col-md-4'>
+								<select class='form-control' id='showtime', name='showtime'>";
+									foreach($shows as $show) { 
+										$html = $html . "<option> {$show['date']} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+											{$showTimeArr[$show['showtimeID']]} </option>";
+									}
+								$html = $html . "</select>
+							</div>
+							<div class='col-md-2'></div>
+							<div class='col-md-2'>
+								<a href='booking.php?movieID=$id' class='btn btn-primary'>Buy Tickets</a>
+							</div>
+								<br><br><br>
+						</div>
+				
+					</div>";
+
+			return $html;
+		}
+
 
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Other
