@@ -2,8 +2,8 @@
   class Database {
     public function getConnection() {
       // database sign-in credentials (default for now)
-      $host = "localhost:3307";
-      $dbname = "cinema_ebooking_system";
+      $host = "localhost";
+      $dbname = "cinemadatabase";
       $username = "root";
       $password = "";
 
