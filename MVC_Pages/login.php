@@ -1,9 +1,28 @@
 <?php
 include("View/Guest_View/View.php");
 session_start();
+$invalid_login = 0;
+if (isset($_GET["invalid_login"])) {
+  
+  $invalid_login = $_GET["invalid_login"];
+  // echo $invalid_login;
+  if ($invalid_login == 1) {
+    echo '<script type="text/JavaScript">
+          				alert("Invalid log in.");
+        			</script>';
+
+  }
+  if ($invalid_login == 2) {
+    echo '<script type="text/JavaScript">
+          				alert("Email not verified.");
+        			</script>';
+
+  }
+}
 
 $view = new View();
 ?>
+
 
 
 <!DOCTYPE html>
