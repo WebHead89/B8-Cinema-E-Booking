@@ -66,7 +66,7 @@ Username: '.$_POST['email'].'
 Password: '.$_POST['password'].'
 ------------------------
 Please click this link to activate your account:
-http://localhost/EBookDemo/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
+http://localhost/B8-Cinema-E-Booking/MVC_Pages/Model/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
 ';
 
 $headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers

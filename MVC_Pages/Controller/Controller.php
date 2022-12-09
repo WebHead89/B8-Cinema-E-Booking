@@ -37,6 +37,14 @@
 
             
         }
+
+        // Updates user status after email verification
+        public function updateUserStatus($email, $emailHash, $status) {
+            $update = "UPDATE user SET status=1 WHERE email=? AND emailHash=? AND status=?";
+            $stmt = $mysqli->prepare($update);
+            $stmt->bind_param("ssi", $email, $emailHash, $status);
+            $stmt->execute();
+        }
     }
 
 ?>

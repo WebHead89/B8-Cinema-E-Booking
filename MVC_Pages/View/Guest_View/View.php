@@ -83,6 +83,7 @@
         } // getLogin
 
 	  public function getSignUp() {
+		// This should not be hard coded probably
 		$signup = "	<form action='/B8-Cinema-E-Booking/MVC_Pages/Controller/Post_Controller.php' method='POST'>
 				<input type='hidden' id='postID' name='postID' value='signup'>
 				
