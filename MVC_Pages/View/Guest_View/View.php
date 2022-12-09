@@ -60,10 +60,6 @@
 								<input type='hidden' id='postID' name='postID' value='login'>
 									<h1 class='h3 mb-3 fw-normal'>Login</h1>
 
-							  <?php if ($is_invalid): ?>
-							  <em>Invalid Login</em>
-							  <?php endif; ?>
-
 									<div class='form-floating'>
 									  <input type='email' class='form-control' id='email' name='email'>
 									  <label for='floatingInput'>Email address</label>
