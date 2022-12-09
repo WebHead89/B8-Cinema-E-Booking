@@ -49,7 +49,7 @@
 												$html = $html . "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
 											} else {
 												$html = $html . "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
-												$html = $html . "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
+												$html = $html . "<li><a class='dropdown-item' href='signup.php'>Register</a></li>";
 											}
 
 			$html = $html . 			"</ul>
@@ -112,7 +112,7 @@
                                 $html = $html . "<li><a class='dropdown-item' href='logout.php'>Logout</a></li>";
                             } else {
                                 $html = $html . "<li><a class='dropdown-item' href='login.php'>Login</a></li>";
-                                $html = $html . "<li><a class='dropdown-item' href='signup.html'>Register</a></li>";
+                                $html = $html . "<li><a class='dropdown-item' href='signup.php'>Register</a></li>";
                             }
 			$html = $html . "
                         </ul>
