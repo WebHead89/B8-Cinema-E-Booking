@@ -72,8 +72,9 @@
 									<input type='checkbox' onclick='myFunction()'>Show Password
 									
 									<button class='w-100 btn btn-lg btn-primary' name='signIn'>Sign in</button>
-
-								<button class='w-100 btn btn-lg btn-primary' name='resetPassword' style='margin-top: 5px'>Forgot Password</button>
+								</form>
+								
+								<a href='resetPassword.php' class='w-100 btn btn-lg btn-primary' name='resetPassword' style='margin-top: 5px'>Forgot Password</a>
 
 								  </form>
 								</main>

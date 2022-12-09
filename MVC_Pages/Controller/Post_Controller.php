@@ -439,9 +439,9 @@
   	      		$_SESSION["user_id"] = $user["id"];
         
         			if($user["admin"] == 0) {
-          				header("Location: ../MVC_Pages/home.php");
+          				header("Location: ../home.php");
         			} else {
-          				header("Location: ../MVC_Pages/admin_home.php");
+          				header("Location: ../admin_home.php");
         			}
  
       		} elseif ($user["status"] == 2) {
@@ -469,7 +469,7 @@
     		} else {
         		echo "Email sending failed";
     		}
-		header("Location: ../MVC_Pages/home.php");
+		header("Location: ../home.php");
 
         } // sendResetPassword
 

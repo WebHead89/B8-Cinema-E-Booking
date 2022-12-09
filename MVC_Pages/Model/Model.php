@@ -339,6 +339,10 @@
             return $resulting->num_rows;
         }
 
+        public function findUserWithEmailPassword($email, $emailHash, $status) {
+            
+        }
+
     }
 
 
