@@ -439,9 +439,9 @@
   	      		$_SESSION["user_id"] = $user["id"];
         
         			if($user["admin"] == 0) {
-          				header("Location: home.php");
+          				header("Location: ../home.php");
         			} else {
-          				header("Location: admin_home.php");
+          				header("Location: ../admin_home.php");
         			}
  
       		} elseif ($user["status"] == 2) {
