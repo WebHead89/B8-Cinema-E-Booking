@@ -412,7 +412,7 @@
 		Password: '.$_POST['password'].'
 		------------------------
 		Please click this link to activate your account:
-		http://localhost/EBookDemo/B8-Cinema-E-Booking/pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
+		http://localhost/B8-Cinema-E-Booking/MVC_Pages/verify.php?email='.$_POST['email'].'&emailHash='.$hash.'
 		';
 		
 		$headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
@@ -439,9 +439,9 @@
   	      		$_SESSION["user_id"] = $user["id"];
         
         			if($user["admin"] == 0) {
-          				header("Location: ../home.php");
+          				header("Location: ../MVC_Pages/home.php");
         			} else {
-          				header("Location: ../admin_home.php");
+          				header("Location: ../MVC_Pages/admin_home.php");
         			}
  
       		} elseif ($user["status"] == 2) {
@@ -462,14 +462,14 @@
     		echo $email;
     		$hash = md5( rand(0, 1000));
     		$subject = 'Password | Reset';
-    		$message = 'Your password reset link is: http://localhost/EBookDemo/B8-Cinema-E-Booking/MVC_Pages/verifyPassword.php?email='.$email.'&emailHash='.$hash;
+    		$message = 'Your password reset link is: http://localhost/B8-Cinema-E-Booking/MVC_Pages/verifyPassword.php?email='.$email.'&emailHash='.$hash;
     		$headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
     		if (mail($email, $subject, $message, $headers)) {
         		echo "Email sent";
     		} else {
         		echo "Email sending failed";
     		}
-		header("Location: ../home.php");
+		header("Location: ../MVC_Pages/home.php");
 
         } // sendResetPassword
 

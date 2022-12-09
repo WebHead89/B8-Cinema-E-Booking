@@ -2,7 +2,7 @@
 
 // database sign-in credentials (default for now)
 $host = "localhost";
-$dbname = "cinemadatabase";
+$dbname = "cinema_ebooking_system";
 $username = "root";
 $password = "";
 

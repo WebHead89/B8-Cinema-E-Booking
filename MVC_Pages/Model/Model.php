@@ -314,12 +314,31 @@
             $stmt->execute();
         }
 
+        public function updateUserInfoLessParams($email, $emailHash, $status) {
+            $update = "UPDATE user SET status=1 WHERE email=? AND emailHash=? AND status=?";
+            $stmt = $this->mysqli->prepare($update);
+            $stmt->bind_param("ssi", $email, $emailHash, $status);
+            $stmt->execute();
+
+        }
+
         public function createNewPaymentCard($cardNum, $expiration, $userID) {
             $stmt = $this->mysqli->stmt_init();
             $sql = "INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES (NULL, '$cardNum', '$expiration', '$userID');";
             $stmt = $this->mysqli->prepare($sql);
             $stmt->execute();
         }
+
+        public function findUserWithEmail($email, $emailHash, $status) {
+            $sql = "SELECT email, emailHash, status FROM user WHERE email=? AND emailHash=? AND status=?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ssi", $email, $emailHash, $status);
+            $stmt->execute();
+            $resulting = $stmt->get_result();
+            $user = $resulting->fetch_assoc();
+            return $resulting->num_rows;
+        }
+
     }
 
 
