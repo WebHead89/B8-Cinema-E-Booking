@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2022 at 07:02 PM
--- Server version: 10.4.20-MariaDB
--- PHP Version: 8.0.9
+-- Generation Time: Dec 09, 2022 at 03:39 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -82,7 +82,9 @@ CREATE TABLE `booking_table` (
 INSERT INTO `booking_table` (`idBooking`, `totalPrice`, `showID`, `paymentID`, `customerID`, `promoID`) VALUES
 (20, '20.00', 15, 6, 34, -1),
 (21, '20.00', 17, 7, 34, -1),
-(22, '8.00', 16, 6, 34, -1);
+(22, '8.00', 16, 6, 34, -1),
+(23, '16.00', 15, 6, 37, -1),
+(24, '24.00', 21, 17, 40, 1);
 
 -- --------------------------------------------------------
 
@@ -110,11 +112,11 @@ CREATE TABLE `movies_table` (
 --
 
 INSERT INTO `movies_table` (`idMovie`, `title`, `cast`, `director`, `producer`, `genre`, `synopsis`, `trailerPicture`, `trailerVideo`, `filmRating`, `categoryID`, `isCurrentlyPlaying`) VALUES
-(1, 'Avatar', '[cast]', '[director]', '[producer]', '[genre]', '[synopsis]', '../pages/assets/avatar.jpg', 'https://www.youtube.com/embed/5PSNL1qE6VY', 'rating', 1, 1),
-(4, 'Rogue One', 'Test Cast', 'Test Director', 'Test Producer', NULL, 'Test Synopsis', '../pages/assets/rogueone.jpg', 'https://www.youtube.com/embed/frdj1zb9sMY', 'PG-13', 4, 1),
-(5, 'Elvis', 'Elvis Cast', 'Elvis Director', 'Elvis Producer', NULL, 'Elvis is elvis', '../pages/assets/elvis.jpg', 'https://www.youtube.com/embed/wBDLRvjHVOY', 'R', 1, 0),
-(6, 'Titanic', 'Titanic Cast', 'Titanic Director', 'Titanic Producer', NULL, 'Titanic hits an iceberg. Music plays. People die. Hearts go on.', '../pages/assets/titanic.webp', 'https://www.youtube.com/embed/kVrqfYjkTdQ', 'PG-13', 5, 0),
-(7, 'Nope', 'Nope Cast', 'Jordan Peele', 'Jordan Peele', NULL, 'SCARY MOVIE SCARY SCARY SCARY', '../pages/assets/nope.jpg', 'https://www.youtube.com/embed/In8fuzj3gck', 'R', 3, 0);
+(1, 'Avatar', 'Sam Worthington, Zoe Saldana, Sigourney Weaver', 'James Cameron', 'James Cameron', 'Action', 'Blue people on a green planet and blue people die', '../pages/assets/avatar.jpg', 'https://www.youtube.com/embed/5PSNL1qE6VY', 'rating', 1, 1),
+(4, 'Rogue One', 'Felicity Jones, Diego Luna', 'Gareth Edwards', 'Kathleen Kenedy', 'Sci-Fi', 'Spies, lasers, no lightsabers and everyone dies', '../pages/assets/rogueone.jpg', 'https://www.youtube.com/embed/frdj1zb9sMY', 'PG-13', 4, 1),
+(5, 'Elvis', 'Austin Butler, Tom Hanks', 'Baz Luhrmann', 'Baz Luhrmann', 'Drama', 'Elvis is Elvis and he died on the toilet', '../pages/assets/elvis.jpg', 'https://www.youtube.com/embed/wBDLRvjHVOY', 'R', 1, 0),
+(6, 'Titanic', 'Kate Winslet, Leonardo DiCaprio', 'James Cameron', 'James Cameron', 'Drama', 'Titanic hits an iceberg. Music plays. People die. Hearts go on.', '../pages/assets/titanic.webp', 'https://www.youtube.com/embed/kVrqfYjkTdQ', 'PG-13', 5, 1),
+(7, 'Nope', 'Keke Palmer, Steven Yuen', 'Jordan Peele', 'Jordan Peele', 'Horror', 'SCARY MOVIE SCARY SCARY SCARY ... and people die', '../pages/assets/nope.jpg', 'https://www.youtube.com/embed/In8fuzj3gck', 'R', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -156,9 +158,8 @@ CREATE TABLE `payment_card_table` (
 --
 
 INSERT INTO `payment_card_table` (`idPaymentCard`, `cardNum`, `experationDate`, `userID`) VALUES
-(6, '1234', '5/20', 34),
-(7, '4321', '5/20', 34),
-(13, '56781', '5/20', -1);
+(15, '1234567890987654', '09/27', 40),
+(16, '4567890987654321', '06/26', 39);
 
 -- --------------------------------------------------------
 
@@ -217,162 +218,297 @@ INSERT INTO `seats_table` (`seatNumber`, `isReserved`, `showID`) VALUES
 (1, 0, 18),
 (1, 0, 19),
 (1, 0, 20),
+(1, 0, 21),
+(1, 0, 22),
+(1, 0, 23),
+(1, 0, 24),
+(1, 0, 25),
 (2, 0, 15),
 (2, 1, 16),
 (2, 0, 17),
 (2, 0, 18),
 (2, 0, 19),
 (2, 0, 20),
+(2, 0, 21),
+(2, 0, 22),
+(2, 0, 23),
+(2, 0, 24),
+(2, 0, 25),
 (3, 0, 15),
 (3, 0, 16),
 (3, 0, 17),
 (3, 0, 18),
 (3, 0, 19),
 (3, 0, 20),
+(3, 0, 21),
+(3, 0, 22),
+(3, 0, 23),
+(3, 0, 24),
+(3, 0, 25),
 (4, 0, 15),
 (4, 0, 16),
 (4, 0, 17),
 (4, 0, 18),
 (4, 0, 19),
 (4, 0, 20),
+(4, 0, 21),
+(4, 0, 22),
+(4, 0, 23),
+(4, 0, 24),
+(4, 0, 25),
 (5, 0, 15),
 (5, 0, 16),
 (5, 1, 17),
 (5, 0, 18),
 (5, 0, 19),
 (5, 0, 20),
+(5, 0, 21),
+(5, 0, 22),
+(5, 0, 23),
+(5, 0, 24),
+(5, 0, 25),
 (6, 1, 15),
 (6, 0, 16),
 (6, 1, 17),
 (6, 0, 18),
 (6, 0, 19),
 (6, 0, 20),
+(6, 0, 21),
+(6, 0, 22),
+(6, 0, 23),
+(6, 0, 24),
+(6, 0, 25),
 (7, 0, 15),
 (7, 0, 16),
 (7, 1, 17),
 (7, 0, 18),
 (7, 0, 19),
 (7, 0, 20),
+(7, 0, 21),
+(7, 0, 22),
+(7, 0, 23),
+(7, 0, 24),
+(7, 0, 25),
 (8, 1, 15),
 (8, 0, 16),
 (8, 0, 17),
 (8, 0, 18),
 (8, 0, 19),
 (8, 0, 20),
+(8, 0, 21),
+(8, 0, 22),
+(8, 0, 23),
+(8, 0, 24),
+(8, 0, 25),
 (9, 1, 15),
 (9, 0, 16),
 (9, 0, 17),
 (9, 0, 18),
 (9, 0, 19),
 (9, 0, 20),
+(9, 0, 21),
+(9, 0, 22),
+(9, 0, 23),
+(9, 0, 24),
+(9, 0, 25),
 (10, 1, 15),
 (10, 0, 16),
 (10, 0, 17),
 (10, 0, 18),
 (10, 0, 19),
 (10, 0, 20),
+(10, 0, 21),
+(10, 0, 22),
+(10, 0, 23),
+(10, 0, 24),
+(10, 0, 25),
 (11, 0, 15),
 (11, 0, 16),
 (11, 0, 17),
 (11, 0, 18),
 (11, 0, 19),
 (11, 0, 20),
+(11, 0, 21),
+(11, 0, 22),
+(11, 0, 23),
+(11, 0, 24),
+(11, 0, 25),
 (12, 0, 15),
 (12, 0, 16),
 (12, 0, 17),
 (12, 0, 18),
 (12, 0, 19),
 (12, 0, 20),
+(12, 0, 21),
+(12, 0, 22),
+(12, 0, 23),
+(12, 0, 24),
+(12, 0, 25),
 (13, 0, 15),
 (13, 0, 16),
 (13, 0, 17),
 (13, 0, 18),
 (13, 0, 19),
 (13, 0, 20),
+(13, 0, 21),
+(13, 0, 22),
+(13, 0, 23),
+(13, 0, 24),
+(13, 0, 25),
 (14, 0, 15),
 (14, 0, 16),
 (14, 0, 17),
 (14, 0, 18),
 (14, 0, 19),
 (14, 0, 20),
+(14, 0, 21),
+(14, 0, 22),
+(14, 0, 23),
+(14, 0, 24),
+(14, 0, 25),
 (15, 0, 15),
 (15, 0, 16),
 (15, 0, 17),
 (15, 0, 18),
 (15, 0, 19),
 (15, 0, 20),
+(15, 0, 21),
+(15, 0, 22),
+(15, 0, 23),
+(15, 0, 24),
+(15, 0, 25),
 (16, 0, 15),
 (16, 0, 16),
 (16, 0, 17),
 (16, 0, 18),
 (16, 0, 19),
 (16, 0, 20),
+(16, 1, 21),
+(16, 0, 22),
+(16, 0, 23),
+(16, 0, 24),
+(16, 0, 25),
 (17, 0, 15),
 (17, 0, 16),
 (17, 0, 17),
 (17, 0, 18),
 (17, 0, 19),
 (17, 0, 20),
+(17, 0, 21),
+(17, 0, 22),
+(17, 0, 23),
+(17, 0, 24),
+(17, 0, 25),
 (18, 0, 15),
 (18, 0, 16),
 (18, 0, 17),
 (18, 0, 18),
 (18, 0, 19),
 (18, 0, 20),
+(18, 1, 21),
+(18, 0, 22),
+(18, 0, 23),
+(18, 0, 24),
+(18, 0, 25),
 (19, 1, 15),
 (19, 0, 16),
 (19, 0, 17),
 (19, 0, 18),
 (19, 0, 19),
 (19, 0, 20),
+(19, 0, 21),
+(19, 0, 22),
+(19, 0, 23),
+(19, 0, 24),
+(19, 0, 25),
 (20, 0, 15),
 (20, 0, 16),
 (20, 0, 17),
 (20, 0, 18),
 (20, 0, 19),
 (20, 0, 20),
+(20, 0, 21),
+(20, 0, 22),
+(20, 0, 23),
+(20, 0, 24),
+(20, 0, 25),
 (21, 0, 15),
 (21, 0, 16),
 (21, 0, 17),
 (21, 0, 18),
 (21, 0, 19),
 (21, 0, 20),
+(21, 0, 21),
+(21, 0, 22),
+(21, 0, 23),
+(21, 0, 24),
+(21, 0, 25),
 (22, 1, 15),
 (22, 0, 16),
 (22, 0, 17),
 (22, 0, 18),
 (22, 0, 19),
 (22, 0, 20),
+(22, 0, 21),
+(22, 0, 22),
+(22, 0, 23),
+(22, 0, 24),
+(22, 0, 25),
 (23, 1, 15),
 (23, 0, 16),
 (23, 0, 17),
 (23, 0, 18),
 (23, 0, 19),
 (23, 0, 20),
+(23, 0, 21),
+(23, 0, 22),
+(23, 0, 23),
+(23, 0, 24),
+(23, 0, 25),
 (24, 1, 15),
 (24, 0, 16),
 (24, 0, 17),
 (24, 0, 18),
 (24, 0, 19),
 (24, 0, 20),
-(25, 0, 15),
+(24, 1, 21),
+(24, 0, 22),
+(24, 0, 23),
+(24, 0, 24),
+(24, 0, 25),
+(25, 1, 15),
 (25, 0, 16),
 (25, 0, 17),
 (25, 0, 18),
 (25, 0, 19),
 (25, 0, 20),
-(26, 0, 15),
+(25, 0, 21),
+(25, 0, 22),
+(25, 0, 23),
+(25, 0, 24),
+(25, 0, 25),
+(26, 1, 15),
 (26, 0, 16),
 (26, 0, 17),
 (26, 0, 18),
 (26, 0, 19),
 (26, 0, 20),
+(26, 0, 21),
+(26, 0, 22),
+(26, 0, 23),
+(26, 0, 24),
+(26, 0, 25),
 (27, 0, 15),
 (27, 0, 16),
 (27, 0, 17),
 (27, 0, 18),
 (27, 0, 19),
-(27, 1, 20);
+(27, 1, 20),
+(27, 0, 21),
+(27, 0, 22),
+(27, 0, 23),
+(27, 0, 24),
+(27, 0, 25);
 
 -- --------------------------------------------------------
 
@@ -443,7 +579,12 @@ INSERT INTO `show_table` (`idShow`, `date`, `movieID`, `showroomID`, `showtimeID
 (17, '2022-11-16', 4, 5, 4),
 (18, '2022-11-30', 1, 1, 1),
 (19, '2022-12-07', 1, 5, 2),
-(20, '2022-11-30', 1, 2, 3);
+(20, '2022-11-30', 1, 2, 3),
+(21, '2022-12-09', 4, 3, 1),
+(22, '2022-12-08', 4, 4, 2),
+(23, '2022-12-08', 6, 1, 3),
+(24, '2022-12-09', 6, 2, 1),
+(25, '2022-12-08', 6, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -468,7 +609,12 @@ INSERT INTO `tickets_table` (`idTicket`, `bookingID`, `seatNumber`) VALUES
 (14, 21, 5),
 (15, 21, 6),
 (16, 21, 7),
-(17, 22, 2);
+(17, 22, 2),
+(18, 23, 25),
+(19, 23, 26),
+(20, 24, 24),
+(21, 24, 18),
+(22, 24, 16);
 
 -- --------------------------------------------------------
 
@@ -519,7 +665,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `first_name`, `last_name`, `phone`, `email`, `password`, `promo`, `city`, `state`, `zip`, `status`, `admin`, `emailHash`, `address`) VALUES
-(34, 'Ben', 'Prestel', '7703304466', 'benjamindprestel@gmail.com', '$2y$10$quLec63OqgiZAlYUhWNyGucY7afbDRdnTVwVy.2lWvxi1MCr7CTLG', 1, NULL, NULL, NULL, 1, 0, 'caf1a3dfb505ffed0d024130f58c5cfa', '');
+(39, 'Admin ', 'McAdmin', '1234567890', 'admin@gmail.com', '$2y$10$mevdYPPdpbocrjiexUoFT.dTpIThIymLLi1GbfwB/28LCIvxKiL7u', 1, '', '', '', 1, 1, '3dc4876f3f08201c7c76cb71fa1da439', ''),
+(40, 'User ', 'McUser', '1234567890', 'user@gmail.com', '$2y$10$3GJjE74wNxu2ZJSZzqnxjeWgxWCqhmCKtplGAEVPqny4Sdp/.vj5K', 1, '', '', '', 1, 0, '7dcd340d84f762eba80aa538b0c527f7', '');
 
 -- --------------------------------------------------------
 
@@ -677,7 +824,7 @@ ALTER TABLE `account_type`
 -- AUTO_INCREMENT for table `booking_table`
 --
 ALTER TABLE `booking_table`
-  MODIFY `idBooking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `idBooking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `movies_table`
@@ -695,7 +842,7 @@ ALTER TABLE `movie_category`
 -- AUTO_INCREMENT for table `payment_card_table`
 --
 ALTER TABLE `payment_card_table`
-  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idPaymentCard` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `promotions_table`
@@ -725,13 +872,13 @@ ALTER TABLE `showtime_table`
 -- AUTO_INCREMENT for table `show_table`
 --
 ALTER TABLE `show_table`
-  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idShow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tickets_table`
 --
 ALTER TABLE `tickets_table`
-  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `idTicket` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `ticket_type`
@@ -743,7 +890,7 @@ ALTER TABLE `ticket_type`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `users`
