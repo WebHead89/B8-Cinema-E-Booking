@@ -339,8 +339,37 @@
             return $resulting->num_rows;
         }
 
-        public function findUserWithEmailPassword($email, $emailHash, $status) {
+        public function findUserWithEmailPassword($email, $emailHash) {
+
+            $sql = "SELECT email, emailHash FROM user WHERE email=? AND emailHash=?"; 
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ss", $email, $emailHash);
+            // var_dump($stmt);
+            $stmt->execute();
+            $resulting = $stmt->get_result();
+            $user = $resulting->fetch_assoc();
+            print_r($user);
+            return $user;
+
+            // $sql = "SELECT * FROM `tickets_table` WHERE `bookingID` = $bookingID";
+            // $result = $this->mysqli->query($sql);
+            // $tickets = $result->fetch_all(MYSQLI_ASSOC);
+            // return $tickets;
             
+        }
+
+        public function updatePassword($email, $emailHash, $password_hash) {
+            $update = "UPDATE user SET password=? WHERE email=? AND emailHash=?";
+            $stmt = $this->mysqli->prepare($update);
+            $stmt->bind_param("sss", $password_hash, $email, $emailHash);
+            $stmt->execute();
+        }
+
+        public function updateUserHash($email, $emailHash) {
+            $update = "UPDATE user SET emailHash=? WHERE email=?";
+            $stmt = $this->mysqli->prepare($update);
+            $stmt->bind_param("ss", $emailHash, $email);
+            $stmt->execute();
         }
 
     }

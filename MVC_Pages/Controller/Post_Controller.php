@@ -463,6 +463,7 @@
   		$email = $_POST['email'];
     		echo $email;
     		$hash = md5( rand(0, 1000));
+            $model->updateUserHash($email, $hash);
     		$subject = 'Password | Reset';
     		$message = 'Your password reset link is: http://localhost/B8-Cinema-E-Booking/MVC_Pages/verifyPassword.php?email='.$email.'&emailHash='.$hash;
     		$headers = 'From:ebookingcinema2022@gmail.com' . "\r\n"; // Set from headers
