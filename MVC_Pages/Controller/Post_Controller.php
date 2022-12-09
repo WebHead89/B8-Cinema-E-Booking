@@ -445,15 +445,17 @@
         			}
  
       		} elseif ($user["status"] == 2) {
-	
- 				echo '
-        			<script type="text/JavaScript">
-          				alert("You must confirm your email before logging in.");
-        			</script>';
-      		}
+                header("Location: ../login.php?invalid_login=2");
+
+      		} elseif (password_verify($_POST["password"], $user["password"]) != 1) {
+              
+                header("Location: ../login.php?invalid_login=1");
+
+            }
+  
+            
 		}
-    		$is_invalid = true;
-	   } // login 
+     } // login 
 
 
 	  if($_POST['postID'] == "sendResetPassword") {
@@ -474,6 +476,7 @@
         } // sendResetPassword
 
     }
+
 
 
 ?>
